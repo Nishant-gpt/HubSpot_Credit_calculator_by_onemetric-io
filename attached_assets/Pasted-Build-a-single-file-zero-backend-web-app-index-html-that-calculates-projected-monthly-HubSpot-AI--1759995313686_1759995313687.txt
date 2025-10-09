@@ -1,0 +1,139 @@
+Build a single-file, zero-backend web app (index.html) that calculates projected monthly HubSpot AI credit usage and cost. Use vanilla HTML/CSS/JS (no frameworks, no build step). Keep code clean and well-commented.
+
+1) Brand & Tone (OneMetric.io)
+
+Visual: minimal, enterprise-clean. Neutral light background, strong typographic hierarchy, rounded cards, subtle shadows.
+
+Header at top-left: OneMetric.io (as a text logo). Tagline under it: “HubSpot AI Credits—clear, predictable, no surprises.”
+
+Microcopy tone: concise, no fluff, ROI-oriented.
+
+Footer badge: “Built by OneMetric.io”.
+
+2) Data model (from the attached sheet)
+
+Embed this JSON constant directly in the JS (no network calls): it lists features, categories, and rates.
+
+const CREDIT_TABLE = {
+  actions: [
+    {"id":"customer-agent","category":"Agents (AI Assistants)","feature":"Customer Agent","credit_type":"Action-based","credit_rate":"100 credits","credits_per_unit":100,"frequency":"Per text conversation handled","notes":"Text-based interactions only"},
+    {"id":"prospecting-agent-monitor-contact","category":"Agents (AI Assistants)","feature":"Prospecting Agent (Monitor Contact)","credit_type":"Recurring","credit_rate":"100 credits","credits_per_unit":100,"frequency":"Per contact monitored per month","notes":"Continuous monitoring"},
+    {"id":"prospecting-agent-company-research","category":"Agents (AI Assistants)","feature":"Prospecting Agent (Company Research)","credit_type":"Action-based","credit_rate":"10 credits","credits_per_unit":10,"frequency":"Per deep research result","notes":"Company insight generation"},
+    {"id":"workflow-ai-action-breeze","category":"Automation (Breeze)","feature":"Workflow AI Action (Breeze Action)","credit_type":"Action-based","credit_rate":"10 credits","credits_per_unit":10,"frequency":"Per Breeze AI action executed","notes":"Applies to AI steps within workflows"},
+    {"id":"company-monitoring-intent","category":"Buyer Intent","feature":"Company Monitoring","credit_type":"Recurring","credit_rate":"10 credits","credits_per_unit":10,"frequency":"Per company per month","notes":"Enables AI-driven intent tracking"},
+    {"id":"data-studio-small-sync","category":"Data Studio (Beta)","feature":"Small Sync (< 500 K rows)","credit_type":"Action-based","credit_rate":"25 credits","credits_per_unit":25,"frequency":"Per destination sync run","notes":"Applies when syncing datasets"},
+    {"id":"data-studio-medium-sync","category":"Data Studio (Beta)","feature":"Medium Sync (500 K–5 M rows)","credit_type":"Action-based","credit_rate":"75 credits","credits_per_unit":75,"frequency":"Per destination sync run","notes":""},
+    {"id":"data-studio-large-sync","category":"Data Studio (Beta)","feature":"Large Sync (> 5 M rows)","credit_type":"Action-based","credit_rate":"200 credits","credits_per_unit":200,"frequency":"Per destination sync run","notes":""},
+    {"id":"data-agent-text-response","category":"Beta AI Agents (Experimental)","feature":"Data Agent (text response)","credit_type":"Action-based","credit_rate":"10 credits","credits_per_unit":10,"frequency":"Per prompt/response pair","notes":"Beta"},
+    {"id":"deal-loss-agent","category":"Beta AI Agents (Experimental)","feature":"Deal Loss Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"},
+    {"id":"rfp-agent","category":"Beta AI Agents (Experimental)","feature":"RFP Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"},
+    {"id":"customer-handoff-agent","category":"Beta AI Agents (Experimental)","feature":"Customer Handoff Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"},
+    {"id":"call-recap-agent","category":"Beta AI Agents (Experimental)","feature":"Call Recap Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"},
+    {"id":"social-post-agent","category":"Beta AI Agents (Experimental)","feature":"Social Post Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"},
+    {"id":"blog-research-agent","category":"Beta AI Agents (Experimental)","feature":"Blog Research Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"}
+  ],
+  included: [
+    {"id":"smartcrm-starter","category":"Credits Included (Monthly)","feature":"Starter Tier (Smart CRM / Marketing / Sales / Service / Content Hub)","credit_type":"Base","credit_rate":"500 credits","credits_per_unit":500,"frequency":"Monthly reset","notes":"Highest tier owned applies"},
+    {"id":"smartcrm-pro","category":"Credits Included (Monthly)","feature":"Professional Tier (Smart CRM / Marketing / Sales / Service / Content Hub)","credit_type":"Base","credit_rate":"3 000 credits","credits_per_unit":3000,"frequency":"Monthly reset","notes":""},
+    {"id":"smartcrm-enterprise","category":"Credits Included (Monthly)","feature":"Enterprise Tier (Smart CRM / Marketing / Sales / Service / Content Hub)","credit_type":"Base","credit_rate":"5 000 credits","credits_per_unit":5000,"frequency":"Monthly reset","notes":""},
+    {"id":"datahub-starter","category":"Credits Included (Monthly)","feature":"Data Hub / Customer Platform Starter","credit_type":"Base","credit_rate":"500 credits","credits_per_unit":500,"frequency":"Monthly reset","notes":""},
+    {"id":"datahub-pro","category":"Credits Included (Monthly)","feature":"Data Hub / Customer Platform Pro","credit_type":"Base","credit_rate":"5 000 credits","credits_per_unit":5000,"frequency":"Monthly reset","notes":""},
+    {"id":"datahub-enterprise","category":"Credits Included (Monthly)","feature":"Data Hub / Customer Platform Enterprise","credit_type":"Base","credit_rate":"10 000 credits","credits_per_unit":10000,"frequency":"Monthly reset","notes":""}
+  ],
+  expansion: [
+    {"id":"capacity-pack","category":"Credit Expansion","feature":"Additional Capacity Pack","credit_type":"—","credit_rate":"$10 = 1 000 credits","credits_per_unit":1000,"frequency":"Monthly recurring","notes":"Auto-upgrade or manual add"},
+    {"id":"overage","category":"Credit Expansion","feature":"Overage (pay-as-you-go)","credit_type":"—","credit_rate":"$0.010 per credit (USD)","credits_per_unit":1,"frequency":"Monthly billed","notes":"Min 10 credit increments"}
+  ]
+};
+
+3) UI
+
+Left panel: Plan Setup
+
+Select highest owned tier among Smart CRM/Marketing/Sales/Service/Content Hub: radio (Starter / Professional / Enterprise). Show included credits (500 / 3000 / 5000).
+
+Select Data Hub / Customer Platform tier: radio (None / Starter 500 / Pro 5000 / Enterprise 10000). This adds to included credits.
+
+Small note: “Smart CRM/Marketing/Sales/Service/Content Hub uses highest tier only. Data Hub adds on top.”
+
+Center panel: Usage Inputs
+
+Group inputs by category from actions. For each actionable item where credits_per_unit is a number, render a number input (min 0, step 1). Show “× {credits_per_unit} credits” and a subtle help icon to display notes. Default all to 0.
+
+For items with credits_per_unit: null (TBD), render as disabled rows with a “TBD (Beta)” badge.
+
+Right panel (sticky): Summary
+
+Included credits (sum of selected tiers).
+
+Projected usage (sum of all inputs × per-unit credits).
+
+Net balance (included – used). If negative, show deficit in red.
+
+Expansion options when deficit > 0:
+
+Capacity packs: packs_needed = Math.ceil(deficit / 1000), cost = packs_needed * 10.
+
+Overage: overage is $0.010 per credit with minimum 10-credit increments. Compute as: Math.ceil(deficit / 10) * 0.10.
+
+Show both options; highlight the cheaper one as “Recommended” with a badge.
+
+Utility:
+
+“Reset” button.
+
+“Export CSV” (download rows: feature, count, per-unit credits, subtotal, totals).
+
+“Share” button that encodes state in the URL hash (base64 JSON). On load, parse hash to restore state.
+
+4) Calculation rules
+
+Included credits = (highest of Smart CRM/Marketing/Sales/Service/Content Hub tiers) + (selected Data Hub tier; 0 if “None”).
+
+Usage = Σ (input_count × credits_per_unit) across actionable rows.
+
+Net = included – usage.
+
+If deficit > 0:
+
+Capacity packs: packs = ceil(deficit / 1000); pack credits = packs*1000; pack cost = $10 * packs.
+
+Overage: cost = ceil(deficit / 10) * $0.10 (10-credit minimum, then charged per 10-credit block).
+
+Show both and mark the lower cost as Recommended. Also show the effective total credits after packs, and the new net.
+
+All currency display in USD. Use thousands separators for numbers.
+
+5) UX polish
+
+Accessible number steppers, mobile-first layout, sticky summary on desktop.
+
+Tooltips for notes.
+
+Empty-state copy in center panel: “Estimate counts for this month. Adjust anytime.”
+
+Toast after export/share.
+
+6) Sample copy (use as placeholders)
+
+Section titles:
+
+Plan Setup → “Your HubSpot plan”
+
+Usage Inputs → “Estimate your month”
+
+Summary → “Projection”
+
+Taglines/snippets:
+
+“No surprises. Model usage before you spend.”
+
+“Clear math. Actionable choices.”
+
+Button labels: “Reset”, “Export CSV”, “Share”.
+
+7) Testing hooks
+
+Provide a small window.__test__ object with functions returning current state and totals so we can assert calculations in console.
+
+Deliverable: A single index.html that runs locally and on Replit Static Web Server. No external dependencies.
