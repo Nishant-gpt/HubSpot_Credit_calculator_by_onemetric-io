@@ -126,13 +126,20 @@ Net Balance,[total]
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
 ## Recent Changes
-- **2025-10-09**: Initial implementation
-  - Complete single-file calculator created
-  - All features implemented and tested
-  - OneMetric.io branding applied
-  - Responsive design completed
-  - Export and sharing functionality added
-  - Testing hooks implemented
+- **2025-10-09**: Enhanced Calculator with Visible Help Text
+  - Added always-visible help text for Customer Agent (no tooltips)
+  - Added Prospecting Agent calculation inputs:
+    - Meetings or Demos Needed per Month
+    - Expected Conversion Rate (%)
+    - Auto-calculated Contacts to Monitor
+  - Added validation for conversion rate (1-100)
+  - Added "Reset All Values" button
+  - State preservation updated for new fields
+  - Refactored with OneMetric.io dark/light theme
+  - Professional header with theme toggle
+  - Quick stats badges in header
+  - "How Credits Work" FAQ section
+  - Enhanced footer with partner branding
 
 ## Notes
 - No API keys or secrets required

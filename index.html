@@ -330,39 +330,64 @@
       font-size: 0.9rem;
     }
 
-    .help-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: var(--om-muted);
-      color: var(--om-surface);
-      font-size: 0.7rem;
-      cursor: help;
-      position: relative;
-      font-weight: 600;
+    .help-text {
+      font-size: 0.8rem;
+      color: var(--om-muted);
+      margin-top: 0.5rem;
+      line-height: 1.5;
+      font-style: italic;
     }
 
-    .help-icon:hover::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      margin-bottom: 0.5rem;
-      padding: 0.5rem 0.75rem;
-      background: #1a1a1a;
-      color: white;
+    .calculated-result {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background: rgba(255,122,89,0.08);
       border-radius: 8px;
-      font-size: 0.75rem;
-      white-space: nowrap;
-      max-width: 300px;
-      white-space: normal;
-      width: max-content;
-      z-index: 1000;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--om-primary);
+    }
+
+    .prospecting-inputs {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(169,175,188,0.05);
+      border-radius: 8px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .input-group label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--om-text);
+    }
+
+    .input-group input {
+      padding: 0.625rem;
+      border: 1px solid var(--om-border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: var(--om-bg);
+      color: var(--om-text);
+      transition: all 0.15s ease;
+    }
+
+    .input-group input:focus {
+      outline: 3px solid var(--om-focus);
+      border-color: var(--om-primary);
+    }
+
+    .validation-error {
+      font-size: 0.8rem;
+      color: var(--om-danger);
+      margin-top: 0.25rem;
     }
 
     .credit-rate {
@@ -817,6 +842,9 @@
           <p>Estimate counts for this month. Adjust anytime.</p>
         </div>
         <div id="usageInputs"></div>
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--om-border);">
+          <button onclick="resetCalculator()" style="width: 100%;">Reset All Values</button>
+        </div>
       </div>
 
       <div class="card summary">
@@ -923,7 +951,9 @@
     let state = {
       smartCrmTier: 'starter',
       dataHubTier: 'none',
-      usage: {}
+      usage: {},
+      prospectingMeetings: 0,
+      prospectingConversionRate: 0
     };
 
     function formatNumber(num) {
@@ -950,11 +980,95 @@
           const isTBD = item.credits_per_unit === null;
           const rowClass = isTBD ? 'usage-row tbd-row' : 'usage-row';
           
+          if (item.id === 'customer-agent') {
+            return `
+              <div class="${rowClass}" style="display: block; border-bottom: 1px solid var(--om-border); padding-bottom: 1rem;">
+                <div class="usage-label" style="margin-bottom: 0.5rem;">
+                  <span>${item.feature}</span>
+                  ${isTBD ? '<span class="badge">TBD (Beta)</span>' : ''}
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <div class="credit-rate">× ${item.credit_rate}</div>
+                  <input 
+                    type="number" 
+                    class="usage-input" 
+                    id="input-${item.id}" 
+                    min="0" 
+                    step="1" 
+                    value="0"
+                    ${isTBD ? 'disabled' : ''}
+                    onchange="updateCalculations()"
+                    aria-label="${item.feature} count"
+                  >
+                </div>
+                <p class="help-text">Estimate how many tickets or conversations each customer support agent is expected to handle per month. This helps calculate the AI cost per agent based on real workload.</p>
+              </div>
+            `;
+          }
+          
+          if (item.id === 'prospecting-agent-monitor-contact') {
+            return `
+              <div class="${rowClass}" style="display: block; border-bottom: 1px solid var(--om-border); padding-bottom: 1.5rem;">
+                <div class="usage-label" style="margin-bottom: 0.5rem;">
+                  <span>${item.feature}</span>
+                  ${isTBD ? '<span class="badge">TBD (Beta)</span>' : ''}
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                  <div class="credit-rate">× ${item.credit_rate}</div>
+                  <input 
+                    type="number" 
+                    class="usage-input" 
+                    id="input-${item.id}" 
+                    min="0" 
+                    step="1" 
+                    value="0"
+                    ${isTBD ? 'disabled' : ''}
+                    onchange="updateCalculations()"
+                    aria-label="${item.feature} count"
+                  >
+                </div>
+                
+                <div class="prospecting-inputs">
+                  <div class="input-group">
+                    <label for="prospecting-meetings">Meetings or Demos Needed per Month</label>
+                    <input 
+                      type="number" 
+                      id="prospecting-meetings" 
+                      min="0" 
+                      step="1" 
+                      value="0"
+                      oninput="updateProspectingCalculation()"
+                    >
+                    <p class="help-text">How many qualified meetings or demos do you expect your prospecting agent to book per month?</p>
+                  </div>
+                  
+                  <div class="input-group">
+                    <label for="prospecting-conversion">Expected Conversion Rate (%)</label>
+                    <input 
+                      type="number" 
+                      id="prospecting-conversion" 
+                      min="1" 
+                      max="100" 
+                      step="0.1" 
+                      value="0"
+                      oninput="updateProspectingCalculation()"
+                    >
+                    <p class="help-text">What is your expected conversion rate from outreach to booked meetings? (e.g., 5%, 10%, 20%)</p>
+                    <div id="conversion-error" class="validation-error" style="display: none;">Conversion rate must be between 1 and 100</div>
+                  </div>
+                  
+                  <div id="prospecting-result" class="calculated-result" style="display: none;">
+                    ➡️ You'll need to monitor approximately <span id="contacts-to-monitor">0</span> contacts per month.
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+          
           return `
             <div class="${rowClass}">
               <div class="usage-label">
                 <span>${item.feature}</span>
-                ${item.notes ? `<span class="help-icon" data-tooltip="${item.notes}" aria-describedby="help-${item.id}">?</span>` : ''}
                 ${isTBD ? '<span class="badge">TBD (Beta)</span>' : ''}
               </div>
               <div class="credit-rate">× ${item.credit_rate}</div>
@@ -1049,6 +1163,48 @@
       updateExpansionOptions(net);
     }
 
+    function updateProspectingCalculation() {
+      const meetingsInput = document.getElementById('prospecting-meetings');
+      const conversionInput = document.getElementById('prospecting-conversion');
+      const errorDiv = document.getElementById('conversion-error');
+      const resultDiv = document.getElementById('prospecting-result');
+      const contactsSpan = document.getElementById('contacts-to-monitor');
+      const prospectingAgentInput = document.getElementById('input-prospecting-agent-monitor-contact');
+
+      if (!meetingsInput || !conversionInput) return;
+
+      const meetings = parseFloat(meetingsInput.value) || 0;
+      const conversionRate = parseFloat(conversionInput.value) || 0;
+
+      state.prospectingMeetings = meetings;
+      state.prospectingConversionRate = conversionRate;
+
+      if (conversionRate > 0 && (conversionRate < 1 || conversionRate > 100)) {
+        errorDiv.style.display = 'block';
+        resultDiv.style.display = 'none';
+        return;
+      } else {
+        errorDiv.style.display = 'none';
+      }
+
+      if (meetings > 0 && conversionRate > 0) {
+        const contactsToMonitor = Math.round(meetings / (conversionRate / 100));
+        contactsSpan.textContent = formatNumber(contactsToMonitor);
+        resultDiv.style.display = 'block';
+
+        if (prospectingAgentInput) {
+          prospectingAgentInput.value = contactsToMonitor;
+          prospectingAgentInput.dispatchEvent(new Event('change'));
+        }
+      } else {
+        resultDiv.style.display = 'none';
+        if (prospectingAgentInput) {
+          prospectingAgentInput.value = 0;
+          prospectingAgentInput.dispatchEvent(new Event('change'));
+        }
+      }
+    }
+
     function updateExpansionOptions(net) {
       const container = document.getElementById('expansionOptions');
       
@@ -1108,7 +1264,9 @@
       state = {
         smartCrmTier: 'starter',
         dataHubTier: 'none',
-        usage: {}
+        usage: {},
+        prospectingMeetings: 0,
+        prospectingConversionRate: 0
       };
 
       document.querySelector('input[name="smartcrm"][value="starter"]').checked = true;
@@ -1124,7 +1282,13 @@
         }
       });
 
+      const meetingsInput = document.getElementById('prospecting-meetings');
+      const conversionInput = document.getElementById('prospecting-conversion');
+      if (meetingsInput) meetingsInput.value = 0;
+      if (conversionInput) conversionInput.value = 0;
+
       updateRadioStyles();
+      updateProspectingCalculation();
       updateCalculations();
       showToast('Calculator reset');
     }
@@ -1194,7 +1358,17 @@
             }
           });
 
+          const meetingsInput = document.getElementById('prospecting-meetings');
+          const conversionInput = document.getElementById('prospecting-conversion');
+          if (meetingsInput && state.prospectingMeetings !== undefined) {
+            meetingsInput.value = state.prospectingMeetings;
+          }
+          if (conversionInput && state.prospectingConversionRate !== undefined) {
+            conversionInput.value = state.prospectingConversionRate;
+          }
+
           updateRadioStyles();
+          updateProspectingCalculation();
           updateCalculations();
         } catch (e) {
           console.error('Failed to load state from URL', e);
@@ -1271,6 +1445,7 @@
 
       updateRadioStyles();
       loadFromURL();
+      updateProspectingCalculation();
       updateCalculations();
     });
 

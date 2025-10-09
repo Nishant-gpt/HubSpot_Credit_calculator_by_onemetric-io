@@ -1,0 +1,117 @@
+Goal:
+Update the HubSpot AI Credit Calculator app to include clearer inline help text and a more detailed Prospecting Agent calculation.
+All help text should be visible directly under input fields — not hidden behind info icons or hover states.
+
+✳️ Updates Required
+🧩 1. Customer Agent Calculation Section
+
+Change:
+Add visible help text below the input field for the Customer Agent.
+
+New Help Text:
+
+“Estimate how many tickets or conversations each customer support agent is expected to handle per month. This helps calculate the AI cost per agent based on real workload.”
+
+Implementation:
+
+Display this text below or next to the label “Customer Agent Calculation” (e.g., inside a <p> tag styled as small, muted text: text-sm text-gray-500 mt-1).
+
+Ensure the field still accepts numeric input for monthly tickets/conversations.
+
+🧩 2. Prospecting Agent (Monitor Contact) Section
+
+Change:
+Add two new input fields under the Prospecting Agent section, both required for calculation logic.
+
+New Inputs:
+
+Meetings or Demos Needed per Month → numeric field
+
+Expected Conversion Rate (%) → numeric field (between 1–100)
+
+New Help Text (visible under each):
+
+For Meetings or Demos Needed:
+
+“How many qualified meetings or demos do you expect your prospecting agent to book per month?”
+
+For Conversion Rate (%):
+
+“What is your expected conversion rate from outreach to booked meetings? (e.g., 5%, 10%, 20%)”
+
+New Calculation Logic:
+Add a derived field (auto-calculated, read-only) for:
+
+Contacts to Monitor = Meetings or Demos Needed ÷ (Conversion Rate / 100)
+
+Display the result dynamically in the Prospecting Agent section under the new fields:
+
+“You’ll need to monitor approximately X contacts per month.”
+
+Example:
+If user enters
+
+Meetings = 20
+
+Conversion = 5%
+→ Display “You’ll need to monitor approximately 400 contacts per month.”
+
+🧩 3. UI & Style
+
+Use the same card or section layout style already present in the app (Tailwind + shadcn).
+
+Help texts should be always visible (no tooltips/icons). Use small muted text style.
+
+Align new fields neatly under the Prospecting Agent section title.
+
+The dynamic calculated “contacts to monitor” value should be styled as subtle emphasized text — e.g., text-md font-semibold text-purple-600 mt-2.
+
+🧩 4. Validation
+
+Meetings and conversion fields should both be required numeric values.
+
+Conversion rate must be between 1 and 100.
+
+Show a soft validation message if values are missing or out of range.
+
+🧩 5. Example Layout (for clarity)
+🧠 Prospecting Agent (Monitor Contact)
+
+[Meetings or Demos Needed per Month] [input]
+How many qualified meetings or demos do you expect your prospecting agent to book per month?
+
+[Expected Conversion Rate (%)] [input]
+What is your expected conversion rate from outreach to booked meetings? (e.g., 5%, 10%, 20%)
+
+➡️ You’ll need to monitor approximately 400 contacts per month.
+
+🧩 6. Optional Enhancement (if easy)
+
+Add a small “Reset Values” button at the bottom of the form to clear all inputs.
+
+✅ Acceptance Criteria
+
+All help texts are always visible (no hover tooltips).
+
+Prospecting Agent section now includes new inputs + calculated contacts.
+
+Calculations update dynamically as user types.
+
+All layout, colors, and spacing remain consistent with current design.
+
+🧠 Developer Note
+
+If the app is using React with Tailwind (likely), locate the component handling these inputs (probably CustomerAgentCard and ProspectingAgentCard) and modify:
+
+useState hooks for new fields.
+
+Add a derived state:
+
+const contactsToMonitor = conversionRate > 0 
+  ? Math.round(meetingsNeeded / (conversionRate / 100))
+  : 0;
+
+
+Display that value below inputs.
+
+Now implement all of the above and redeploy the updated calculator.
