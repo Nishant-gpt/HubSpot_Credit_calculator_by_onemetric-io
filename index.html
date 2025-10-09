@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,46 +12,168 @@
     }
 
     :root {
-      --bg-main: #f8f9fa;
-      --bg-card: #ffffff;
-      --text-primary: #1a1a1a;
-      --text-secondary: #6c757d;
-      --border-color: #e0e0e0;
-      --accent-blue: #0066cc;
-      --accent-green: #28a745;
-      --accent-red: #dc3545;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-      --radius: 8px;
+      --om-bg: #0B0C10;
+      --om-surface: #111318;
+      --om-text: #E7E9EE;
+      --om-muted: #A9AFBC;
+      --om-border: #232732;
+      --om-primary: #FF7A59;
+      --om-primary-600: #F26B49;
+      --om-primary-700: #E05E3E;
+      --om-success: #22C55E;
+      --om-danger: #EF4444;
+      --om-warning: #F59E0B;
+      --om-focus: rgba(255,122,89,0.35);
+      --om-radius-lg: 18px;
+      --om-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    :root[data-theme="light"] {
+      --om-bg: #F7F8FA;
+      --om-surface: #FFFFFF;
+      --om-text: #0B0C10;
+      --om-muted: #5B6372;
+      --om-border: #E7E9EE;
+      --om-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: var(--bg-main);
-      color: var(--text-primary);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+      background: var(--om-bg);
+      color: var(--om-text);
       line-height: 1.6;
+      transition: background 0.15s ease, color 0.15s ease;
     }
 
     .header {
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border-color);
-      padding: 1.5rem 2rem;
+      background: var(--om-surface);
+      border-bottom: 1px solid var(--om-border);
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--om-shadow);
     }
 
-    .header h1 {
-      font-size: 1.5rem;
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.25rem;
       font-weight: 600;
-      margin-bottom: 0.25rem;
-      color: var(--text-primary);
+      color: var(--om-text);
     }
 
-    .header p {
+    .header-center {
       font-size: 0.875rem;
-      color: var(--text-secondary);
+      font-weight: 500;
+      color: var(--om-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-link {
+      font-size: 0.875rem;
+      color: var(--om-muted);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .header-link:hover {
+      color: var(--om-primary);
+      background: rgba(255,122,89,0.1);
+    }
+
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--om-border);
+      color: var(--om-text);
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--om-primary);
+      background: rgba(255,122,89,0.1);
+    }
+
+    .theme-toggle:focus {
+      outline: 3px solid var(--om-focus);
+      outline-offset: 2px;
+    }
+
+    .tagline {
+      background: rgba(255,122,89,0.08);
+      border-bottom: 1px solid var(--om-border);
+      padding: 0.75rem 2rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--om-muted);
+    }
+
+    .quick-stats {
+      background: var(--om-surface);
+      border-bottom: 1px solid var(--om-border);
+      padding: 1rem 2rem;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      font-weight: 600;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pill--muted {
+      background: rgba(169,175,188,0.15);
+      color: var(--om-muted);
+    }
+
+    .pill--primary {
+      background: rgba(255,122,89,0.15);
+      color: var(--om-primary);
+    }
+
+    .pill--success {
+      background: rgba(34,197,94,0.15);
+      color: var(--om-success);
+    }
+
+    .pill--danger {
+      background: rgba(239,68,68,0.15);
+      color: var(--om-danger);
     }
 
     .container {
@@ -68,38 +190,57 @@
 
     @media (min-width: 768px) {
       .grid {
-        grid-template-columns: 300px 1fr;
+        grid-template-columns: 320px 1fr;
       }
     }
 
     @media (min-width: 1024px) {
       .grid {
-        grid-template-columns: 320px 1fr 360px;
+        grid-template-columns: 320px 1fr 380px;
       }
     }
 
     .card {
-      background: var(--bg-card);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--border-color);
+      background: var(--om-surface);
+      border-radius: var(--om-radius-lg);
+      padding: 24px;
+      box-shadow: var(--om-shadow);
+      border: 1px solid var(--om-border);
+      transition: box-shadow 0.15s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+    }
+
+    :root[data-theme="light"] .card:hover {
+      box-shadow: 0 12px 35px rgba(0,0,0,0.12);
     }
 
     .card h2 {
-      font-size: 1.125rem;
+      font-size: 1.25rem;
       font-weight: 600;
       margin-bottom: 1rem;
-      color: var(--text-primary);
+      color: var(--om-text);
     }
 
     .card h3 {
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       font-weight: 600;
       margin: 1.5rem 0 0.75rem 0;
-      color: var(--text-secondary);
+      color: var(--om-muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
+    }
+
+    .helper-text {
+      font-size: 0.875rem;
+      color: var(--om-muted);
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(169,175,188,0.08);
+      border-radius: 8px;
+      line-height: 1.5;
     }
 
     .radio-group {
@@ -111,26 +252,34 @@
     .radio-option {
       display: flex;
       align-items: center;
-      padding: 0.75rem;
-      border: 2px solid var(--border-color);
-      border-radius: var(--radius);
+      padding: 0.875rem;
+      border: 2px solid var(--om-border);
+      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s ease;
     }
 
     .radio-option:hover {
-      border-color: var(--accent-blue);
-      background: #f0f7ff;
+      border-color: var(--om-primary);
+      background: rgba(255,122,89,0.05);
+    }
+
+    .radio-option.selected {
+      border-color: var(--om-primary);
+      background: rgba(255,122,89,0.1);
     }
 
     .radio-option input[type="radio"] {
       margin-right: 0.75rem;
       cursor: pointer;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--om-primary);
     }
 
-    .radio-option.selected {
-      border-color: var(--accent-blue);
-      background: #e6f2ff;
+    .radio-option:focus-within {
+      outline: 3px solid var(--om-focus);
+      outline-offset: 2px;
     }
 
     .radio-label {
@@ -146,17 +295,7 @@
 
     .radio-label span:last-child {
       font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
-
-    .note {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      margin-top: 0.75rem;
-      padding: 0.75rem;
-      background: #f8f9fa;
-      border-radius: 4px;
-      line-height: 1.4;
+      color: var(--om-muted);
     }
 
     .usage-category {
@@ -173,8 +312,8 @@
       grid-template-columns: 1fr auto auto;
       gap: 1rem;
       align-items: center;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border-color);
+      padding: 0.875rem 0;
+      border-bottom: 1px solid var(--om-border);
     }
 
     .usage-row:last-child {
@@ -195,14 +334,15 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
-      background: var(--text-secondary);
-      color: white;
+      background: var(--om-muted);
+      color: var(--om-surface);
       font-size: 0.7rem;
       cursor: help;
       position: relative;
+      font-weight: 600;
     }
 
     .help-icon:hover::after {
@@ -213,39 +353,44 @@
       transform: translateX(-50%);
       margin-bottom: 0.5rem;
       padding: 0.5rem 0.75rem;
-      background: #333;
+      background: #1a1a1a;
       color: white;
-      border-radius: 4px;
+      border-radius: 8px;
       font-size: 0.75rem;
       white-space: nowrap;
-      max-width: 250px;
+      max-width: 300px;
       white-space: normal;
       width: max-content;
       z-index: 1000;
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
 
     .credit-rate {
       font-size: 0.875rem;
-      color: var(--text-secondary);
+      color: var(--om-muted);
       white-space: nowrap;
     }
 
     .usage-input {
-      width: 80px;
-    }
-
-    input[type="number"] {
-      padding: 0.5rem;
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
+      width: 90px;
+      padding: 0.625rem;
+      border: 1px solid var(--om-border);
+      border-radius: 8px;
       font-size: 0.9rem;
       text-align: right;
+      background: var(--om-bg);
+      color: var(--om-text);
+      transition: all 0.15s ease;
     }
 
-    input[type="number"]:focus {
-      outline: none;
-      border-color: var(--accent-blue);
+    .usage-input:hover {
+      border-color: var(--om-primary);
+    }
+
+    .usage-input:focus {
+      outline: 3px solid var(--om-focus);
+      outline-offset: 0;
+      border-color: var(--om-primary);
     }
 
     .tbd-row {
@@ -254,36 +399,37 @@
 
     .badge {
       display: inline-block;
-      padding: 0.25rem 0.5rem;
-      background: #ffc107;
+      padding: 0.25rem 0.625rem;
+      background: var(--om-warning);
       color: #000;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 0.7rem;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .badge.recommended {
-      background: var(--accent-green);
+      background: var(--om-success);
       color: white;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--text-secondary);
     }
 
     .summary {
       position: sticky;
-      top: 90px;
+      top: 180px;
+    }
+
+    .summary-lead {
+      font-size: 0.875rem;
+      color: var(--om-muted);
+      margin-bottom: 1rem;
+      font-style: italic;
     }
 
     .summary-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border-color);
+      padding: 0.875rem 0;
+      border-bottom: 1px solid var(--om-border);
     }
 
     .summary-row:last-child {
@@ -292,39 +438,57 @@
 
     .summary-row.total {
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       margin-top: 0.5rem;
       padding-top: 1rem;
-      border-top: 2px solid var(--border-color);
+      border-top: 2px solid var(--om-border);
     }
 
     .summary-label {
-      color: var(--text-secondary);
+      color: var(--om-muted);
     }
 
     .summary-value {
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .summary-value.negative {
-      color: var(--accent-red);
+      color: var(--om-danger);
     }
 
     .summary-value.positive {
-      color: var(--accent-green);
+      color: var(--om-success);
+    }
+
+    .expansion-section {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--om-border);
+    }
+
+    .expansion-section h3 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: var(--om-text);
+    }
+
+    .expansion-compare {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
 
     .expansion-option {
-      margin-top: 1rem;
       padding: 1rem;
-      border: 2px solid var(--border-color);
-      border-radius: var(--radius);
-      background: #f8f9fa;
+      border: 2px solid var(--om-border);
+      border-radius: 12px;
+      background: rgba(169,175,188,0.05);
+      transition: all 0.15s ease;
     }
 
     .expansion-option.recommended {
-      border-color: var(--accent-green);
-      background: #f0f9f4;
+      border-color: var(--om-success);
+      background: rgba(34,197,94,0.08);
     }
 
     .expansion-header {
@@ -335,13 +499,23 @@
     }
 
     .expansion-header h4 {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 600;
     }
 
     .expansion-details {
       font-size: 0.875rem;
-      color: var(--text-secondary);
+      color: var(--om-muted);
+      line-height: 1.6;
+    }
+
+    .expansion-explainer {
+      font-size: 0.8rem;
+      color: var(--om-muted);
+      line-height: 1.5;
+      padding: 0.75rem;
+      background: rgba(169,175,188,0.08);
+      border-radius: 8px;
     }
 
     .button-group {
@@ -352,55 +526,104 @@
     }
 
     button {
-      padding: 0.625rem 1.25rem;
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      background: white;
-      color: var(--text-primary);
+      min-height: 44px;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--om-border);
+      border-radius: 8px;
+      background: var(--om-surface);
+      color: var(--om-text);
       font-size: 0.875rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s ease;
     }
 
     button:hover {
-      background: var(--accent-blue);
+      background: var(--om-primary);
       color: white;
-      border-color: var(--accent-blue);
+      border-color: var(--om-primary);
+      transform: translateY(-1px);
+    }
+
+    button:focus {
+      outline: 3px solid var(--om-focus);
+      outline-offset: 2px;
     }
 
     button.primary {
-      background: var(--accent-blue);
+      background: var(--om-primary);
       color: white;
-      border-color: var(--accent-blue);
+      border-color: var(--om-primary);
     }
 
     button.primary:hover {
-      background: #0052a3;
+      background: var(--om-primary-700);
     }
 
     .footer {
-      text-align: center;
+      background: var(--om-surface);
+      border-top: 1px solid var(--om-border);
       padding: 2rem;
-      color: var(--text-secondary);
-      font-size: 0.875rem;
+      margin-top: 4rem;
     }
 
-    .footer strong {
-      color: var(--text-primary);
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-left {
+      font-size: 0.875rem;
+      color: var(--om-muted);
+    }
+
+    .footer-left strong {
+      color: var(--om-text);
+      font-weight: 600;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.8rem;
+    }
+
+    .footer-link {
+      color: var(--om-muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--om-primary);
+    }
+
+    .footer-note {
+      width: 100%;
+      text-align: center;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--om-border);
+      font-size: 0.75rem;
+      color: var(--om-muted);
     }
 
     .toast {
       position: fixed;
       bottom: 2rem;
       right: 2rem;
-      background: #333;
+      background: #1a1a1a;
       color: white;
       padding: 1rem 1.5rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-md);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       z-index: 1000;
-      animation: slideIn 0.3s ease;
+      animation: slideIn 0.15s ease;
     }
 
     @keyframes slideIn {
@@ -414,9 +637,54 @@
       }
     }
 
+    .how-credits-work {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: var(--om-surface);
+      border: 1px solid var(--om-border);
+      border-radius: var(--om-radius-lg);
+    }
+
+    .how-credits-work h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .how-credits-work details {
+      margin-bottom: 0.75rem;
+    }
+
+    .how-credits-work summary {
+      cursor: pointer;
+      padding: 0.75rem;
+      background: rgba(169,175,188,0.08);
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+
+    .how-credits-work summary:hover {
+      background: rgba(255,122,89,0.1);
+      color: var(--om-primary);
+    }
+
+    .how-credits-work details[open] summary {
+      margin-bottom: 0.75rem;
+    }
+
+    .how-credits-work p {
+      padding: 0 0.75rem;
+      color: var(--om-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
     @media (max-width: 1023px) {
       .summary {
         position: static;
+      }
+      .header-center {
+        display: none;
       }
     }
 
@@ -424,24 +692,22 @@
       .container {
         padding: 1rem;
       }
-
-      .header {
+      .header-top {
         padding: 1rem;
       }
-
+      .tagline, .quick-stats {
+        padding: 0.75rem 1rem;
+      }
       .usage-row {
         grid-template-columns: 1fr;
         gap: 0.5rem;
       }
-
       .usage-label {
         grid-column: 1 / -1;
       }
-
       .button-group {
         flex-direction: column;
       }
-
       button {
         width: 100%;
       }
@@ -450,8 +716,32 @@
 </head>
 <body>
   <div class="header">
-    <h1>OneMetric.io</h1>
-    <p>HubSpot AI Credits—clear, predictable, no surprises.</p>
+    <div class="header-top">
+      <div class="logo">OneMetric.io</div>
+      <div class="header-center">HubSpot AI Credits Calculator</div>
+      <div class="header-actions">
+        <a href="#how-credits-work" class="header-link">Docs</a>
+        <a href="mailto:hello@onemetric.io" class="header-link">Talk to an expert</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span id="themeIcon">☀️</span>
+        </button>
+      </div>
+    </div>
+    <div class="tagline">HubSpot AI Credits—clear, predictable, no surprises.</div>
+    <div class="quick-stats">
+      <div class="pill pill--muted">
+        <span>Included:</span>
+        <strong id="quickIncluded">500</strong>
+      </div>
+      <div class="pill pill--primary">
+        <span>Projected:</span>
+        <strong id="quickProjected">0</strong>
+      </div>
+      <div class="pill pill--success" id="quickNetPill">
+        <span>Net:</span>
+        <strong id="quickNet">500</strong>
+      </div>
+    </div>
   </div>
 
   <div class="container">
@@ -516,8 +806,8 @@
           </label>
         </div>
 
-        <div class="note">
-          Smart CRM/Marketing/Sales/Service/Content Hub uses highest tier only. Data Hub adds on top.
+        <div class="helper-text">
+          Pick your highest Smart CRM/Hub tiers. Data Hub adds on top.
         </div>
       </div>
 
@@ -531,6 +821,8 @@
 
       <div class="card summary">
         <h2>Projection</h2>
+        <p class="summary-lead">Included vs. usage vs. expansion—at a glance.</p>
+        
         <div class="summary-row">
           <span class="summary-label">Included credits</span>
           <span class="summary-value" id="includedCredits">500</span>
@@ -553,10 +845,46 @@
         </div>
       </div>
     </div>
+
+    <div class="how-credits-work" id="how-credits-work">
+      <h2>How credits work</h2>
+      <details>
+        <summary>What are HubSpot AI Credits?</summary>
+        <p>AI Credits are the currency for HubSpot's AI-powered features. Each AI action (conversation, workflow step, data sync) consumes a set number of credits based on complexity.</p>
+      </details>
+      <details>
+        <summary>How are credits included in my plan?</summary>
+        <p>Your monthly credit allocation depends on your highest-tier Smart CRM/Marketing/Sales/Service/Content Hub subscription. Data Hub or Customer Platform tiers add additional credits on top.</p>
+      </details>
+      <details>
+        <summary>What happens when I run out of credits?</summary>
+        <p>You have two options: purchase Capacity Packs (1,000 credits for $10) or use pay-as-you-go Overage billing ($0.01 per credit, minimum 10-credit blocks). We recommend the most cost-effective option automatically.</p>
+      </details>
+      <details>
+        <summary>Do unused credits roll over?</summary>
+        <p>No. Included credits reset monthly. Only purchased Capacity Pack credits may have different terms—confirm with your HubSpot CSM.</p>
+      </details>
+      <details>
+        <summary>How accurate is this calculator?</summary>
+        <p>This calculator uses HubSpot's published rates and provides estimates based on your input. Actual usage may vary. Always confirm final pricing with your Customer Success Manager.</p>
+      </details>
+    </div>
   </div>
 
   <div class="footer">
-    Built by <strong>OneMetric.io</strong>
+    <div class="footer-content">
+      <div class="footer-left">
+        Built by <strong>OneMetric.io</strong> — HubSpot Elite Partner & Onboarding Accredited
+      </div>
+      <div class="footer-links">
+        <a href="#" class="footer-link">Privacy</a>
+        <a href="mailto:hello@onemetric.io" class="footer-link">Contact</a>
+        <a href="https://onemetric.io" class="footer-link" target="_blank">onemetric.io</a>
+      </div>
+    </div>
+    <div class="footer-note">
+      Numbers are estimates. Confirm with your HubSpot CSM.
+    </div>
   </div>
 
   <script>
@@ -626,7 +954,7 @@
             <div class="${rowClass}">
               <div class="usage-label">
                 <span>${item.feature}</span>
-                ${item.notes ? `<span class="help-icon" data-tooltip="${item.notes}">?</span>` : ''}
+                ${item.notes ? `<span class="help-icon" data-tooltip="${item.notes}" aria-describedby="help-${item.id}">?</span>` : ''}
                 ${isTBD ? '<span class="badge">TBD (Beta)</span>' : ''}
               </div>
               <div class="credit-rate">× ${item.credit_rate}</div>
@@ -639,6 +967,7 @@
                 value="0"
                 ${isTBD ? 'disabled' : ''}
                 onchange="updateCalculations()"
+                aria-label="${item.feature} count"
               >
             </div>
           `;
@@ -686,6 +1015,15 @@
       return total;
     }
 
+    function updateQuickStats(included, usage, net) {
+      document.getElementById('quickIncluded').textContent = formatNumber(included);
+      document.getElementById('quickProjected').textContent = formatNumber(usage);
+      document.getElementById('quickNet').textContent = formatNumber(net);
+      
+      const netPill = document.getElementById('quickNetPill');
+      netPill.className = 'pill ' + (net >= 0 ? 'pill--success' : 'pill--danger');
+    }
+
     function updateCalculations() {
       CREDIT_TABLE.actions.forEach(action => {
         if (action.credits_per_unit !== null) {
@@ -707,6 +1045,7 @@
       netElement.textContent = formatNumber(net);
       netElement.className = 'summary-value ' + (net >= 0 ? 'positive' : 'negative');
 
+      updateQuickStats(included, usage, net);
       updateExpansionOptions(net);
     }
 
@@ -733,25 +1072,33 @@
       const cheaperOption = packCost <= overageCost ? 'pack' : 'overage';
 
       container.innerHTML = `
-        <div class="expansion-option ${cheaperOption === 'pack' ? 'recommended' : ''}">
-          <div class="expansion-header">
-            <h4>Capacity Packs</h4>
-            ${cheaperOption === 'pack' ? '<span class="badge recommended">Recommended</span>' : ''}
+        <div class="expansion-section">
+          <h3>Expansion Options</h3>
+          <div class="expansion-compare">
+            <div class="expansion-option ${cheaperOption === 'pack' ? 'recommended' : ''}">
+              <div class="expansion-header">
+                <h4>Capacity Packs</h4>
+                ${cheaperOption === 'pack' ? '<span class="badge recommended">Recommended</span>' : ''}
+              </div>
+              <div class="expansion-details">
+                ${packsNeeded} pack${packsNeeded > 1 ? 's' : ''} × $10 = <strong>${formatCurrency(packCost)}</strong><br>
+                Adds ${formatNumber(packCredits)} credits → New net: <strong>${formatNumber(packNet)}</strong>
+              </div>
+            </div>
+            
+            <div class="expansion-option ${cheaperOption === 'overage' ? 'recommended' : ''}">
+              <div class="expansion-header">
+                <h4>Overage (Pay-as-you-go)</h4>
+                ${cheaperOption === 'overage' ? '<span class="badge recommended">Recommended</span>' : ''}
+              </div>
+              <div class="expansion-details">
+                ${overageBlocks} × 10 credits @ $0.01/credit = <strong>${formatCurrency(overageCost)}</strong><br>
+                Adds ${formatNumber(overageCredits)} credits → New net: <strong>${formatNumber(overageNet)}</strong>
+              </div>
+            </div>
           </div>
-          <div class="expansion-details">
-            ${packsNeeded} pack${packsNeeded > 1 ? 's' : ''} × $10 = <strong>${formatCurrency(packCost)}</strong><br>
-            Adds ${formatNumber(packCredits)} credits → New net: <strong>${formatNumber(packNet)}</strong>
-          </div>
-        </div>
-        
-        <div class="expansion-option ${cheaperOption === 'overage' ? 'recommended' : ''}">
-          <div class="expansion-header">
-            <h4>Overage (Pay-as-you-go)</h4>
-            ${cheaperOption === 'overage' ? '<span class="badge recommended">Recommended</span>' : ''}
-          </div>
-          <div class="expansion-details">
-            ${overageBlocks} × 10 credits @ $0.01/credit = <strong>${formatCurrency(overageCost)}</strong><br>
-            Adds ${formatNumber(overageCredits)} credits → New net: <strong>${formatNumber(overageNet)}</strong>
+          <div class="expansion-explainer">
+            Capacity packs add credits in 1,000-credit blocks at $10 each. Overage bills per 10-credit block at $0.10. We do the math so you choose confidently.
           </div>
         </div>
       `;
@@ -859,6 +1206,8 @@
       const toast = document.createElement('div');
       toast.className = 'toast';
       toast.textContent = message;
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
       document.body.appendChild(toast);
 
       setTimeout(() => {
@@ -877,7 +1226,23 @@
       });
     }
 
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('om-theme', newTheme);
+      document.getElementById('themeIcon').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    function loadTheme() {
+      const savedTheme = localStorage.getItem('om-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeIcon').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      loadTheme();
       initializeUsageInputs();
       
       document.querySelectorAll('input[name="smartcrm"]').forEach(radio => {

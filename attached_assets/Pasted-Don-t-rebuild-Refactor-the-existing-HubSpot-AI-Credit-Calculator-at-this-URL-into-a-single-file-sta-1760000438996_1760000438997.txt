@@ -1,0 +1,157 @@
+Don’t rebuild. Refactor the existing HubSpot AI Credit Calculator at this URL into a single-file static app with a tasteful OneMetric.io theme, refined copy, and better header/footer. Keep all current calculations/IDs and logic intact.
+
+1) Brand & Tone (OneMetric.io)
+
+Design language: minimal, enterprise-clean; high contrast, generous white space, rounded cards (16–20px), soft shadows, subtle dividers.
+
+Copy tone: concise, ROI-first, “clarity, efficiency, scale.” No fluff.
+
+Header (top bar):
+
+Left: text logo OneMetric.io (semi-bold).
+
+Center (smaller): “HubSpot AI Credits Calculator”
+
+Right CTAs: Docs (anchor to a “How credits work” section), Talk to an expert (mailto: hello@onemetric.io
+).
+
+Under the bar: a slim tagline band: “HubSpot AI Credits—clear, predictable, no surprises.”
+
+Footer:
+
+Left: “Built by OneMetric.io — HubSpot Elite Partner & Onboarding Accredited”
+
+Right: tiny links: Privacy, Contact, onemetric.io
+
+A tiny note: “Numbers are estimates. Confirm with your HubSpot CSM.”
+
+Microcopy snippets (use where appropriate):
+
+“No surprises. Model usage before you spend.”
+
+“Clear math. Actionable choices.”
+
+“Included vs. projected vs. expansion—at a glance.”
+
+2) Color & Typography Tokens
+
+Create CSS variables at :root and use them everywhere (buttons, links, badges, focus rings). Provide light & dark themes via [data-theme="light"] / [data-theme="dark"] toggled by a small sun/moon button in the header (persist in localStorage).
+
+If you don’t know exact brand hex codes, start with these tasteful defaults (easy to change later):
+
+:root {
+  /* base */
+  --om-bg: #0B0C10;            /* page background (dark) */
+  --om-surface: #111318;       /* card/background */
+  --om-text: #E7E9EE;          /* primary text */
+  --om-muted: #A9AFBC;         /* secondary text */
+  --om-border: #232732;        /* card borders/dividers */
+
+  /* brand */
+  --om-primary: #FF7A59;       /* HubSpot-like accent for relevance */
+  --om-primary-600: #F26B49;
+  --om-primary-700: #E05E3E;
+
+  /* states */
+  --om-success: #22C55E;
+  --om-danger: #EF4444;
+  --om-warning: #F59E0B;
+  --om-focus: rgba(255,122,89,0.35);
+
+  /* radii & shadows */
+  --om-radius-lg: 18px;
+  --om-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* Light theme override */
+:root[data-theme="light"] {
+  --om-bg: #F7F8FA;
+  --om-surface: #FFFFFF;
+  --om-text: #0B0C10;
+  --om-muted: #5B6372;
+  --om-border: #E7E9EE;
+}
+
+
+Typography: font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+
+Button style: large hit area (44px), bold labels, subtle inner highlight on hover, clear focus ring outline: 3px solid var(--om-focus);
+
+Cards: 24px padding, 16–24px gaps, border:1px solid var(--om-border), border-radius: var(--om-radius-lg), box-shadow: var(--om-shadow) very lightly reduced on hover.
+
+3) Layout & IA (keep your current calculator logic)
+
+3-column on desktop (collapsible to single column on mobile):
+
+Your HubSpot Plan (tiers)
+
+Estimate your month (inputs; grouped by category)
+
+Projection (sticky summary)
+
+Add a shallow subheader strip under the main header with three quick stats (as small badges):
+Included credits, Projected usage, Net balance — live-updating.
+
+TBD/Beta rows: dimmed with a TBD (Beta) pill; hover tooltip explaining why it’s disabled.
+
+Tooltips: use a simple, accessible custom tooltip (aria-describedby) for “notes” next to each feature.
+
+4) Components to Upgrade (implement with plain HTML/CSS/JS)
+
+Theme toggle: sun/moon icon; store in localStorage (om-theme key).
+
+Badge system: .pill { font-weight:600; border-radius:999px; padding:6px 10px; }
+Variants: pill--primary, pill--success, pill--danger, pill--muted.
+
+Price compare block (in Projection): side-by-side cards for Capacity Packs vs Overage; compute the cheaper option and add a small “Recommended” ribbon.
+
+Toast for “Export CSV” and “Share”.
+
+Anchor section called How credits work (accordion) with 5 bullets summarizing the model.
+
+5) Content updates (replace existing copy)
+
+Header tagline: “HubSpot AI Credits—clear, predictable, no surprises.”
+
+Plan panel helper: “Pick your highest Smart CRM/Hub tiers. Data Hub adds on top.”
+
+Inputs empty state: “Estimate counts for this month. Adjust anytime.”
+
+Projection lead-in: “Included vs. usage vs. expansion—at a glance.”
+
+Expansion explainer (small text below compare cards):
+“Capacity packs add credits in 1,000-credit blocks at $10 each. Overage bills per 10-credit block at $0.10. We do the math so you choose confidently.”
+
+6) Accessibility & Polish
+
+Respect prefers-reduced-motion; otherwise, use tiny 120–160ms transitions on hover/focus.
+
+Ensure WCAG AA contrast (check primary on both themes).
+
+Keyboard navigable: tab order across header → plan → inputs → summary; focus rings visible.
+
+Form inputs: large labels, helper text, and aria-live="polite" for computed totals.
+
+7) Keep the current JS logic—but rewire UI classes/IDs cleanly
+
+Do not change calculation formulas, IDs, or the encoded URL sharing format—only style & structure. If you must rename DOM hooks, adapt the JS accordingly so outputs remain identical.
+
+8) Deliverables
+
+A single index.html with:
+
+<style> block containing the tokenized theme, light/dark themes, and component styles.
+
+Existing HTML restructured into the 3 columns + header/footer.
+
+Small inline <script> that:
+
+Preserves all prior calculator math.
+
+Adds theme toggle with localStorage.
+
+Adds simple tooltip + toast logic.
+
+Updates the three quick-stat badges under the header.
+
+Keep it zero-dependency (vanilla JS only), runs on Replit static web server.
