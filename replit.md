@@ -126,6 +126,11 @@ Net Balance,[total]
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
 ## Recent Changes
+- **2025-10-09**: Branding Update
+  - Replaced text logo with OneMetric logo image in header and footer
+  - Removed tagline strip "HubSpot AI Credits—clear, predictable, no surprises."
+  - Updated CTA to "Talk to an HubSpot expert" linking to www.onemetric.io
+  
 - **2025-10-09**: Enhanced Calculator with Visible Help Text
   - Added always-visible help text for Customer Agent (no tooltips)
   - Added Prospecting Agent calculation inputs:

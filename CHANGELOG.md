@@ -1,5 +1,21 @@
 # HubSpot AI Credits Calculator - Changelog
 
+## Branding Update - OneMetric Logo
+
+### 🎨 Visual Changes
+- **Header Logo:** Replaced "OneMetric.io" text with uploaded OneMetric logo image
+- **Footer Logo:** Replaced "OneMetric.io" text with uploaded OneMetric logo image
+- **Removed Tagline:** Completely removed the "HubSpot AI Credits—clear, predictable, no surprises." strip
+- **Updated CTA:** Changed "Talk to an expert" to "Talk to an HubSpot expert" with link to www.onemetric.io
+
+### 🔧 Technical Changes
+- Added logo image support with responsive sizing (40px header, 28px footer)
+- Removed unused `.tagline` CSS styles
+- Updated header CTA link to external OneMetric.io website
+- Cleaned up media query references to removed tagline
+
+---
+
 ## Enhanced Calculator Update
 
 ### ✨ New Features

@@ -77,6 +77,12 @@
       color: var(--om-text);
     }
 
+    .logo img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
     .header-center {
       font-size: 0.875rem;
       font-weight: 500;
@@ -127,14 +133,6 @@
       outline-offset: 2px;
     }
 
-    .tagline {
-      background: rgba(255,122,89,0.08);
-      border-bottom: 1px solid var(--om-border);
-      padding: 0.75rem 2rem;
-      text-align: center;
-      font-size: 0.875rem;
-      color: var(--om-muted);
-    }
 
     .quick-stats {
       background: var(--om-surface);
@@ -605,11 +603,20 @@
     .footer-left {
       font-size: 0.875rem;
       color: var(--om-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .footer-left strong {
       color: var(--om-text);
       font-weight: 600;
+    }
+
+    .footer-left img {
+      height: 28px;
+      width: auto;
+      display: block;
     }
 
     .footer-links {
@@ -720,7 +727,7 @@
       .header-top {
         padding: 1rem;
       }
-      .tagline, .quick-stats {
+      .quick-stats {
         padding: 0.75rem 1rem;
       }
       .usage-row {
@@ -742,17 +749,18 @@
 <body>
   <div class="header">
     <div class="header-top">
-      <div class="logo">OneMetric.io</div>
+      <div class="logo">
+        <img src="attached_assets/OneMetric Logo_1760030103016.png" alt="OneMetric.io">
+      </div>
       <div class="header-center">HubSpot AI Credits Calculator</div>
       <div class="header-actions">
         <a href="#how-credits-work" class="header-link">Docs</a>
-        <a href="mailto:hello@onemetric.io" class="header-link">Talk to an expert</a>
+        <a href="https://www.onemetric.io" class="header-link" target="_blank" rel="noopener noreferrer">Talk to an HubSpot expert</a>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
           <span id="themeIcon">☀️</span>
         </button>
       </div>
     </div>
-    <div class="tagline">HubSpot AI Credits—clear, predictable, no surprises.</div>
     <div class="quick-stats">
       <div class="pill pill--muted">
         <span>Included:</span>
@@ -902,7 +910,7 @@
   <div class="footer">
     <div class="footer-content">
       <div class="footer-left">
-        Built by <strong>OneMetric.io</strong> — HubSpot Elite Partner & Onboarding Accredited
+        Built by <img src="attached_assets/OneMetric Logo_1760030103016.png" alt="OneMetric.io"> — HubSpot Elite Partner & Onboarding Accredited
       </div>
       <div class="footer-links">
         <a href="#" class="footer-link">Privacy</a>
