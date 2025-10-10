@@ -12,25 +12,27 @@
     }
 
     :root {
-      --om-bg: #0B0C10;
-      --om-surface: #111318;
-      --om-text: #E7E9EE;
-      --om-muted: #A9AFBC;
-      --om-border: #232732;
+      --om-bg: #0d1117;
+      --om-surface: #161b22;
+      --om-input: #0d1117;
+      --om-text: #c9d1d9;
+      --om-muted: #8b949e;
+      --om-border: #30363d;
       --om-primary: #FF7A59;
       --om-primary-600: #F26B49;
       --om-primary-700: #E05E3E;
-      --om-success: #22C55E;
-      --om-danger: #EF4444;
-      --om-warning: #F59E0B;
+      --om-success: #3fb950;
+      --om-danger: #f85149;
+      --om-warning: #d29922;
       --om-focus: rgba(255,122,89,0.35);
       --om-radius: 20px;
-      --om-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      --om-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     :root[data-theme="light"] {
       --om-bg: #F7F8FA;
       --om-surface: #FFFFFF;
+      --om-input: #F7F8FA;
       --om-text: #0B0C10;
       --om-muted: #5B6372;
       --om-border: #E7E9EE;
@@ -305,7 +307,7 @@
     input[type="number"], select {
       width: 100%;
       padding: 0.75rem 1rem;
-      background: var(--om-bg);
+      background: var(--om-input);
       border: 1px solid var(--om-border);
       border-radius: 10px;
       color: var(--om-text);
@@ -326,7 +328,7 @@
     }
 
     .chip {
-      background: var(--om-bg);
+      background: var(--om-input);
       border: 1px solid var(--om-border);
       padding: 0.25rem 0.75rem;
       border-radius: 8px;

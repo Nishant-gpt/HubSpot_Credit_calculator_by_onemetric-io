@@ -156,6 +156,17 @@ Net Balance,[total]
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
 ## Recent Changes
+- **2025-10-10**: Dark Mode Color Improvements
+  - Updated dark theme to GitHub-style blue-tinted grays
+  - Background: #0d1117 (dark slate)
+  - Surface/panels: #161b22 (dark slate gray)
+  - Borders: #30363d (subtle blue-gray)
+  - Text: #c9d1d9 (light gray)
+  - Muted text: #8b949e (medium gray)
+  - Success: #3fb950 (GitHub green)
+  - Danger: #f85149 (GitHub red)
+  - Better visual hierarchy and contrast
+
 - **2025-10-10**: Complete Refactor - Three-Column Layout
   - NEW: Hero section with collapsing behavior on scroll
   - NEW: Sticky header with condensed KPIs and CTA
