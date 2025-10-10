@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HubSpot Credits Calculator - Breeze by OneMetric.io</title>
+  <title>HubSpot Credits Calculator - OneMetric.io</title>
   <style>
     * {
       margin: 0;
@@ -12,932 +12,900 @@
     }
 
     :root {
-      --om-bg: #0d1117;
-      --om-surface: #161b22;
-      --om-input: #0d1117;
-      --om-text: #c9d1d9;
-      --om-muted: #8b949e;
-      --om-border: #30363d;
-      --om-primary: #FF7A59;
-      --om-primary-600: #F26B49;
-      --om-primary-700: #E05E3E;
-      --om-success: #3fb950;
-      --om-danger: #f85149;
-      --om-warning: #d29922;
-      --om-focus: rgba(255,122,89,0.35);
-      --om-radius: 20px;
-      --om-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    :root[data-theme="light"] {
-      --om-bg: #F7F8FA;
-      --om-surface: #FFFFFF;
-      --om-input: #F7F8FA;
-      --om-text: #0B0C10;
-      --om-muted: #5B6372;
-      --om-border: #E7E9EE;
-      --om-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --bg: #F7F8FA;
+      --surface: #FFFFFF;
+      --text: #0B0C10;
+      --muted: #5B6372;
+      --border: #E7E9EE;
+      --primary: #7C3AED;
+      --accent: #FF7A59;
+      --success: #16A34A;
+      --danger: #EF4444;
+      --shadow: 0 10px 30px rgba(0,0,0,.06);
+      --radius: 16px;
+      --radius-lg: 20px;
     }
 
     body {
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      background: var(--om-bg);
-      color: var(--om-text);
+      color: var(--text);
+      background: var(--bg);
       line-height: 1.6;
-      transition: background 0.15s ease, color 0.15s ease;
     }
 
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, var(--om-surface) 0%, rgba(255,122,89,0.1) 100%);
-      border-bottom: 1px solid var(--om-border);
-      padding: 3rem 2rem;
-      transition: all 0.3s ease;
-    }
-
-    .hero.collapsed {
-      padding: 0;
-      height: 0;
-      opacity: 0;
-      overflow: hidden;
-    }
-
-    .hero-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .hero-logo {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--om-text);
-    }
-
-    .hero-logo img {
-      height: 50px;
-      width: auto;
-    }
-
-    .hero-center {
-      text-align: center;
-    }
-
-    .hero-center h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, var(--om-text) 0%, var(--om-primary) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-center p {
-      font-size: 1.125rem;
-      color: var(--om-muted);
-    }
-
-    .hero-kpi {
-      background: var(--om-surface);
-      border: 1px solid var(--om-border);
-      border-radius: var(--om-radius);
-      padding: 1.5rem;
-      box-shadow: var(--om-shadow);
-    }
-
-    .kpi-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 0;
-    }
-
-    .kpi-row + .kpi-row {
-      border-top: 1px solid var(--om-border);
-      margin-top: 0.5rem;
-      padding-top: 0.75rem;
-    }
-
-    .kpi-label {
-      font-size: 0.875rem;
-      color: var(--om-muted);
-    }
-
-    .kpi-value {
-      font-size: 1.25rem;
-      font-weight: 700;
-    }
-
-    .kpi-value.positive { color: var(--om-success); }
-    .kpi-value.negative { color: var(--om-danger); }
-    .kpi-value.neutral { color: var(--om-primary); }
-
-    /* Collapsed Sticky Header */
-    .sticky-header {
+    /* Header */
+    .header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: var(--om-surface);
-      border-bottom: 1px solid var(--om-border);
-      box-shadow: var(--om-shadow);
-      opacity: 0;
-      transform: translateY(-100%);
-      transition: all 0.3s ease;
-      pointer-events: none;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      height: 56px;
     }
 
-    .sticky-header.visible {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: all;
-    }
-
-    .sticky-content {
-      max-width: 1400px;
+    .header-content {
+      max-width: 1440px;
       margin: 0 auto;
-      padding: 1rem 2rem;
+      padding: 0 24px;
+      height: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 2rem;
     }
 
-    .sticky-kpis {
+    .header-left {
       display: flex;
-      gap: 1.5rem;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
     }
 
-    .sticky-kpi {
-      display: flex;
-      flex-direction: column;
+    .header-left img {
+      height: 28px;
     }
 
-    .sticky-kpi-label {
-      font-size: 0.75rem;
-      color: var(--om-muted);
+    .header-logo {
+      color: var(--text);
+      font-size: 15px;
     }
 
-    .sticky-kpi-value {
-      font-size: 1.125rem;
+    .header-center h1 {
+      font-size: 18px;
       font-weight: 700;
     }
 
-    .cta-button {
-      background: var(--om-primary);
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 10px;
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      height: 36px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
       font-weight: 600;
+      font-size: 14px;
       cursor: pointer;
+      background: var(--surface);
+      color: var(--text);
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
       transition: all 0.15s ease;
     }
 
-    .cta-button:hover {
-      background: var(--om-primary-600);
-      transform: translateY(-1px);
+    .btn:hover {
+      background: var(--bg);
     }
 
-    /* Three Column Layout */
-    .main-container {
-      max-width: 1400px;
-      margin: 2rem auto;
-      padding: 0 2rem;
+    .btn--primary {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .btn--primary:hover {
+      background: #F26B49;
+    }
+
+    /* Main Layout */
+    .main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 32px 24px;
       display: grid;
-      grid-template-columns: 250px 1fr 350px;
-      gap: 2rem;
+      grid-template-columns: 280px 1fr;
+      gap: 32px;
     }
 
-    /* Left: Steps Navigation */
-    .steps-nav {
-      background: var(--om-surface);
-      border-radius: var(--om-radius);
-      padding: 1.5rem;
-      height: fit-content;
+    /* Sidebar */
+    .sidebar {
       position: sticky;
-      top: 100px;
-      box-shadow: var(--om-shadow);
+      top: 88px;
+      height: fit-content;
     }
 
-    .steps-nav h3 {
-      font-size: 0.875rem;
+    .sidebar h3 {
+      font-size: 14px;
+      font-weight: 700;
       text-transform: uppercase;
-      color: var(--om-muted);
-      margin-bottom: 1rem;
+      color: var(--muted);
+      margin-bottom: 16px;
       letter-spacing: 0.5px;
     }
 
-    .step-item {
-      padding: 0.75rem 1rem;
-      margin-bottom: 0.5rem;
-      border-radius: 10px;
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
       cursor: pointer;
       transition: all 0.15s ease;
-      border: 1px solid transparent;
     }
 
-    .step-item:hover {
-      background: rgba(255,122,89,0.1);
+    .step:hover {
+      background: var(--bg);
     }
 
-    .step-item.active {
-      background: var(--om-primary);
-      color: white;
-      border-color: var(--om-primary-700);
+    .step--active {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(124,58,237,.12) inset;
+      background: rgba(124,58,237,.05);
     }
 
-    .step-number {
-      font-size: 0.75rem;
-      color: var(--om-muted);
-      display: block;
-      margin-bottom: 0.25rem;
+    .step__icon {
+      font-size: 18px;
+      width: 20px;
+      text-align: center;
     }
 
-    .step-item.active .step-number {
-      color: rgba(255,255,255,0.8);
-    }
-
-    .step-title {
+    .step__label {
+      flex: 1;
       font-weight: 600;
+      font-size: 14px;
     }
 
-    /* Center: Input Panel */
-    .input-panel {
-      background: var(--om-surface);
-      border-radius: var(--om-radius);
-      padding: 2rem;
-      box-shadow: var(--om-shadow);
+    .step__badge {
+      margin-left: auto;
+      font-weight: 600;
+      color: var(--muted);
+      background: #F3F4F6;
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 12px;
     }
 
-    .input-panel h2 {
-      font-size: 1.75rem;
-      margin-bottom: 0.5rem;
+    .step--active .step__badge {
+      background: rgba(124,58,237,.15);
+      color: var(--primary);
     }
 
-    .input-panel .subtitle {
-      color: var(--om-muted);
-      margin-bottom: 2rem;
+    /* Content Card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 32px;
     }
 
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      flex: 1;
+    }
+
+    .h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .helper {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .section-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .section-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    /* Tool Cards */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .tool-card {
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: var(--surface);
+    }
+
+    .tool-card:hover {
+      border-style: solid;
+      background: rgba(124,58,237,.02);
+    }
+
+    .tool-card--active {
+      border-style: solid;
+      border-color: var(--primary);
+      background: rgba(124,58,237,.05);
+    }
+
+    .tool-card__icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .tool-card__name {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .tool-card__help {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .tool-card__credits {
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    /* Inputs */
     .input-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 20px;
     }
 
     .input-label {
       display: block;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      font-size: 15px;
+      margin-bottom: 6px;
     }
 
     .input-help {
-      color: var(--om-muted);
-      font-size: 0.875rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .input-wrapper {
-      position: relative;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
     }
 
     input[type="number"], select {
       width: 100%;
-      padding: 0.75rem 1rem;
-      background: var(--om-input);
-      border: 1px solid var(--om-border);
+      padding: 10px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 10px;
-      color: var(--om-text);
-      font-size: 1rem;
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
       transition: all 0.15s ease;
     }
 
     input[type="number"]:focus, select:focus {
       outline: none;
-      border-color: var(--om-primary);
-      box-shadow: 0 0 0 3px var(--om-focus);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(124,58,237,.12);
     }
 
-    .quick-add-chips {
+    .quick-chips {
       display: flex;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
+      gap: 8px;
+      margin-top: 8px;
     }
 
     .chip {
-      background: var(--om-input);
-      border: 1px solid var(--om-border);
-      padding: 0.25rem 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
       border-radius: 8px;
-      font-size: 0.875rem;
+      font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
     }
 
     .chip:hover {
-      background: var(--om-primary);
+      background: var(--primary);
       color: white;
-      border-color: var(--om-primary);
+      border-color: var(--primary);
     }
 
-    .tabs {
+    /* Toggle Switch */
+    .toggle-wrapper {
       display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--om-border);
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: #F0F9FF;
+      border: 1px solid #BAE6FD;
+      border-radius: 12px;
+      margin-bottom: 20px;
     }
 
-    .tab {
-      padding: 0.75rem 1.5rem;
-      background: transparent;
-      border: none;
-      color: var(--om-muted);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.15s ease;
-      font-weight: 600;
+    .toggle-label {
+      flex: 1;
     }
 
-    .tab.active {
-      color: var(--om-primary);
-      border-bottom-color: var(--om-primary);
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
+    .toggle-label strong {
       display: block;
+      margin-bottom: 4px;
     }
 
-    .calculated-result {
-      background: rgba(255,122,89,0.1);
-      border: 1px solid var(--om-primary);
-      border-radius: 10px;
-      padding: 1rem;
-      margin-top: 1rem;
-      color: var(--om-primary);
+    .toggle-label small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 48px;
+      height: 24px;
+      background: #CBD5E1;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle.active {
+      background: var(--accent);
+    }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+
+    .toggle.active::after {
+      transform: translateX(24px);
+    }
+
+    /* Step Total */
+    .step-total {
+      background: rgba(124,58,237,.08);
+      border: 1px solid rgba(124,58,237,.2);
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: var(--primary);
       font-weight: 600;
+      font-size: 15px;
+      margin-top: 20px;
     }
 
-    .benchmark-chip {
-      background: var(--om-primary);
-      color: white;
-      padding: 0.25rem 0.75rem;
-      border-radius: 8px;
-      font-size: 0.875rem;
-      display: inline-block;
-      margin-top: 0.5rem;
-    }
-
-    /* Right: Talk Track Panel */
-    .talk-track {
-      background: var(--om-surface);
-      border-radius: var(--om-radius);
-      padding: 1.5rem;
-      height: fit-content;
-      position: sticky;
-      top: 100px;
-      box-shadow: var(--om-shadow);
-    }
-
-    .talk-track h3 {
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      color: var(--om-primary);
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.5px;
-    }
-
-    .talk-section {
-      margin-bottom: 1.5rem;
-    }
-
-    .talk-section h4 {
-      font-size: 0.875rem;
-      color: var(--om-muted);
-      margin-bottom: 0.5rem;
-    }
-
-    .talk-section p {
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    .formula-box {
-      background: var(--om-bg);
-      border: 1px solid var(--om-border);
-      border-radius: 10px;
-      padding: 1rem;
-      font-family: 'Courier New', monospace;
-      font-size: 0.875rem;
-      margin-top: 0.5rem;
-    }
-
-    /* Summary Block */
-    .summary-block {
-      background: var(--om-surface);
-      border-radius: var(--om-radius);
-      padding: 2rem;
-      margin-top: 2rem;
-      box-shadow: var(--om-shadow);
-    }
-
-    .summary-grid {
+    /* Results */
+    .result-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      gap: 16px;
+      margin-bottom: 24px;
     }
 
-    .summary-card {
-      background: var(--om-bg);
-      border: 1px solid var(--om-border);
-      border-radius: 10px;
-      padding: 1.5rem;
+    .result-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
       text-align: center;
     }
 
-    .summary-card h4 {
-      font-size: 0.875rem;
-      color: var(--om-muted);
-      margin-bottom: 0.5rem;
+    .result-card__label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
     }
 
-    .summary-card .value {
-      font-size: 2rem;
+    .result-card__value {
+      font-size: 32px;
       font-weight: 700;
     }
 
-    .recommendation-box {
-      background: rgba(255,122,89,0.1);
-      border: 1px solid var(--om-primary);
-      border-radius: 10px;
-      padding: 1.5rem;
-      margin-top: 1rem;
+    .result-card__value.positive { color: var(--success); }
+    .result-card__value.negative { color: var(--danger); }
+    .result-card__value.neutral { color: var(--primary); }
+
+    .top-drivers {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 24px;
     }
 
-    .recommendation-box h4 {
-      color: var(--om-primary);
-      margin-bottom: 1rem;
+    .top-drivers h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
     }
 
-    .option-row {
+    .driver-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.75rem;
-      background: var(--om-bg);
-      border-radius: 8px;
-      margin-bottom: 0.5rem;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
     }
 
-    .option-row.recommended {
-      border: 2px solid var(--om-success);
-      background: rgba(34,197,94,0.1);
+    .driver-item:last-child {
+      border-bottom: none;
     }
 
-    .recommended-badge {
-      background: var(--om-success);
+    .driver-bar {
+      flex: 1;
+      height: 8px;
+      background: #E5E7EB;
+      border-radius: 4px;
+      margin: 0 16px;
+      overflow: hidden;
+    }
+
+    .driver-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .expansion-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .option-card {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      position: relative;
+    }
+
+    .option-card.recommended {
+      border-color: var(--success);
+      background: #F0FDF4;
+    }
+
+    .option-card__ribbon {
+      position: absolute;
+      top: -1px;
+      right: 16px;
+      background: var(--success);
       color: white;
-      padding: 0.25rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 0 0 8px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
 
-    .action-buttons {
+    .option-card h4 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .option-card__price {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 12px 0;
+    }
+
+    .option-card__details {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .result-actions {
       display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
+      gap: 12px;
     }
 
-    .btn {
-      padding: 0.75rem 1.5rem;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      border: none;
-      font-size: 1rem;
+    .result-actions .btn {
+      flex: 1;
+      justify-content: center;
+      height: 44px;
     }
 
-    .btn-primary {
-      background: var(--om-primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--om-primary-600);
-    }
-
-    .btn-secondary {
-      background: var(--om-bg);
-      color: var(--om-text);
-      border: 1px solid var(--om-border);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--om-primary);
-    }
-
-    /* Theme Toggle */
-    .theme-toggle {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 50px;
-      height: 50px;
-      background: var(--om-primary);
-      border: none;
-      border-radius: 50%;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      box-shadow: var(--om-shadow);
-      transition: all 0.15s ease;
-      z-index: 1000;
-    }
-
-    .theme-toggle:hover {
-      transform: scale(1.1);
-    }
-
-    @media (max-width: 1200px) {
-      .main-container {
-        grid-template-columns: 200px 1fr;
-      }
-      .talk-track {
-        display: none;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .hero-container {
+    /* Responsive */
+    @media (max-width: 968px) {
+      .main {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 24px;
       }
-      .hero-center h1 {
-        font-size: 1.75rem;
-      }
-      .main-container {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        padding: 0 1rem;
-      }
-      .steps-nav {
+
+      .sidebar {
         position: static;
       }
-      .sticky-content {
-        flex-direction: column;
-        gap: 1rem;
+
+      .steps {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+
+      .step {
+        flex-shrink: 0;
+        min-width: 140px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .expansion-options {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-center h1 {
+        font-size: 15px;
+      }
+
+      .header-actions {
+        gap: 6px;
+      }
+
+      .header-actions .btn {
+        font-size: 12px;
+        padding: 0 10px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Hero Section -->
-  <div class="hero" id="hero">
-    <div class="hero-container">
-      <div class="hero-logo">
-        <img src="attached_assets/OneMetric Logo_1760030103016.png" alt="Breeze by OneMetric.io">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <img src="attached_assets/OneMetric Logo_1760030103016.png" alt="OneMetric.io" onerror="this.style.display='none'">
+        <span class="header-logo">· Breeze</span>
       </div>
-      <div class="hero-center">
+      <div class="header-center">
         <h1>HubSpot Credits Calculator</h1>
-        <p>Estimate your monthly credit consumption.</p>
       </div>
-      <div class="hero-kpi">
-        <div class="kpi-row">
-          <span class="kpi-label">Included</span>
-          <span class="kpi-value" id="heroIncluded">0</span>
-        </div>
-        <div class="kpi-row">
-          <span class="kpi-label">Projected</span>
-          <span class="kpi-value neutral" id="heroProjected">0</span>
-        </div>
-        <div class="kpi-row">
-          <span class="kpi-label">Net</span>
-          <span class="kpi-value positive" id="heroNet">0</span>
-        </div>
+      <div class="header-actions">
+        <a href="#how-credits-work" class="btn">How credits work</a>
+        <a href="https://www.onemetric.io" target="_blank" class="btn btn--primary">Talk to an expert</a>
       </div>
     </div>
-  </div>
+  </header>
 
-  <!-- Sticky Collapsed Header -->
-  <div class="sticky-header" id="stickyHeader">
-    <div class="sticky-content">
-      <div class="sticky-kpis">
-        <div class="sticky-kpi">
-          <span class="sticky-kpi-label">Included</span>
-          <span class="sticky-kpi-value" id="stickyIncluded">0</span>
-        </div>
-        <div class="sticky-kpi">
-          <span class="sticky-kpi-label">Projected</span>
-          <span class="sticky-kpi-value neutral" id="stickyProjected">0</span>
-        </div>
-        <div class="sticky-kpi">
-          <span class="sticky-kpi-label">Net</span>
-          <span class="sticky-kpi-value positive" id="stickyNet">0</span>
-        </div>
-      </div>
-      <a href="https://www.onemetric.io" class="cta-button" target="_blank" rel="noopener noreferrer">Talk to an HubSpot expert</a>
-    </div>
-  </div>
+  <!-- Main -->
+  <main class="main">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3>Calculator Steps</h3>
+      <div class="steps" id="steps"></div>
+    </aside>
 
-  <!-- Main Three Column Layout -->
-  <div class="main-container">
-    <!-- Left: Steps Navigation -->
-    <div class="steps-nav">
-      <h3>Steps</h3>
-      <div id="stepsContainer"></div>
-    </div>
-
-    <!-- Center: Input Panel -->
-    <div>
-      <div class="input-panel" id="inputPanel"></div>
-      
-      <!-- Summary Block -->
-      <div class="summary-block">
-        <h2>Summary</h2>
-        <div class="summary-grid">
-          <div class="summary-card">
-            <h4>Included Credits</h4>
-            <div class="value" id="summaryIncluded">0</div>
-          </div>
-          <div class="summary-card">
-            <h4>Projected Usage</h4>
-            <div class="value neutral" id="summaryProjected">0</div>
-          </div>
-          <div class="summary-card">
-            <h4>Net Balance</h4>
-            <div class="value positive" id="summaryNet">0</div>
-          </div>
-        </div>
-        
-        <div id="recommendationContainer"></div>
-
-        <div class="action-buttons">
-          <button class="btn btn-primary" onclick="shareURL()">📤 Share Calculator</button>
-          <button class="btn btn-secondary" onclick="exportCSV()">📊 Export CSV</button>
-          <button class="btn btn-secondary" onclick="resetCalculator()">🔄 Reset All</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right: Talk Track Panel -->
-    <div class="talk-track" id="talkTrack">
-      <h3>💡 Partner Talk-Track</h3>
-      <div id="talkTrackContent"></div>
-    </div>
-  </div>
-
-  <!-- Theme Toggle -->
-  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">☀️</button>
+    <!-- Content -->
+    <div class="card" id="content"></div>
+  </main>
 
   <script>
-    // State Management
+    // State
     let state = {
       currentStep: 0,
-      included: 0,
-      usage: {}
+      included: 500,
+      hasDataHub: false,
+      usage: {
+        'customer-agent': 0,
+        'prospecting-monitor-mode': 'direct',
+        'prospecting-monitor-companies': 0,
+        'prospecting-monitor-contacts-per-company': 2,
+        'prospecting-monitor-meetings': 0,
+        'prospecting-monitor-conversion': 5,
+        'prospecting-agent-monitor-contact': 0,
+        'prospecting-agent-company-research': 0,
+        'data-agent-questions': 0,
+        'data-agent-records': 0,
+        'data-agent-refreshes': 1,
+        'data-agent-text-response': 0,
+        'workflow-ai-action-breeze': 0,
+        'buyer-intent-targets': 0,
+        'buyer-intent-additional': 0,
+        'company-monitoring-intent': 0,
+        'data-hub-size': 'small',
+        'data-hub-destinations': 1,
+        'data-hub-frequency': 1
+      }
     };
 
     // Steps Configuration
     const steps = [
-      { id: 'customer-agent', title: 'Customer Agent', subtitle: 'Conversations per month' },
-      { id: 'prospecting-monitor', title: 'Prospecting Agent', subtitle: 'Monitor Contact' },
-      { id: 'prospecting-research', title: 'Company Research', subtitle: 'Research results' },
-      { id: 'data-agent', title: 'Data Agent', subtitle: 'Custom questions' },
-      { id: 'breeze-workflows', title: 'Breeze Workflows', subtitle: 'AI actions' },
-      { id: 'buyer-intent', title: 'Buyer Intent', subtitle: 'Target accounts' },
-      { id: 'data-hub', title: 'Data Hub', subtitle: 'Syncs & destinations' }
+      { id: 'subscription', icon: '🏠', label: 'Subscription Base' },
+      { id: 'customer-agent', icon: '💬', label: 'Customer Agent' },
+      { id: 'prospecting', icon: '🎯', label: 'Prospecting Agent' },
+      { id: 'data-agent', icon: '📊', label: 'Data Agent' },
+      { id: 'buyer-intent', icon: '👁️', label: 'Buyer Intent' },
+      { id: 'workflows', icon: '⚙️', label: 'Breeze Workflows' },
+      { id: 'data-hub', icon: '💾', label: 'Data Hub' },
+      { id: 'results', icon: '📈', label: 'Results' }
     ];
 
-    // Talk Track Content
-    const talkTracks = {
-      'customer-agent': {
-        primary: 'How many conversations across all channels per month?',
-        alternative: 'If unsure, last month\'s chat + email + social thread counts work.',
-        benchmark: 'Early teams often start 200–1,000/month.',
-        formula: 'conversations × 100 credits',
-        example: '1,000 conversations × 100 = 100,000 credits'
-      },
-      'prospecting-monitor': {
-        primary: 'How many companies do you want to prospect into each month?',
-        alternative: 'How many reps? How many accounts per rep per month?',
-        benchmark: '50–100 accounts per rep per month.',
-        formula: 'companies × contacts/company × 100 (default contacts/company = 2)',
-        example: '375 companies × 2 contacts × 100 = 75,000 credits'
-      },
-      'prospecting-research': {
-        primary: 'How many deep research results do you need per month?',
-        alternative: 'Think about how many companies you want detailed insights on.',
-        benchmark: 'Most teams start with 100-500 results.',
-        formula: 'results × 10',
-        example: '500 results × 10 = 5,000 credits'
-      },
-      'data-agent': {
-        primary: 'How many custom questions do you answer per record?',
-        alternative: 'How many new records per month? How often do you refresh?',
-        benchmark: 'Typical: 1-5 questions per record.',
-        formula: 'questions × new records × monthly refreshes × 10',
-        example: '3 × 1,000 × 1 × 10 = 30,000 credits'
-      },
-      'breeze-workflows': {
-        primary: 'What AI action and how many records per month?',
-        alternative: 'Count total workflow executions with AI steps.',
-        benchmark: 'Automation-heavy teams: 500-5,000/month.',
-        formula: 'actions/month × 10',
-        example: '200 actions × 10 = 2,000 credits'
-      },
-      'buyer-intent': {
-        primary: 'How many target accounts do you want to actively track?',
-        alternative: 'Any additional companies to monitor?',
-        benchmark: 'ABM teams: 10-100 accounts.',
-        formula: '(targets + others) × 10',
-        example: '15 + 13 = 28 × 10 = 280 credits'
-      },
-      'data-hub': {
-        primary: 'What\'s your dataset size, destinations, and sync cadence?',
-        alternative: 'How often do you need data refreshed?',
-        benchmark: 'Most teams: Medium datasets, 1-2 destinations, daily sync.',
-        formula: 'sizeCredits × destinations × syncs/month',
-        example: 'Medium (75) × 1 × 30 = 2,250 credits'
+    // Calculate step totals
+    function getStepTotal(stepId) {
+      switch(stepId) {
+        case 'subscription': return state.included;
+        case 'customer-agent': return (state.usage['customer-agent'] || 0) * 100;
+        case 'prospecting': 
+          const monitor = (state.usage['prospecting-agent-monitor-contact'] || 0) * 100;
+          const research = (state.usage['prospecting-agent-company-research'] || 0) * 10;
+          return monitor + research;
+        case 'data-agent': return (state.usage['data-agent-text-response'] || 0) * 10;
+        case 'buyer-intent': return (state.usage['company-monitoring-intent'] || 0) * 10;
+        case 'workflows': return (state.usage['workflow-ai-action-breeze'] || 0) * 10;
+        case 'data-hub':
+          const sizeMap = { small: 25, medium: 75, large: 200 };
+          const size = state.usage['data-hub-size'] || 'small';
+          const dest = state.usage['data-hub-destinations'] || 0;
+          const freq = state.usage['data-hub-frequency'] || 0;
+          return sizeMap[size] * dest * freq;
+        case 'results': return getProjectedUsage();
+        default: return 0;
       }
-    };
-
-    // Initialize
-    function init() {
-      loadTheme();
-      renderSteps();
-      renderCurrentStep();
-      renderTalkTrack();
-      setupScrollBehavior();
-      loadFromURL();
-      updateCalculations();
     }
 
-    // Render Steps Navigation
-    function renderSteps() {
-      const container = document.getElementById('stepsContainer');
+    // Render sidebar
+    function renderSidebar() {
+      const container = document.getElementById('steps');
       container.innerHTML = steps.map((step, index) => `
-        <div class="step-item ${index === state.currentStep ? 'active' : ''}" onclick="goToStep(${index})">
-          <span class="step-number">Step ${index + 1}</span>
-          <div class="step-title">${step.title}</div>
+        <div class="step ${state.currentStep === index ? 'step--active' : ''}" onclick="goToStep(${index})">
+          <div class="step__icon">${step.icon}</div>
+          <div class="step__label">${step.label}</div>
+          <div class="step__badge">${getStepTotal(step.id).toLocaleString()}</div>
         </div>
       `).join('');
     }
 
-    // Go to Step
-    function goToStep(index) {
-      state.currentStep = index;
-      renderSteps();
-      renderCurrentStep();
-      renderTalkTrack();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Render Current Step Input Panel
-    function renderCurrentStep() {
+    // Render content based on current step
+    function renderContent() {
       const step = steps[state.currentStep];
-      const panel = document.getElementById('inputPanel');
+      const container = document.getElementById('content');
       
-      let content = `<h2>${step.title}</h2><p class="subtitle">${step.subtitle}</p>`;
+      const nextButton = state.currentStep < steps.length - 1 
+        ? `<button class="btn btn--primary" onclick="nextStep()">Next section →</button>`
+        : '';
 
+      let content = '';
+      
       switch(step.id) {
+        case 'subscription':
+          content = renderSubscription();
+          break;
         case 'customer-agent':
-          content += renderCustomerAgent();
+          content = renderCustomerAgent();
           break;
-        case 'prospecting-monitor':
-          content += renderProspectingMonitor();
-          break;
-        case 'prospecting-research':
-          content += renderProspectingResearch();
+        case 'prospecting':
+          content = renderProspecting();
           break;
         case 'data-agent':
-          content += renderDataAgent();
-          break;
-        case 'breeze-workflows':
-          content += renderBreezeWorkflows();
+          content = renderDataAgent();
           break;
         case 'buyer-intent':
-          content += renderBuyerIntent();
+          content = renderBuyerIntent();
+          break;
+        case 'workflows':
+          content = renderWorkflows();
           break;
         case 'data-hub':
-          content += renderDataHub();
+          content = renderDataHub();
+          break;
+        case 'results':
+          content = renderResults();
           break;
       }
 
-      panel.innerHTML = content;
+      container.innerHTML = `
+        <div class="card-header">
+          <div class="card-title">
+            <h2 class="h2">${step.label}</h2>
+          </div>
+          ${nextButton}
+        </div>
+        ${content}
+      `;
     }
 
-    // Customer Agent Input
+    // Subscription Step
+    function renderSubscription() {
+      const tiers = [
+        { id: 'starter', name: 'Starter', credits: 500 },
+        { id: 'pro', name: 'Professional', credits: 3000 },
+        { id: 'enterprise', name: 'Enterprise', credits: 5000 }
+      ];
+
+      const currentTier = tiers.find(t => t.credits === state.included) || tiers[0];
+
+      return `
+        <p class="helper">Select your current HubSpot subscription details.</p>
+        
+        <div class="section-card">
+          <div class="toggle-wrapper">
+            <div class="toggle-label">
+              <strong>Customer is on Seats pricing</strong>
+              <small>Enable to choose base credits granted with Seats Pricing</small>
+            </div>
+            <div class="toggle ${state.hasDataHub ? 'active' : ''}" onclick="toggleSeats()"></div>
+          </div>
+
+          <h3>Highest Product Edition</h3>
+          <div class="tool-grid">
+            ${tiers.map(tier => `
+              <div class="tool-card ${currentTier.id === tier.id ? 'tool-card--active' : ''}" onclick="selectTier('${tier.id}', ${tier.credits})">
+                <div class="tool-card__name">${tier.name}</div>
+                <div class="tool-card__credits">${tier.credits.toLocaleString()} credits</div>
+              </div>
+            `).join('')}
+          </div>
+
+          ${state.hasDataHub ? `
+            <h3 style="margin-top: 20px;">Data Hub Edition</h3>
+            <div class="tool-grid">
+              ${[
+                { id: 'starter-dh', name: 'Starter', credits: 500 },
+                { id: 'pro-dh', name: 'Professional', credits: 5000 },
+                { id: 'enterprise-dh', name: 'Enterprise', credits: 10000 }
+              ].map(tier => `
+                <div class="tool-card" onclick="selectDataHubTier(${tier.credits})">
+                  <div class="tool-card__name">${tier.name}</div>
+                  <div class="tool-card__credits">${tier.credits.toLocaleString()} credits</div>
+                </div>
+              `).join('')}
+            </div>
+            <div style="background: #FEF3C7; border: 1px solid #FDE68A; border-radius: 12px; padding: 14px; margin-top: 16px; font-size: 13px;">
+              <strong>💡 Active Credits Source</strong><br>
+              Using the higher amount between Product Hub and Data Hub
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    // Customer Agent Step
     function renderCustomerAgent() {
-      const value = state.usage['customer-agent'] || 0;
+      const conversations = state.usage['customer-agent'] || 0;
+      const total = conversations * 100;
+
       return `
-        <div class="input-group">
-          <label class="input-label">Conversations per Month</label>
-          <p class="input-help">Estimate how many conversations across all channels (chat, email, social) per month.</p>
-          <input type="number" id="input-customer-agent" value="${value}" min="0" oninput="updateUsage('customer-agent', this.value)">
-          <div class="quick-add-chips">
-            <span class="chip" onclick="addQuick('customer-agent', 50)">+50</span>
-            <span class="chip" onclick="addQuick('customer-agent', 100)">+100</span>
-            <span class="chip" onclick="addQuick('customer-agent', 1000)">+1000</span>
+        <p class="helper">Estimate how many conversations across all channels per month.</p>
+        
+        <div class="section-card">
+          <div class="input-group">
+            <label class="input-label">Conversations per Month</label>
+            <div class="input-help">Estimate how many conversations across all channels (chat, email, social) per month.</div>
+            <input type="number" value="${conversations}" min="0" oninput="updateUsage('customer-agent', this.value)">
+            <div class="quick-chips">
+              <span class="chip" onclick="addQuick('customer-agent', 50)">+50</span>
+              <span class="chip" onclick="addQuick('customer-agent', 100)">+100</span>
+              <span class="chip" onclick="addQuick('customer-agent', 1000)">+1000</span>
+            </div>
           </div>
-        </div>
-        <div class="calculated-result">
-          💳 Credits: ${value} conversations × 100 = ${(value * 100).toLocaleString()} credits
+          <div class="step-total">💳 This step: ${total.toLocaleString()} credits</div>
         </div>
       `;
     }
 
-    // Prospecting Monitor Input with Tabs
-    function renderProspectingMonitor() {
-      const companies = state.usage['prospecting-monitor-companies'] || 0;
-      const contactsPerCompany = state.usage['prospecting-monitor-contacts-per-company'] || 2;
-      const meetings = state.usage['prospecting-monitor-meetings'] || 0;
-      const conversion = state.usage['prospecting-monitor-conversion'] || 5;
+    // Prospecting Agent Step
+    function renderProspecting() {
       const mode = state.usage['prospecting-monitor-mode'] || 'direct';
+      const monitorTotal = (state.usage['prospecting-agent-monitor-contact'] || 0) * 100;
+      const researchTotal = (state.usage['prospecting-agent-company-research'] || 0) * 10;
+      const total = monitorTotal + researchTotal;
 
       return `
-        <div class="tabs">
-          <button class="tab ${mode === 'direct' ? 'active' : ''}" onclick="switchProspectingMode('direct')">Direct Input</button>
-          <button class="tab ${mode === 'goal' ? 'active' : ''}" onclick="switchProspectingMode('goal')">Goal Mode</button>
-        </div>
-
-        <div class="tab-content ${mode === 'direct' ? 'active' : ''}" id="direct-tab">
-          <div class="input-group">
-            <label class="input-label">Companies per Month</label>
-            <p class="input-help">How many companies do you want to prospect into each month?</p>
-            <input type="number" id="input-prospecting-companies" value="${companies}" min="0" oninput="updateProspecting()">
-            <div class="quick-add-chips">
-              <span class="chip" onclick="addQuickProspecting('companies', 50)">+50</span>
-              <span class="chip" onclick="addQuickProspecting('companies', 100)">+100</span>
-              <span class="chip" onclick="addQuickProspecting('companies', 1000)">+1000</span>
+        <p class="helper">Estimate directly, or switch to Goal Mode to back-solve from meetings needed.</p>
+        
+        <div class="section-card">
+          <h3>Monitor Contact Activity</h3>
+          <div class="tool-grid">
+            <div class="tool-card ${mode === 'direct' ? 'tool-card--active' : ''}" onclick="switchMode('direct')">
+              <div class="tool-card__icon">📊</div>
+              <div class="tool-card__name">Direct Input</div>
+              <div class="tool-card__help">Enter companies and contacts directly</div>
             </div>
-            <p class="input-help" style="margin-top: 0.5rem;">💡 Don't know? Reps × accounts/rep/month</p>
-            <span class="benchmark-chip">Benchmark: 50–100 accounts/rep/month</span>
-          </div>
-          <div class="input-group">
-            <label class="input-label">Contacts per Company</label>
-            <input type="number" id="input-prospecting-contacts" value="${contactsPerCompany}" min="1" oninput="updateProspecting()">
-          </div>
-          <div class="calculated-result">
-            💳 Credits: ${companies} companies × ${contactsPerCompany} contacts × 100 = ${(companies * contactsPerCompany * 100).toLocaleString()} credits
-          </div>
-        </div>
-
-        <div class="tab-content ${mode === 'goal' ? 'active' : ''}" id="goal-tab">
-          <div class="input-group">
-            <label class="input-label">Meetings Needed per Month</label>
-            <input type="number" id="input-prospecting-meetings" value="${meetings}" min="0" oninput="updateProspecting()">
-            <div class="quick-add-chips">
-              <span class="chip" onclick="addQuickProspecting('meetings', 50)">+50</span>
-              <span class="chip" onclick="addQuickProspecting('meetings', 100)">+100</span>
-              <span class="chip" onclick="addQuickProspecting('meetings', 1000)">+1000</span>
+            <div class="tool-card ${mode === 'goal' ? 'tool-card--active' : ''}" onclick="switchMode('goal')">
+              <div class="tool-card__icon">🎯</div>
+              <div class="tool-card__name">Goal Mode</div>
+              <div class="tool-card__help">Back-solve from meetings needed</div>
             </div>
           </div>
+
+          ${mode === 'direct' ? `
+            <div class="input-group">
+              <label class="input-label">Companies to Monitor per Month</label>
+              <input type="number" id="input-companies" value="${state.usage['prospecting-monitor-companies'] || 0}" min="0" oninput="updateProspecting()">
+              <div class="quick-chips">
+                <span class="chip" onclick="addQuickProspecting('companies', 50)">+50</span>
+                <span class="chip" onclick="addQuickProspecting('companies', 100)">+100</span>
+              </div>
+            </div>
+            <div class="input-group">
+              <label class="input-label">Contacts per Company</label>
+              <input type="number" id="input-contacts" value="${state.usage['prospecting-monitor-contacts-per-company'] || 2}" min="1" oninput="updateProspecting()">
+            </div>
+          ` : `
+            <div class="input-group">
+              <label class="input-label">Meetings Needed per Month</label>
+              <input type="number" id="input-meetings" value="${state.usage['prospecting-monitor-meetings'] || 0}" min="0" oninput="updateProspecting()">
+              <div class="quick-chips">
+                <span class="chip" onclick="addQuickProspecting('meetings', 10)">+10</span>
+                <span class="chip" onclick="addQuickProspecting('meetings', 50)">+50</span>
+              </div>
+            </div>
+            <div class="input-group">
+              <label class="input-label">Expected Conversion Rate (%)</label>
+              <input type="number" id="input-conversion" value="${state.usage['prospecting-monitor-conversion'] || 5}" min="1" max="100" oninput="updateProspecting()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">Contacts per Company</label>
+              <input type="number" id="input-contacts-goal" value="${state.usage['prospecting-monitor-contacts-per-company'] || 2}" min="1" oninput="updateProspecting()">
+            </div>
+            <div style="background: #F0F9FF; border: 1px solid #BAE6FD; border-radius: 10px; padding: 12px; font-size: 14px; margin-top: 12px;">
+              📊 Calculated: <strong>${state.usage['prospecting-monitor-companies'] || 0} companies</strong> to monitor
+            </div>
+          `}
+        </div>
+
+        <div class="section-card">
+          <h3>Company Research</h3>
           <div class="input-group">
-            <label class="input-label">Meeting Conversion Rate (%)</label>
-            <input type="number" id="input-prospecting-conversion" value="${conversion}" min="1" max="100" step="1" oninput="updateProspecting()">
-          </div>
-          <div class="input-group">
-            <label class="input-label">Contacts per Company</label>
-            <input type="number" id="input-prospecting-contacts-goal" value="${contactsPerCompany}" min="1" oninput="updateProspecting()">
-          </div>
-          <div class="calculated-result">
-            📊 Derived: ${Math.ceil(meetings / (conversion / 100))} companies needed<br>
-            💳 Credits: ${Math.ceil(meetings / (conversion / 100))} × ${contactsPerCompany} × 100 = ${(Math.ceil(meetings / (conversion / 100)) * contactsPerCompany * 100).toLocaleString()} credits
+            <label class="input-label">Research Results per Month</label>
+            <input type="number" value="${state.usage['prospecting-agent-company-research'] || 0}" min="0" oninput="updateUsage('prospecting-agent-company-research', this.value)">
+            <div class="quick-chips">
+              <span class="chip" onclick="addQuick('prospecting-agent-company-research', 50)">+50</span>
+              <span class="chip" onclick="addQuick('prospecting-agent-company-research', 100)">+100</span>
+            </div>
           </div>
         </div>
+
+        <div class="step-total">💳 This step: ${total.toLocaleString()} credits</div>
       `;
     }
 
-    // Prospecting Research
-    function renderProspectingResearch() {
-      const value = state.usage['prospecting-agent-company-research'] || 0;
-      return `
-        <div class="input-group">
-          <label class="input-label">Research Results per Month</label>
-          <p class="input-help">How many deep research results do you need per month?</p>
-          <input type="number" id="input-prospecting-agent-company-research" value="${value}" min="0" oninput="updateUsage('prospecting-agent-company-research', this.value)">
-          <div class="quick-add-chips">
-            <span class="chip" onclick="addQuick('prospecting-agent-company-research', 50)">+50</span>
-            <span class="chip" onclick="addQuick('prospecting-agent-company-research', 100)">+100</span>
-            <span class="chip" onclick="addQuick('prospecting-agent-company-research', 1000)">+1000</span>
-          </div>
-        </div>
-        <div class="calculated-result">
-          💳 Credits: ${value} results × 10 = ${(value * 10).toLocaleString()} credits
-        </div>
-      `;
-    }
-
-    // Data Agent
+    // Data Agent Step
     function renderDataAgent() {
       const questions = state.usage['data-agent-questions'] || 0;
       const records = state.usage['data-agent-records'] || 0;
@@ -945,163 +913,284 @@
       const total = questions * records * refreshes * 10;
 
       return `
-        <div class="input-group">
-          <label class="input-label">Questions per Record</label>
-          <input type="number" id="input-data-agent-questions" value="${questions}" min="0" oninput="updateDataAgent()">
-          <div class="quick-add-chips">
-            <span class="chip" onclick="addQuickDataAgent('questions', 50)">+50</span>
-            <span class="chip" onclick="addQuickDataAgent('questions', 100)">+100</span>
-            <span class="chip" onclick="addQuickDataAgent('questions', 1000)">+1000</span>
+        <p class="helper">Estimate AI questions asked about your data.</p>
+        
+        <div class="section-card">
+          <div class="input-group">
+            <label class="input-label">Questions per Record</label>
+            <input type="number" id="input-questions" value="${questions}" min="0" oninput="updateDataAgent()">
+            <div class="quick-chips">
+              <span class="chip" onclick="addQuickDataAgent('questions', 1)">+1</span>
+              <span class="chip" onclick="addQuickDataAgent('questions', 5)">+5</span>
+            </div>
           </div>
-        </div>
-        <div class="input-group">
-          <label class="input-label">New Records per Month</label>
-          <input type="number" id="input-data-agent-records" value="${records}" min="0" oninput="updateDataAgent()">
-          <div class="quick-add-chips">
-            <span class="chip" onclick="addQuickDataAgent('records', 50)">+50</span>
-            <span class="chip" onclick="addQuickDataAgent('records', 100)">+100</span>
-            <span class="chip" onclick="addQuickDataAgent('records', 1000)">+1000</span>
+          <div class="input-group">
+            <label class="input-label">New Records per Month</label>
+            <input type="number" id="input-records" value="${records}" min="0" oninput="updateDataAgent()">
+            <div class="quick-chips">
+              <span class="chip" onclick="addQuickDataAgent('records', 100)">+100</span>
+              <span class="chip" onclick="addQuickDataAgent('records', 1000)">+1000</span>
+            </div>
           </div>
-        </div>
-        <div class="input-group">
-          <label class="input-label">Refreshes per Month</label>
-          <select id="input-data-agent-refreshes" onchange="updateDataAgent()">
-            <option value="1" ${refreshes === 1 ? 'selected' : ''}>1 (Monthly)</option>
-            <option value="4" ${refreshes === 4 ? 'selected' : ''}>4 (Weekly)</option>
-            <option value="30" ${refreshes === 30 ? 'selected' : ''}>30 (Daily)</option>
-          </select>
-        </div>
-        <div class="calculated-result">
-          💳 Credits: ${questions} × ${records} × ${refreshes} × 10 = ${total.toLocaleString()} credits
+          <div class="input-group">
+            <label class="input-label">Refreshes per Month</label>
+            <select id="input-refreshes" onchange="updateDataAgent()">
+              <option value="1" ${refreshes === 1 ? 'selected' : ''}>Once (1)</option>
+              <option value="4" ${refreshes === 4 ? 'selected' : ''}>Weekly (4)</option>
+              <option value="30" ${refreshes === 30 ? 'selected' : ''}>Daily (30)</option>
+            </select>
+          </div>
+          <div class="step-total">💳 This step: ${total.toLocaleString()} credits</div>
         </div>
       `;
     }
 
-    // Breeze Workflows
-    function renderBreezeWorkflows() {
-      const value = state.usage['workflow-ai-action-breeze'] || 0;
-      return `
-        <div class="input-group">
-          <label class="input-label">AI Actions per Month</label>
-          <p class="input-help">How many AI actions are executed in workflows per month?</p>
-          <input type="number" id="input-workflow-ai-action-breeze" value="${value}" min="0" oninput="updateUsage('workflow-ai-action-breeze', this.value)">
-          <div class="quick-add-chips">
-            <span class="chip" onclick="addQuick('workflow-ai-action-breeze', 50)">+50</span>
-            <span class="chip" onclick="addQuick('workflow-ai-action-breeze', 100)">+100</span>
-            <span class="chip" onclick="addQuick('workflow-ai-action-breeze', 1000)">+1000</span>
-          </div>
-        </div>
-        <div class="calculated-result">
-          💳 Credits: ${value} actions × 10 = ${(value * 10).toLocaleString()} credits
-        </div>
-      `;
-    }
-
-    // Buyer Intent
+    // Buyer Intent Step
     function renderBuyerIntent() {
       const targets = state.usage['buyer-intent-targets'] || 0;
       const additional = state.usage['buyer-intent-additional'] || 0;
       const total = (targets + additional) * 10;
 
       return `
-        <div class="input-group">
-          <label class="input-label">Target Accounts</label>
-          <p class="input-help">How many target accounts do you want to actively track?</p>
-          <input type="number" id="input-buyer-intent-targets" value="${targets}" min="0" oninput="updateBuyerIntent()">
-          <div class="quick-add-chips">
-            <span class="chip" onclick="addQuickBuyerIntent('targets', 50)">+50</span>
-            <span class="chip" onclick="addQuickBuyerIntent('targets', 100)">+100</span>
-            <span class="chip" onclick="addQuickBuyerIntent('targets', 1000)">+1000</span>
+        <p class="helper">Monitor companies for buying signals.</p>
+        
+        <div class="section-card">
+          <div class="input-group">
+            <label class="input-label">Target Accounts</label>
+            <input type="number" id="input-targets" value="${targets}" min="0" oninput="updateBuyerIntent()">
+            <div class="quick-chips">
+              <span class="chip" onclick="addQuickBuyerIntent('targets', 10)">+10</span>
+              <span class="chip" onclick="addQuickBuyerIntent('targets', 50)">+50</span>
+            </div>
           </div>
-        </div>
-        <div class="input-group">
-          <label class="input-label">Additional Companies</label>
-          <input type="number" id="input-buyer-intent-additional" value="${additional}" min="0" oninput="updateBuyerIntent()">
-          <div class="quick-add-chips">
-            <span class="chip" onclick="addQuickBuyerIntent('additional', 50)">+50</span>
-            <span class="chip" onclick="addQuickBuyerIntent('additional', 100)">+100</span>
-            <span class="chip" onclick="addQuickBuyerIntent('additional', 1000)">+1000</span>
+          <div class="input-group">
+            <label class="input-label">Additional Companies</label>
+            <input type="number" id="input-additional" value="${additional}" min="0" oninput="updateBuyerIntent()">
+            <div class="quick-chips">
+              <span class="chip" onclick="addQuickBuyerIntent('additional', 10)">+10</span>
+              <span class="chip" onclick="addQuickBuyerIntent('additional', 50)">+50</span>
+            </div>
           </div>
-        </div>
-        <div class="calculated-result">
-          💳 Credits: (${targets} + ${additional}) × 10 = ${total.toLocaleString()} credits
+          <div class="step-total">💳 This step: ${total.toLocaleString()} credits</div>
         </div>
       `;
     }
 
-    // Data Hub
+    // Workflows Step
+    function renderWorkflows() {
+      const actions = state.usage['workflow-ai-action-breeze'] || 0;
+      const total = actions * 10;
+
+      return `
+        <p class="helper">AI-powered workflow automation actions.</p>
+        
+        <div class="section-card">
+          <div class="input-group">
+            <label class="input-label">AI Actions per Month</label>
+            <input type="number" value="${actions}" min="0" oninput="updateUsage('workflow-ai-action-breeze', this.value)">
+            <div class="quick-chips">
+              <span class="chip" onclick="addQuick('workflow-ai-action-breeze', 50)">+50</span>
+              <span class="chip" onclick="addQuick('workflow-ai-action-breeze', 100)">+100</span>
+              <span class="chip" onclick="addQuick('workflow-ai-action-breeze', 1000)">+1000</span>
+            </div>
+          </div>
+          <div class="step-total">💳 This step: ${total.toLocaleString()} credits</div>
+        </div>
+      `;
+    }
+
+    // Data Hub Step
     function renderDataHub() {
       const size = state.usage['data-hub-size'] || 'small';
       const destinations = state.usage['data-hub-destinations'] || 1;
       const frequency = state.usage['data-hub-frequency'] || 1;
-      
-      const sizeCredits = { small: 25, medium: 75, large: 200 };
-      const total = sizeCredits[size] * destinations * frequency;
+      const sizeMap = { small: 25, medium: 75, large: 200 };
+      const total = sizeMap[size] * destinations * frequency;
 
       return `
-        <div class="input-group">
-          <label class="input-label">Dataset Size</label>
-          <select id="input-data-hub-size" onchange="updateDataHub()">
-            <option value="small" ${size === 'small' ? 'selected' : ''}>Small (< 500K rows) - 25 credits</option>
-            <option value="medium" ${size === 'medium' ? 'selected' : ''}>Medium (500K-5M rows) - 75 credits</option>
-            <option value="large" ${size === 'large' ? 'selected' : ''}>Large (> 5M rows) - 200 credits</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label class="input-label">Destinations</label>
-          <input type="number" id="input-data-hub-destinations" value="${destinations}" min="1" oninput="updateDataHub()">
-        </div>
-        <div class="input-group">
-          <label class="input-label">Sync Frequency</label>
-          <select id="input-data-hub-frequency" onchange="updateDataHub()">
-            <option value="1" ${frequency === 1 ? 'selected' : ''}>One-time (1)</option>
-            <option value="1" ${frequency === 1 ? 'selected' : ''}>Monthly (1)</option>
-            <option value="30" ${frequency === 30 ? 'selected' : ''}>Daily (30)</option>
-            <option value="700" ${frequency === 700 ? 'selected' : ''}>Hourly (700)</option>
-            <option value="2900" ${frequency === 2900 ? 'selected' : ''}>Fifteen-min (2900)</option>
-          </select>
-        </div>
-        <div class="calculated-result">
-          💳 Credits: ${sizeCredits[size]} × ${destinations} × ${frequency} = ${total.toLocaleString()} credits
+        <p class="helper">Data synchronization and management.</p>
+        
+        <div class="section-card">
+          <h3>Dataset Size</h3>
+          <div class="tool-grid">
+            ${Object.entries({ small: '< 500K rows', medium: '500K-5M rows', large: '> 5M rows' }).map(([key, label]) => `
+              <div class="tool-card ${size === key ? 'tool-card--active' : ''}" onclick="selectDataHubSize('${key}')">
+                <div class="tool-card__name">${label}</div>
+                <div class="tool-card__credits">${sizeMap[key]} credits</div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Destinations</label>
+            <input type="number" id="input-destinations" value="${destinations}" min="1" oninput="updateDataHubCalc()">
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Sync Frequency</label>
+            <select id="input-frequency" onchange="updateDataHubCalc()">
+              <option value="1" ${frequency === 1 ? 'selected' : ''}>One-time (1)</option>
+              <option value="1" ${frequency === 1 ? 'selected' : ''}>Monthly (1)</option>
+              <option value="30" ${frequency === 30 ? 'selected' : ''}>Daily (30)</option>
+              <option value="700" ${frequency === 700 ? 'selected' : ''}>Hourly (700)</option>
+              <option value="2900" ${frequency === 2900 ? 'selected' : ''}>Fifteen-min (2900)</option>
+            </select>
+          </div>
+
+          <div class="step-total">💳 This step: ${total.toLocaleString()} credits</div>
         </div>
       `;
+    }
+
+    // Results Step
+    function renderResults() {
+      const included = state.included;
+      const projected = getProjectedUsage();
+      const net = included - projected;
+
+      // Get top 3 drivers
+      const drivers = [
+        { name: 'Customer Agent', credits: getStepTotal('customer-agent') },
+        { name: 'Prospecting Agent', credits: getStepTotal('prospecting') },
+        { name: 'Data Agent', credits: getStepTotal('data-agent') },
+        { name: 'Buyer Intent', credits: getStepTotal('buyer-intent') },
+        { name: 'Breeze Workflows', credits: getStepTotal('workflows') },
+        { name: 'Data Hub', credits: getStepTotal('data-hub') }
+      ].sort((a, b) => b.credits - a.credits).slice(0, 3);
+
+      const maxCredits = drivers[0]?.credits || 1;
+
+      return `
+        <p class="helper">Included vs. projected vs. expansion—at a glance.</p>
+        
+        <div class="result-grid">
+          <div class="result-card">
+            <div class="result-card__label">Included Credits</div>
+            <div class="result-card__value neutral">${included.toLocaleString()}</div>
+          </div>
+          <div class="result-card">
+            <div class="result-card__label">Projected Usage</div>
+            <div class="result-card__value neutral">${projected.toLocaleString()}</div>
+          </div>
+          <div class="result-card">
+            <div class="result-card__label">Net Balance</div>
+            <div class="result-card__value ${net >= 0 ? 'positive' : 'negative'}">${net.toLocaleString()}</div>
+          </div>
+        </div>
+
+        <div class="top-drivers">
+          <h3>Top Credit Drivers</h3>
+          ${drivers.map(driver => `
+            <div class="driver-item">
+              <strong style="min-width: 140px;">${driver.name}</strong>
+              <div class="driver-bar">
+                <div class="driver-bar-fill" style="width: ${(driver.credits / maxCredits * 100)}%"></div>
+              </div>
+              <span style="font-weight: 600; min-width: 80px; text-align: right;">${driver.credits.toLocaleString()}</span>
+              <span style="color: var(--muted); min-width: 50px; text-align: right;">${projected > 0 ? Math.round(driver.credits / projected * 100) : 0}%</span>
+            </div>
+          `).join('')}
+        </div>
+
+        ${net < 0 ? `
+          ${(() => {
+            const deficit = Math.abs(net);
+            const capacityPacks = Math.ceil(deficit / 1000);
+            const capacityCost = capacityPacks * 10;
+            const overageCost = Math.ceil(deficit / 10) * 0.10;
+            const recommended = capacityCost <= overageCost ? 'capacity' : 'overage';
+
+            return `
+              <div class="expansion-options">
+                <div class="option-card ${recommended === 'capacity' ? 'recommended' : ''}">
+                  ${recommended === 'capacity' ? '<div class="option-card__ribbon">RECOMMENDED</div>' : ''}
+                  <h4>Capacity Packs</h4>
+                  <div class="option-card__price">$${capacityCost.toFixed(2)}</div>
+                  <div class="option-card__details">${capacityPacks} pack${capacityPacks > 1 ? 's' : ''} × $10<br>Best for consistent overages</div>
+                </div>
+                <div class="option-card ${recommended === 'overage' ? 'recommended' : ''}">
+                  ${recommended === 'overage' ? '<div class="option-card__ribbon">RECOMMENDED</div>' : ''}
+                  <h4>Overage</h4>
+                  <div class="option-card__price">$${overageCost.toFixed(2)}</div>
+                  <div class="option-card__details">$0.01 per credit<br>Best for occasional spikes</div>
+                </div>
+              </div>
+            `;
+          })()}
+        ` : `
+          <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 16px; padding: 24px; text-align: center;">
+            <h3 style="color: var(--success); margin-bottom: 8px;">✅ You're all set!</h3>
+            <p style="color: var(--muted);">Your current plan includes enough credits for your projected usage.</p>
+          </div>
+        `}
+
+        <div class="result-actions">
+          <button class="btn" onclick="exportCSV()">📥 Export CSV</button>
+          <button class="btn" onclick="shareURL()">🔗 Share</button>
+          <button class="btn" onclick="resetCalculator()">🔄 Reset</button>
+        </div>
+      `;
+    }
+
+    // Navigation
+    function goToStep(index) {
+      state.currentStep = index;
+      render();
+    }
+
+    function nextStep() {
+      if (state.currentStep < steps.length - 1) {
+        state.currentStep++;
+        render();
+      }
     }
 
     // Update Functions
     function updateUsage(id, value) {
       state.usage[id] = parseInt(value) || 0;
-      updateCalculations();
-      renderCurrentStep();
+      render();
     }
 
     function addQuick(id, amount) {
-      const input = document.getElementById(`input-${id}`);
-      if (input) {
-        const newValue = (parseInt(input.value) || 0) + amount;
-        input.value = newValue;
-        updateUsage(id, newValue);
-      }
+      state.usage[id] = (state.usage[id] || 0) + amount;
+      render();
     }
 
-    function switchProspectingMode(mode) {
+    function toggleSeats() {
+      state.hasDataHub = !state.hasDataHub;
+      renderContent();
+    }
+
+    function selectTier(id, credits) {
+      state.included = credits;
+      render();
+    }
+
+    function selectDataHubTier(credits) {
+      if (credits > state.included) {
+        state.included = credits;
+      }
+      render();
+    }
+
+    function switchMode(mode) {
       state.usage['prospecting-monitor-mode'] = mode;
-      renderCurrentStep();
-      updateProspecting();
+      renderContent();
     }
 
     function updateProspecting() {
       const mode = state.usage['prospecting-monitor-mode'] || 'direct';
       
       if (mode === 'direct') {
-        const companies = parseInt(document.getElementById('input-prospecting-companies')?.value) || 0;
-        const contacts = parseInt(document.getElementById('input-prospecting-contacts')?.value) || 2;
+        const companies = parseInt(document.getElementById('input-companies')?.value) || 0;
+        const contacts = parseInt(document.getElementById('input-contacts')?.value) || 2;
         state.usage['prospecting-monitor-companies'] = companies;
         state.usage['prospecting-monitor-contacts-per-company'] = contacts;
         state.usage['prospecting-agent-monitor-contact'] = companies * contacts;
       } else {
-        const meetings = parseInt(document.getElementById('input-prospecting-meetings')?.value) || 0;
-        const conversion = parseInt(document.getElementById('input-prospecting-conversion')?.value) || 5;
-        const contacts = parseInt(document.getElementById('input-prospecting-contacts-goal')?.value) || 2;
+        const meetings = parseInt(document.getElementById('input-meetings')?.value) || 0;
+        const conversion = parseInt(document.getElementById('input-conversion')?.value) || 5;
+        const contacts = parseInt(document.getElementById('input-contacts-goal')?.value) || 2;
         const companies = Math.ceil(meetings / (conversion / 100));
         
         state.usage['prospecting-monitor-meetings'] = meetings;
@@ -1111,104 +1200,79 @@
         state.usage['prospecting-agent-monitor-contact'] = companies * contacts;
       }
       
-      updateCalculations();
-      renderCurrentStep();
+      render();
     }
 
     function addQuickProspecting(field, amount) {
       const mode = state.usage['prospecting-monitor-mode'] || 'direct';
       if (mode === 'direct' && field === 'companies') {
-        const input = document.getElementById('input-prospecting-companies');
-        input.value = (parseInt(input.value) || 0) + amount;
+        state.usage['prospecting-monitor-companies'] = (state.usage['prospecting-monitor-companies'] || 0) + amount;
       } else if (mode === 'goal' && field === 'meetings') {
-        const input = document.getElementById('input-prospecting-meetings');
-        input.value = (parseInt(input.value) || 0) + amount;
+        state.usage['prospecting-monitor-meetings'] = (state.usage['prospecting-monitor-meetings'] || 0) + amount;
       }
       updateProspecting();
     }
 
     function updateDataAgent() {
-      const questions = parseInt(document.getElementById('input-data-agent-questions')?.value) || 0;
-      const records = parseInt(document.getElementById('input-data-agent-records')?.value) || 0;
-      const refreshes = parseInt(document.getElementById('input-data-agent-refreshes')?.value) || 1;
+      const questions = parseInt(document.getElementById('input-questions')?.value) || 0;
+      const records = parseInt(document.getElementById('input-records')?.value) || 0;
+      const refreshes = parseInt(document.getElementById('input-refreshes')?.value) || 1;
       
       state.usage['data-agent-questions'] = questions;
       state.usage['data-agent-records'] = records;
       state.usage['data-agent-refreshes'] = refreshes;
       state.usage['data-agent-text-response'] = questions * records * refreshes;
       
-      updateCalculations();
-      renderCurrentStep();
+      render();
     }
 
     function addQuickDataAgent(field, amount) {
-      const input = document.getElementById(`input-data-agent-${field}`);
-      if (input) {
-        input.value = (parseInt(input.value) || 0) + amount;
-        updateDataAgent();
-      }
+      state.usage[`data-agent-${field}`] = (state.usage[`data-agent-${field}`] || 0) + amount;
+      updateDataAgent();
     }
 
     function updateBuyerIntent() {
-      const targets = parseInt(document.getElementById('input-buyer-intent-targets')?.value) || 0;
-      const additional = parseInt(document.getElementById('input-buyer-intent-additional')?.value) || 0;
+      const targets = parseInt(document.getElementById('input-targets')?.value) || 0;
+      const additional = parseInt(document.getElementById('input-additional')?.value) || 0;
       
       state.usage['buyer-intent-targets'] = targets;
       state.usage['buyer-intent-additional'] = additional;
       state.usage['company-monitoring-intent'] = targets + additional;
       
-      updateCalculations();
-      renderCurrentStep();
+      render();
     }
 
     function addQuickBuyerIntent(field, amount) {
-      const input = document.getElementById(`input-buyer-intent-${field}`);
-      if (input) {
-        input.value = (parseInt(input.value) || 0) + amount;
-        updateBuyerIntent();
-      }
+      state.usage[`buyer-intent-${field}`] = (state.usage[`buyer-intent-${field}`] || 0) + amount;
+      updateBuyerIntent();
     }
 
-    function updateDataHub() {
-      const size = document.getElementById('input-data-hub-size')?.value || 'small';
-      const destinations = parseInt(document.getElementById('input-data-hub-destinations')?.value) || 1;
-      const frequency = parseInt(document.getElementById('input-data-hub-frequency')?.value) || 1;
-      
+    function selectDataHubSize(size) {
       state.usage['data-hub-size'] = size;
+      render();
+    }
+
+    function updateDataHubCalc() {
+      const destinations = parseInt(document.getElementById('input-destinations')?.value) || 1;
+      const frequency = parseInt(document.getElementById('input-frequency')?.value) || 1;
+      
       state.usage['data-hub-destinations'] = destinations;
       state.usage['data-hub-frequency'] = frequency;
       
-      const sizeMap = { small: 25, medium: 75, large: 200 };
-      const sizeId = size === 'small' ? 'data-studio-small-sync' : size === 'medium' ? 'data-studio-medium-sync' : 'data-studio-large-sync';
-      state.usage[sizeId] = destinations * frequency;
-      
-      updateCalculations();
-      renderCurrentStep();
+      render();
     }
 
     // Calculate Totals
     function getProjectedUsage() {
       let total = 0;
       
-      // Customer Agent
       total += (state.usage['customer-agent'] || 0) * 100;
-      
-      // Prospecting Monitor
       total += (state.usage['prospecting-agent-monitor-contact'] || 0) * 100;
-      
-      // Prospecting Research
       total += (state.usage['prospecting-agent-company-research'] || 0) * 10;
-      
-      // Data Agent
       total += (state.usage['data-agent-text-response'] || 0) * 10;
-      
-      // Breeze Workflows
       total += (state.usage['workflow-ai-action-breeze'] || 0) * 10;
-      
-      // Buyer Intent
       total += (state.usage['company-monitoring-intent'] || 0) * 10;
       
-      // Data Hub
       const sizeMap = { small: 25, medium: 75, large: 200 };
       const size = state.usage['data-hub-size'] || 'small';
       const destinations = state.usage['data-hub-destinations'] || 0;
@@ -1216,145 +1280,6 @@
       total += sizeMap[size] * destinations * frequency;
       
       return total;
-    }
-
-    function updateCalculations() {
-      const included = state.included || 500; // Default starter
-      const projected = getProjectedUsage();
-      const net = included - projected;
-
-      // Update all KPI displays
-      document.getElementById('heroIncluded').textContent = included.toLocaleString();
-      document.getElementById('heroProjected').textContent = projected.toLocaleString();
-      document.getElementById('heroNet').textContent = net.toLocaleString();
-      
-      document.getElementById('stickyIncluded').textContent = included.toLocaleString();
-      document.getElementById('stickyProjected').textContent = projected.toLocaleString();
-      document.getElementById('stickyNet').textContent = net.toLocaleString();
-      
-      document.getElementById('summaryIncluded').textContent = included.toLocaleString();
-      document.getElementById('summaryProjected').textContent = projected.toLocaleString();
-      document.getElementById('summaryNet').textContent = net.toLocaleString();
-
-      // Update colors
-      const netClass = net >= 0 ? 'positive' : 'negative';
-      document.getElementById('heroNet').className = `kpi-value ${netClass}`;
-      document.getElementById('stickyNet').className = `sticky-kpi-value ${netClass}`;
-      document.getElementById('summaryNet').className = `value ${netClass}`;
-
-      // Update recommendation
-      updateRecommendation(net);
-    }
-
-    function updateRecommendation(net) {
-      const container = document.getElementById('recommendationContainer');
-      
-      if (net >= 0) {
-        container.innerHTML = '<p style="color: var(--om-success); font-weight: 600;">✅ You have enough credits included in your plan!</p>';
-        return;
-      }
-
-      const deficit = Math.abs(net);
-      const capacityPacks = Math.ceil(deficit / 1000);
-      const capacityCost = capacityPacks * 10;
-      const overageCost = Math.ceil(deficit / 10) * 0.10;
-
-      const recommended = capacityCost <= overageCost ? 'capacity' : 'overage';
-
-      container.innerHTML = `
-        <div class="recommendation-box">
-          <h4>⚠️ Credit Deficit: ${deficit.toLocaleString()} credits</h4>
-          
-          <div class="option-row ${recommended === 'capacity' ? 'recommended' : ''}">
-            <div>
-              <strong>Capacity Packs</strong><br>
-              <span style="color: var(--om-muted); font-size: 0.875rem;">${capacityPacks} pack${capacityPacks > 1 ? 's' : ''} × $10</span>
-            </div>
-            <div style="text-align: right;">
-              <strong>$${capacityCost.toFixed(2)}</strong>
-              ${recommended === 'capacity' ? '<div class="recommended-badge">RECOMMENDED</div>' : ''}
-            </div>
-          </div>
-
-          <div class="option-row ${recommended === 'overage' ? 'recommended' : ''}">
-            <div>
-              <strong>Overage (Pay-as-you-go)</strong><br>
-              <span style="color: var(--om-muted); font-size: 0.875rem;">$0.01 per credit</span>
-            </div>
-            <div style="text-align: right;">
-              <strong>$${overageCost.toFixed(2)}</strong>
-              ${recommended === 'overage' ? '<div class="recommended-badge">RECOMMENDED</div>' : ''}
-            </div>
-          </div>
-
-          <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--om-muted);">
-            💡 Capacity packs suit consistent overages; overage is fine for spikes.
-          </p>
-        </div>
-      `;
-    }
-
-    // Talk Track Panel
-    function renderTalkTrack() {
-      const step = steps[state.currentStep];
-      const track = talkTracks[step.id];
-      
-      if (!track) return;
-
-      document.getElementById('talkTrackContent').innerHTML = `
-        <div class="talk-section">
-          <h4>Primary Question</h4>
-          <p>${track.primary}</p>
-        </div>
-        <div class="talk-section">
-          <h4>If they don't know</h4>
-          <p>${track.alternative}</p>
-        </div>
-        <div class="talk-section">
-          <h4>Common Benchmark</h4>
-          <p>${track.benchmark}</p>
-        </div>
-        <div class="talk-section">
-          <h4>Formula</h4>
-          <div class="formula-box">${track.formula}</div>
-        </div>
-        <div class="talk-section">
-          <h4>Example</h4>
-          <p>${track.example}</p>
-        </div>
-      `;
-    }
-
-    // Scroll Behavior
-    function setupScrollBehavior() {
-      window.addEventListener('scroll', () => {
-        const hero = document.getElementById('hero');
-        const stickyHeader = document.getElementById('stickyHeader');
-        
-        if (window.scrollY > 200) {
-          hero.classList.add('collapsed');
-          stickyHeader.classList.add('visible');
-        } else {
-          hero.classList.remove('collapsed');
-          stickyHeader.classList.remove('visible');
-        }
-      });
-    }
-
-    // Theme Toggle
-    function toggleTheme() {
-      const html = document.documentElement;
-      const currentTheme = html.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      document.getElementById('themeToggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
-    }
-
-    function loadTheme() {
-      const savedTheme = localStorage.getItem('theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
     }
 
     // URL State Management
@@ -1372,8 +1297,6 @@
         try {
           const loadedState = JSON.parse(atob(hash));
           state = { ...state, ...loadedState };
-          renderCurrentStep();
-          updateCalculations();
         } catch (e) {
           console.error('Failed to load state from URL');
         }
@@ -1390,7 +1313,11 @@
         ['Data Agent', state.usage['data-agent-text-response'] || 0, 10, (state.usage['data-agent-text-response'] || 0) * 10],
         ['Breeze Workflows', state.usage['workflow-ai-action-breeze'] || 0, 10, (state.usage['workflow-ai-action-breeze'] || 0) * 10],
         ['Buyer Intent', state.usage['company-monitoring-intent'] || 0, 10, (state.usage['company-monitoring-intent'] || 0) * 10],
-        ['', '', 'Total', getProjectedUsage()]
+        ['', '', '', ''],
+        ['Summary', '', '', ''],
+        ['Included Credits', state.included, '', ''],
+        ['Projected Usage', getProjectedUsage(), '', ''],
+        ['Net Balance', state.included - getProjectedUsage(), '', '']
       ];
 
       const csv = rows.map(row => row.join(',')).join('\n');
@@ -1405,13 +1332,48 @@
     // Reset
     function resetCalculator() {
       if (confirm('Reset all values? This cannot be undone.')) {
-        state = { currentStep: 0, included: 500, usage: {} };
-        renderCurrentStep();
-        updateCalculations();
+        state = { 
+          currentStep: 0, 
+          included: 500, 
+          hasDataHub: false,
+          usage: {
+            'customer-agent': 0,
+            'prospecting-monitor-mode': 'direct',
+            'prospecting-monitor-companies': 0,
+            'prospecting-monitor-contacts-per-company': 2,
+            'prospecting-monitor-meetings': 0,
+            'prospecting-monitor-conversion': 5,
+            'prospecting-agent-monitor-contact': 0,
+            'prospecting-agent-company-research': 0,
+            'data-agent-questions': 0,
+            'data-agent-records': 0,
+            'data-agent-refreshes': 1,
+            'data-agent-text-response': 0,
+            'workflow-ai-action-breeze': 0,
+            'buyer-intent-targets': 0,
+            'buyer-intent-additional': 0,
+            'company-monitoring-intent': 0,
+            'data-hub-size': 'small',
+            'data-hub-destinations': 1,
+            'data-hub-frequency': 1
+          }
+        };
+        render();
       }
     }
 
-    // Initialize on load
+    // Main Render
+    function render() {
+      renderSidebar();
+      renderContent();
+    }
+
+    // Initialize
+    function init() {
+      loadFromURL();
+      render();
+    }
+
     init();
   </script>
 </body>
