@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HubSpot AI Credits Calculator</title>
+  <title>HubSpot Credits Calculator - Breeze by OneMetric.io</title>
   <style>
     * {
       margin: 0;
@@ -24,7 +24,7 @@
       --om-danger: #EF4444;
       --om-warning: #F59E0B;
       --om-focus: rgba(255,122,89,0.35);
-      --om-radius-lg: 18px;
+      --om-radius: 20px;
       --om-shadow: 0 10px 30px rgba(0,0,0,0.25);
     }
 
@@ -37,1433 +37,1380 @@
       --om-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
     body {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
       background: var(--om-bg);
       color: var(--om-text);
       line-height: 1.6;
       transition: background 0.15s ease, color 0.15s ease;
     }
 
-    .header {
-      background: var(--om-surface);
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--om-surface) 0%, rgba(255,122,89,0.1) 100%);
       border-bottom: 1px solid var(--om-border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: var(--om-shadow);
+      padding: 3rem 2rem;
+      transition: all 0.3s ease;
     }
 
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 2rem;
+    .hero.collapsed {
+      padding: 0;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .hero-container {
       max-width: 1400px;
       margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 2rem;
+      align-items: center;
     }
 
-    .logo {
-      font-size: 1.25rem;
+    .hero-logo {
+      font-size: 1.5rem;
       font-weight: 600;
       color: var(--om-text);
     }
 
-    .logo img {
-      height: 40px;
+    .hero-logo img {
+      height: 50px;
       width: auto;
-      display: block;
     }
 
-    .header-center {
-      font-size: 0.875rem;
-      font-weight: 500;
+    .hero-center {
+      text-align: center;
+    }
+
+    .hero-center h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--om-text) 0%, var(--om-primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-center p {
+      font-size: 1.125rem;
       color: var(--om-muted);
     }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .header-link {
-      font-size: 0.875rem;
-      color: var(--om-muted);
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      transition: all 0.15s ease;
-    }
-
-    .header-link:hover {
-      color: var(--om-primary);
-      background: rgba(255,122,89,0.1);
-    }
-
-    .theme-toggle {
-      background: transparent;
+    .hero-kpi {
+      background: var(--om-surface);
       border: 1px solid var(--om-border);
-      color: var(--om-text);
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s ease;
-    }
-
-    .theme-toggle:hover {
-      border-color: var(--om-primary);
-      background: rgba(255,122,89,0.1);
-    }
-
-    .theme-toggle:focus {
-      outline: 3px solid var(--om-focus);
-      outline-offset: 2px;
-    }
-
-
-    .quick-stats {
-      background: var(--om-surface);
-      border-bottom: 1px solid var(--om-border);
-      padding: 1rem 2rem;
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .pill {
-      font-weight: 600;
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 0.8rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .pill--muted {
-      background: rgba(169,175,188,0.15);
-      color: var(--om-muted);
-    }
-
-    .pill--primary {
-      background: rgba(255,122,89,0.15);
-      color: var(--om-primary);
-    }
-
-    .pill--success {
-      background: rgba(34,197,94,0.15);
-      color: var(--om-success);
-    }
-
-    .pill--danger {
-      background: rgba(239,68,68,0.15);
-      color: var(--om-danger);
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    @media (min-width: 768px) {
-      .grid {
-        grid-template-columns: 320px 1fr;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .grid {
-        grid-template-columns: 320px 1fr 380px;
-      }
-    }
-
-    .card {
-      background: var(--om-surface);
-      border-radius: var(--om-radius-lg);
-      padding: 24px;
+      border-radius: var(--om-radius);
+      padding: 1.5rem;
       box-shadow: var(--om-shadow);
-      border: 1px solid var(--om-border);
-      transition: box-shadow 0.15s ease;
     }
 
-    .card:hover {
-      box-shadow: 0 12px 35px rgba(0,0,0,0.3);
-    }
-
-    :root[data-theme="light"] .card:hover {
-      box-shadow: 0 12px 35px rgba(0,0,0,0.12);
-    }
-
-    .card h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--om-text);
-    }
-
-    .card h3 {
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin: 1.5rem 0 0.75rem 0;
-      color: var(--om-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
-
-    .helper-text {
-      font-size: 0.875rem;
-      color: var(--om-muted);
-      margin-top: 0.75rem;
-      padding: 0.75rem;
-      background: rgba(169,175,188,0.08);
-      border-radius: 8px;
-      line-height: 1.5;
-    }
-
-    .radio-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .radio-option {
-      display: flex;
-      align-items: center;
-      padding: 0.875rem;
-      border: 2px solid var(--om-border);
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .radio-option:hover {
-      border-color: var(--om-primary);
-      background: rgba(255,122,89,0.05);
-    }
-
-    .radio-option.selected {
-      border-color: var(--om-primary);
-      background: rgba(255,122,89,0.1);
-    }
-
-    .radio-option input[type="radio"] {
-      margin-right: 0.75rem;
-      cursor: pointer;
-      width: 18px;
-      height: 18px;
-      accent-color: var(--om-primary);
-    }
-
-    .radio-option:focus-within {
-      outline: 3px solid var(--om-focus);
-      outline-offset: 2px;
-    }
-
-    .radio-label {
-      flex: 1;
+    .kpi-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0.5rem 0;
     }
 
-    .radio-label span:first-child {
-      font-weight: 500;
-    }
-
-    .radio-label span:last-child {
-      font-size: 0.875rem;
-      color: var(--om-muted);
-    }
-
-    .usage-category {
-      margin-bottom: 2rem;
-    }
-
-    .usage-category h3 {
-      margin-top: 0;
-      margin-bottom: 1rem;
-    }
-
-    .usage-row {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 1rem;
-      align-items: center;
-      padding: 0.875rem 0;
-      border-bottom: 1px solid var(--om-border);
-    }
-
-    .usage-row:last-child {
-      border-bottom: none;
-    }
-
-    .usage-label {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .usage-label span {
-      font-size: 0.9rem;
-    }
-
-    .help-text {
-      font-size: 0.8rem;
-      color: var(--om-muted);
+    .kpi-row + .kpi-row {
+      border-top: 1px solid var(--om-border);
       margin-top: 0.5rem;
-      line-height: 1.5;
-      font-style: italic;
+      padding-top: 0.75rem;
     }
 
-    .calculated-result {
-      margin-top: 1rem;
-      padding: 0.75rem;
-      background: rgba(255,122,89,0.08);
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--om-primary);
-    }
-
-    .prospecting-inputs {
-      display: grid;
-      gap: 1rem;
-      margin-top: 1rem;
-      padding: 1rem;
-      background: rgba(169,175,188,0.05);
-      border-radius: 8px;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .input-group label {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--om-text);
-    }
-
-    .input-group input {
-      padding: 0.625rem;
-      border: 1px solid var(--om-border);
-      border-radius: 8px;
-      font-size: 0.9rem;
-      background: var(--om-bg);
-      color: var(--om-text);
-      transition: all 0.15s ease;
-    }
-
-    .input-group input:focus {
-      outline: 3px solid var(--om-focus);
-      border-color: var(--om-primary);
-    }
-
-    .validation-error {
-      font-size: 0.8rem;
-      color: var(--om-danger);
-      margin-top: 0.25rem;
-    }
-
-    .credit-rate {
+    .kpi-label {
       font-size: 0.875rem;
       color: var(--om-muted);
-      white-space: nowrap;
     }
 
-    .usage-input {
-      width: 90px;
-      padding: 0.625rem;
-      border: 1px solid var(--om-border);
-      border-radius: 8px;
-      font-size: 0.9rem;
-      text-align: right;
-      background: var(--om-bg);
-      color: var(--om-text);
-      transition: all 0.15s ease;
-    }
-
-    .usage-input:hover {
-      border-color: var(--om-primary);
-    }
-
-    .usage-input:focus {
-      outline: 3px solid var(--om-focus);
-      outline-offset: 0;
-      border-color: var(--om-primary);
-    }
-
-    .tbd-row {
-      opacity: 0.5;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 0.25rem 0.625rem;
-      background: var(--om-warning);
-      color: #000;
-      border-radius: 6px;
-      font-size: 0.7rem;
+    .kpi-value {
+      font-size: 1.25rem;
       font-weight: 700;
     }
 
-    .badge.recommended {
-      background: var(--om-success);
-      color: white;
-    }
+    .kpi-value.positive { color: var(--om-success); }
+    .kpi-value.negative { color: var(--om-danger); }
+    .kpi-value.neutral { color: var(--om-primary); }
 
-    .summary {
+    /* Collapsed Sticky Header */
+    .sticky-header {
       position: sticky;
-      top: 180px;
-    }
-
-    .summary-lead {
-      font-size: 0.875rem;
-      color: var(--om-muted);
-      margin-bottom: 1rem;
-      font-style: italic;
-    }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.875rem 0;
+      top: 0;
+      z-index: 100;
+      background: var(--om-surface);
       border-bottom: 1px solid var(--om-border);
+      box-shadow: var(--om-shadow);
+      opacity: 0;
+      transform: translateY(-100%);
+      transition: all 0.3s ease;
+      pointer-events: none;
     }
 
-    .summary-row:last-child {
-      border-bottom: none;
+    .sticky-header.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
     }
 
-    .summary-row.total {
-      font-weight: 600;
-      font-size: 1.15rem;
-      margin-top: 0.5rem;
-      padding-top: 1rem;
-      border-top: 2px solid var(--om-border);
-    }
-
-    .summary-label {
-      color: var(--om-muted);
-    }
-
-    .summary-value {
-      font-weight: 600;
-    }
-
-    .summary-value.negative {
-      color: var(--om-danger);
-    }
-
-    .summary-value.positive {
-      color: var(--om-success);
-    }
-
-    .expansion-section {
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--om-border);
-    }
-
-    .expansion-section h3 {
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      color: var(--om-text);
-    }
-
-    .expansion-compare {
-      display: grid;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .expansion-option {
-      padding: 1rem;
-      border: 2px solid var(--om-border);
-      border-radius: 12px;
-      background: rgba(169,175,188,0.05);
-      transition: all 0.15s ease;
-    }
-
-    .expansion-option.recommended {
-      border-color: var(--om-success);
-      background: rgba(34,197,94,0.08);
-    }
-
-    .expansion-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .expansion-header h4 {
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
-
-    .expansion-details {
-      font-size: 0.875rem;
-      color: var(--om-muted);
-      line-height: 1.6;
-    }
-
-    .expansion-explainer {
-      font-size: 0.8rem;
-      color: var(--om-muted);
-      line-height: 1.5;
-      padding: 0.75rem;
-      background: rgba(169,175,188,0.08);
-      border-radius: 8px;
-    }
-
-    .button-group {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    button {
-      min-height: 44px;
-      padding: 0.75rem 1.5rem;
-      border: 1px solid var(--om-border);
-      border-radius: 8px;
-      background: var(--om-surface);
-      color: var(--om-text);
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    button:hover {
-      background: var(--om-primary);
-      color: white;
-      border-color: var(--om-primary);
-      transform: translateY(-1px);
-    }
-
-    button:focus {
-      outline: 3px solid var(--om-focus);
-      outline-offset: 2px;
-    }
-
-    button.primary {
-      background: var(--om-primary);
-      color: white;
-      border-color: var(--om-primary);
-    }
-
-    button.primary:hover {
-      background: var(--om-primary-700);
-    }
-
-    .footer {
-      background: var(--om-surface);
-      border-top: 1px solid var(--om-border);
-      padding: 2rem;
-      margin-top: 4rem;
-    }
-
-    .footer-content {
+    .sticky-content {
       max-width: 1400px;
       margin: 0 auto;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 2rem;
     }
 
-    .footer-left {
-      font-size: 0.875rem;
-      color: var(--om-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .footer-left strong {
-      color: var(--om-text);
-      font-weight: 600;
-    }
-
-    .footer-left img {
-      height: 28px;
-      width: auto;
-      display: block;
-    }
-
-    .footer-links {
+    .sticky-kpis {
       display: flex;
       gap: 1.5rem;
-      font-size: 0.8rem;
     }
 
-    .footer-link {
-      color: var(--om-muted);
-      text-decoration: none;
-      transition: color 0.15s ease;
+    .sticky-kpi {
+      display: flex;
+      flex-direction: column;
     }
 
-    .footer-link:hover {
-      color: var(--om-primary);
-    }
-
-    .footer-note {
-      width: 100%;
-      text-align: center;
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--om-border);
+    .sticky-kpi-label {
       font-size: 0.75rem;
       color: var(--om-muted);
     }
 
-    .toast {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: #1a1a1a;
+    .sticky-kpi-value {
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+
+    .cta-button {
+      background: var(--om-primary);
       color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      z-index: 1000;
-      animation: slideIn 0.15s ease;
-    }
-
-    @keyframes slideIn {
-      from {
-        transform: translateY(100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .how-credits-work {
-      margin-top: 3rem;
-      padding: 2rem;
-      background: var(--om-surface);
-      border: 1px solid var(--om-border);
-      border-radius: var(--om-radius-lg);
-    }
-
-    .how-credits-work h2 {
-      font-size: 1.25rem;
-      margin-bottom: 1rem;
-    }
-
-    .how-credits-work details {
-      margin-bottom: 0.75rem;
-    }
-
-    .how-credits-work summary {
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
       cursor: pointer;
-      padding: 0.75rem;
-      background: rgba(169,175,188,0.08);
-      border-radius: 8px;
-      font-weight: 500;
+      text-decoration: none;
       transition: all 0.15s ease;
     }
 
-    .how-credits-work summary:hover {
-      background: rgba(255,122,89,0.1);
-      color: var(--om-primary);
+    .cta-button:hover {
+      background: var(--om-primary-600);
+      transform: translateY(-1px);
     }
 
-    .how-credits-work details[open] summary {
+    /* Three Column Layout */
+    .main-container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 250px 1fr 350px;
+      gap: 2rem;
+    }
+
+    /* Left: Steps Navigation */
+    .steps-nav {
+      background: var(--om-surface);
+      border-radius: var(--om-radius);
+      padding: 1.5rem;
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+      box-shadow: var(--om-shadow);
+    }
+
+    .steps-nav h3 {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      color: var(--om-muted);
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-item {
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+    }
+
+    .step-item:hover {
+      background: rgba(255,122,89,0.1);
+    }
+
+    .step-item.active {
+      background: var(--om-primary);
+      color: white;
+      border-color: var(--om-primary-700);
+    }
+
+    .step-number {
+      font-size: 0.75rem;
+      color: var(--om-muted);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-item.active .step-number {
+      color: rgba(255,255,255,0.8);
+    }
+
+    .step-title {
+      font-weight: 600;
+    }
+
+    /* Center: Input Panel */
+    .input-panel {
+      background: var(--om-surface);
+      border-radius: var(--om-radius);
+      padding: 2rem;
+      box-shadow: var(--om-shadow);
+    }
+
+    .input-panel h2 {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .input-panel .subtitle {
+      color: var(--om-muted);
+      margin-bottom: 2rem;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .input-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .input-help {
+      color: var(--om-muted);
+      font-size: 0.875rem;
       margin-bottom: 0.75rem;
     }
 
-    .how-credits-work p {
-      padding: 0 0.75rem;
+    .input-wrapper {
+      position: relative;
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--om-bg);
+      border: 1px solid var(--om-border);
+      border-radius: 10px;
+      color: var(--om-text);
+      font-size: 1rem;
+      transition: all 0.15s ease;
+    }
+
+    input[type="number"]:focus, select:focus {
+      outline: none;
+      border-color: var(--om-primary);
+      box-shadow: 0 0 0 3px var(--om-focus);
+    }
+
+    .quick-add-chips {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .chip {
+      background: var(--om-bg);
+      border: 1px solid var(--om-border);
+      padding: 0.25rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .chip:hover {
+      background: var(--om-primary);
+      color: white;
+      border-color: var(--om-primary);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--om-border);
+    }
+
+    .tab {
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: none;
       color: var(--om-muted);
-      font-size: 0.9rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s ease;
+      font-weight: 600;
+    }
+
+    .tab.active {
+      color: var(--om-primary);
+      border-bottom-color: var(--om-primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .calculated-result {
+      background: rgba(255,122,89,0.1);
+      border: 1px solid var(--om-primary);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 1rem;
+      color: var(--om-primary);
+      font-weight: 600;
+    }
+
+    .benchmark-chip {
+      background: var(--om-primary);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    /* Right: Talk Track Panel */
+    .talk-track {
+      background: var(--om-surface);
+      border-radius: var(--om-radius);
+      padding: 1.5rem;
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+      box-shadow: var(--om-shadow);
+    }
+
+    .talk-track h3 {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      color: var(--om-primary);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .talk-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .talk-section h4 {
+      font-size: 0.875rem;
+      color: var(--om-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .talk-section p {
+      font-size: 0.95rem;
       line-height: 1.6;
     }
 
-    @media (max-width: 1023px) {
-      .summary {
-        position: static;
+    .formula-box {
+      background: var(--om-bg);
+      border: 1px solid var(--om-border);
+      border-radius: 10px;
+      padding: 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Summary Block */
+    .summary-block {
+      background: var(--om-surface);
+      border-radius: var(--om-radius);
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--om-shadow);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .summary-card {
+      background: var(--om-bg);
+      border: 1px solid var(--om-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .summary-card h4 {
+      font-size: 0.875rem;
+      color: var(--om-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-card .value {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .recommendation-box {
+      background: rgba(255,122,89,0.1);
+      border: 1px solid var(--om-primary);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .recommendation-box h4 {
+      color: var(--om-primary);
+      margin-bottom: 1rem;
+    }
+
+    .option-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      background: var(--om-bg);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .option-row.recommended {
+      border: 2px solid var(--om-success);
+      background: rgba(34,197,94,0.1);
+    }
+
+    .recommended-badge {
+      background: var(--om-success);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--om-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--om-primary-600);
+    }
+
+    .btn-secondary {
+      background: var(--om-bg);
+      color: var(--om-text);
+      border: 1px solid var(--om-border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--om-primary);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--om-primary);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: var(--om-shadow);
+      transition: all 0.15s ease;
+      z-index: 1000;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 1200px) {
+      .main-container {
+        grid-template-columns: 200px 1fr;
       }
-      .header-center {
+      .talk-track {
         display: none;
       }
     }
 
-    @media (max-width: 767px) {
-      .container {
-        padding: 1rem;
-      }
-      .header-top {
-        padding: 1rem;
-      }
-      .quick-stats {
-        padding: 0.75rem 1rem;
-      }
-      .usage-row {
+    @media (max-width: 768px) {
+      .hero-container {
         grid-template-columns: 1fr;
-        gap: 0.5rem;
+        gap: 1.5rem;
       }
-      .usage-label {
-        grid-column: 1 / -1;
+      .hero-center h1 {
+        font-size: 1.75rem;
       }
-      .button-group {
+      .main-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0 1rem;
+      }
+      .steps-nav {
+        position: static;
+      }
+      .sticky-content {
         flex-direction: column;
-      }
-      button {
-        width: 100%;
+        gap: 1rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="header-top">
-      <div class="logo">
-        <img src="attached_assets/OneMetric Logo_1760030103016.png" alt="OneMetric.io">
+  <!-- Hero Section -->
+  <div class="hero" id="hero">
+    <div class="hero-container">
+      <div class="hero-logo">
+        <img src="attached_assets/OneMetric Logo_1760030103016.png" alt="Breeze by OneMetric.io">
       </div>
-      <div class="header-center">HubSpot AI Credits Calculator</div>
-      <div class="header-actions">
-        <a href="#how-credits-work" class="header-link">Docs</a>
-        <a href="https://www.onemetric.io" class="header-link" target="_blank" rel="noopener noreferrer">Talk to an HubSpot expert</a>
-        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-          <span id="themeIcon">☀️</span>
-        </button>
+      <div class="hero-center">
+        <h1>HubSpot Credits Calculator</h1>
+        <p>Estimate your monthly credit consumption.</p>
       </div>
-    </div>
-    <div class="quick-stats">
-      <div class="pill pill--muted">
-        <span>Included:</span>
-        <strong id="quickIncluded">500</strong>
-      </div>
-      <div class="pill pill--primary">
-        <span>Projected:</span>
-        <strong id="quickProjected">0</strong>
-      </div>
-      <div class="pill pill--success" id="quickNetPill">
-        <span>Net:</span>
-        <strong id="quickNet">500</strong>
+      <div class="hero-kpi">
+        <div class="kpi-row">
+          <span class="kpi-label">Included</span>
+          <span class="kpi-value" id="heroIncluded">0</span>
+        </div>
+        <div class="kpi-row">
+          <span class="kpi-label">Projected</span>
+          <span class="kpi-value neutral" id="heroProjected">0</span>
+        </div>
+        <div class="kpi-row">
+          <span class="kpi-label">Net</span>
+          <span class="kpi-value positive" id="heroNet">0</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="container">
-    <div class="grid">
-      <div class="card">
-        <h2>Your HubSpot plan</h2>
+  <!-- Sticky Collapsed Header -->
+  <div class="sticky-header" id="stickyHeader">
+    <div class="sticky-content">
+      <div class="sticky-kpis">
+        <div class="sticky-kpi">
+          <span class="sticky-kpi-label">Included</span>
+          <span class="sticky-kpi-value" id="stickyIncluded">0</span>
+        </div>
+        <div class="sticky-kpi">
+          <span class="sticky-kpi-label">Projected</span>
+          <span class="sticky-kpi-value neutral" id="stickyProjected">0</span>
+        </div>
+        <div class="sticky-kpi">
+          <span class="sticky-kpi-label">Net</span>
+          <span class="sticky-kpi-value positive" id="stickyNet">0</span>
+        </div>
+      </div>
+      <a href="https://www.onemetric.io" class="cta-button" target="_blank" rel="noopener noreferrer">Talk to an HubSpot expert</a>
+    </div>
+  </div>
+
+  <!-- Main Three Column Layout -->
+  <div class="main-container">
+    <!-- Left: Steps Navigation -->
+    <div class="steps-nav">
+      <h3>Steps</h3>
+      <div id="stepsContainer"></div>
+    </div>
+
+    <!-- Center: Input Panel -->
+    <div>
+      <div class="input-panel" id="inputPanel"></div>
+      
+      <!-- Summary Block -->
+      <div class="summary-block">
+        <h2>Summary</h2>
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4>Included Credits</h4>
+            <div class="value" id="summaryIncluded">0</div>
+          </div>
+          <div class="summary-card">
+            <h4>Projected Usage</h4>
+            <div class="value neutral" id="summaryProjected">0</div>
+          </div>
+          <div class="summary-card">
+            <h4>Net Balance</h4>
+            <div class="value positive" id="summaryNet">0</div>
+          </div>
+        </div>
         
-        <h3>Smart CRM / Marketing / Sales / Service / Content Hub</h3>
-        <div class="radio-group" id="smartCrmTier">
-          <label class="radio-option">
-            <input type="radio" name="smartcrm" value="starter" checked>
-            <div class="radio-label">
-              <span>Starter</span>
-              <span>500 credits</span>
-            </div>
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="smartcrm" value="professional">
-            <div class="radio-label">
-              <span>Professional</span>
-              <span>3,000 credits</span>
-            </div>
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="smartcrm" value="enterprise">
-            <div class="radio-label">
-              <span>Enterprise</span>
-              <span>5,000 credits</span>
-            </div>
-          </label>
-        </div>
+        <div id="recommendationContainer"></div>
 
-        <h3>Data Hub / Customer Platform</h3>
-        <div class="radio-group" id="dataHubTier">
-          <label class="radio-option">
-            <input type="radio" name="datahub" value="none" checked>
-            <div class="radio-label">
-              <span>None</span>
-              <span>0 credits</span>
-            </div>
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="datahub" value="starter">
-            <div class="radio-label">
-              <span>Starter</span>
-              <span>500 credits</span>
-            </div>
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="datahub" value="pro">
-            <div class="radio-label">
-              <span>Professional</span>
-              <span>5,000 credits</span>
-            </div>
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="datahub" value="enterprise">
-            <div class="radio-label">
-              <span>Enterprise</span>
-              <span>10,000 credits</span>
-            </div>
-          </label>
-        </div>
-
-        <div class="helper-text">
-          Pick your highest Smart CRM/Hub tiers. Data Hub adds on top.
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Estimate your month</h2>
-        <div class="empty-state" style="display: none;">
-          <p>Estimate counts for this month. Adjust anytime.</p>
-        </div>
-        <div id="usageInputs"></div>
-        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--om-border);">
-          <button onclick="resetCalculator()" style="width: 100%;">Reset All Values</button>
-        </div>
-      </div>
-
-      <div class="card summary">
-        <h2>Projection</h2>
-        <p class="summary-lead">Included vs. usage vs. expansion—at a glance.</p>
-        
-        <div class="summary-row">
-          <span class="summary-label">Included credits</span>
-          <span class="summary-value" id="includedCredits">500</span>
-        </div>
-        <div class="summary-row">
-          <span class="summary-label">Projected usage</span>
-          <span class="summary-value" id="projectedUsage">0</span>
-        </div>
-        <div class="summary-row total">
-          <span class="summary-label">Net balance</span>
-          <span class="summary-value positive" id="netBalance">500</span>
-        </div>
-
-        <div id="expansionOptions"></div>
-
-        <div class="button-group">
-          <button onclick="resetCalculator()">Reset</button>
-          <button onclick="exportCSV()">Export CSV</button>
-          <button class="primary" onclick="shareURL()">Share</button>
+        <div class="action-buttons">
+          <button class="btn btn-primary" onclick="shareURL()">📤 Share Calculator</button>
+          <button class="btn btn-secondary" onclick="exportCSV()">📊 Export CSV</button>
+          <button class="btn btn-secondary" onclick="resetCalculator()">🔄 Reset All</button>
         </div>
       </div>
     </div>
 
-    <div class="how-credits-work" id="how-credits-work">
-      <h2>How credits work</h2>
-      <details>
-        <summary>What are HubSpot AI Credits?</summary>
-        <p>AI Credits are the currency for HubSpot's AI-powered features. Each AI action (conversation, workflow step, data sync) consumes a set number of credits based on complexity.</p>
-      </details>
-      <details>
-        <summary>How are credits included in my plan?</summary>
-        <p>Your monthly credit allocation depends on your highest-tier Smart CRM/Marketing/Sales/Service/Content Hub subscription. Data Hub or Customer Platform tiers add additional credits on top.</p>
-      </details>
-      <details>
-        <summary>What happens when I run out of credits?</summary>
-        <p>You have two options: purchase Capacity Packs (1,000 credits for $10) or use pay-as-you-go Overage billing ($0.01 per credit, minimum 10-credit blocks). We recommend the most cost-effective option automatically.</p>
-      </details>
-      <details>
-        <summary>Do unused credits roll over?</summary>
-        <p>No. Included credits reset monthly. Only purchased Capacity Pack credits may have different terms—confirm with your HubSpot CSM.</p>
-      </details>
-      <details>
-        <summary>How accurate is this calculator?</summary>
-        <p>This calculator uses HubSpot's published rates and provides estimates based on your input. Actual usage may vary. Always confirm final pricing with your Customer Success Manager.</p>
-      </details>
+    <!-- Right: Talk Track Panel -->
+    <div class="talk-track" id="talkTrack">
+      <h3>💡 Partner Talk-Track</h3>
+      <div id="talkTrackContent"></div>
     </div>
   </div>
 
-  <div class="footer">
-    <div class="footer-content">
-      <div class="footer-left">
-        Built by <img src="attached_assets/OneMetric Logo_1760030103016.png" alt="OneMetric.io"> — HubSpot Elite Partner & Onboarding Accredited
-      </div>
-      <div class="footer-links">
-        <a href="#" class="footer-link">Privacy</a>
-        <a href="mailto:hello@onemetric.io" class="footer-link">Contact</a>
-        <a href="https://onemetric.io" class="footer-link" target="_blank">onemetric.io</a>
-      </div>
-    </div>
-    <div class="footer-note">
-      Numbers are estimates. Confirm with your HubSpot CSM.
-    </div>
-  </div>
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">☀️</button>
 
   <script>
-    const CREDIT_TABLE = {
-      actions: [
-        {"id":"customer-agent","category":"Agents (AI Assistants)","feature":"Customer Agent","credit_type":"Action-based","credit_rate":"100 credits","credits_per_unit":100,"frequency":"Per text conversation handled","notes":"Text-based interactions only"},
-        {"id":"prospecting-agent-monitor-contact","category":"Agents (AI Assistants)","feature":"Prospecting Agent (Monitor Contact)","credit_type":"Recurring","credit_rate":"100 credits","credits_per_unit":100,"frequency":"Per contact monitored per month","notes":"Continuous monitoring"},
-        {"id":"prospecting-agent-company-research","category":"Agents (AI Assistants)","feature":"Prospecting Agent (Company Research)","credit_type":"Action-based","credit_rate":"10 credits","credits_per_unit":10,"frequency":"Per deep research result","notes":"Company insight generation"},
-        {"id":"workflow-ai-action-breeze","category":"Automation (Breeze)","feature":"Workflow AI Action (Breeze Action)","credit_type":"Action-based","credit_rate":"10 credits","credits_per_unit":10,"frequency":"Per Breeze AI action executed","notes":"Applies to AI steps within workflows"},
-        {"id":"company-monitoring-intent","category":"Buyer Intent","feature":"Company Monitoring","credit_type":"Recurring","credit_rate":"10 credits","credits_per_unit":10,"frequency":"Per company per month","notes":"Enables AI-driven intent tracking"},
-        {"id":"data-studio-small-sync","category":"Data Studio (Beta)","feature":"Small Sync (< 500 K rows)","credit_type":"Action-based","credit_rate":"25 credits","credits_per_unit":25,"frequency":"Per destination sync run","notes":"Applies when syncing datasets"},
-        {"id":"data-studio-medium-sync","category":"Data Studio (Beta)","feature":"Medium Sync (500 K–5 M rows)","credit_type":"Action-based","credit_rate":"75 credits","credits_per_unit":75,"frequency":"Per destination sync run","notes":""},
-        {"id":"data-studio-large-sync","category":"Data Studio (Beta)","feature":"Large Sync (> 5 M rows)","credit_type":"Action-based","credit_rate":"200 credits","credits_per_unit":200,"frequency":"Per destination sync run","notes":""},
-        {"id":"data-agent-text-response","category":"Beta AI Agents (Experimental)","feature":"Data Agent (text response)","credit_type":"Action-based","credit_rate":"10 credits","credits_per_unit":10,"frequency":"Per prompt/response pair","notes":"Beta"},
-        {"id":"deal-loss-agent","category":"Beta AI Agents (Experimental)","feature":"Deal Loss Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"},
-        {"id":"rfp-agent","category":"Beta AI Agents (Experimental)","feature":"RFP Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"},
-        {"id":"customer-handoff-agent","category":"Beta AI Agents (Experimental)","feature":"Customer Handoff Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"},
-        {"id":"call-recap-agent","category":"Beta AI Agents (Experimental)","feature":"Call Recap Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"},
-        {"id":"social-post-agent","category":"Beta AI Agents (Experimental)","feature":"Social Post Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"},
-        {"id":"blog-research-agent","category":"Beta AI Agents (Experimental)","feature":"Blog Research Agent","credit_type":"TBD","credit_rate":"TBD","credits_per_unit":null,"frequency":"TBD","notes":"Beta"}
-      ],
-      included: [
-        {"id":"smartcrm-starter","category":"Credits Included (Monthly)","feature":"Starter Tier (Smart CRM / Marketing / Sales / Service / Content Hub)","credit_type":"Base","credit_rate":"500 credits","credits_per_unit":500,"frequency":"Monthly reset","notes":"Highest tier owned applies"},
-        {"id":"smartcrm-pro","category":"Credits Included (Monthly)","feature":"Professional Tier (Smart CRM / Marketing / Sales / Service / Content Hub)","credit_type":"Base","credit_rate":"3 000 credits","credits_per_unit":3000,"frequency":"Monthly reset","notes":""},
-        {"id":"smartcrm-enterprise","category":"Credits Included (Monthly)","feature":"Enterprise Tier (Smart CRM / Marketing / Sales / Service / Content Hub)","credit_type":"Base","credit_rate":"5 000 credits","credits_per_unit":5000,"frequency":"Monthly reset","notes":""},
-        {"id":"datahub-starter","category":"Credits Included (Monthly)","feature":"Data Hub / Customer Platform Starter","credit_type":"Base","credit_rate":"500 credits","credits_per_unit":500,"frequency":"Monthly reset","notes":""},
-        {"id":"datahub-pro","category":"Credits Included (Monthly)","feature":"Data Hub / Customer Platform Pro","credit_type":"Base","credit_rate":"5 000 credits","credits_per_unit":5000,"frequency":"Monthly reset","notes":""},
-        {"id":"datahub-enterprise","category":"Credits Included (Monthly)","feature":"Data Hub / Customer Platform Enterprise","credit_type":"Base","credit_rate":"10 000 credits","credits_per_unit":10000,"frequency":"Monthly reset","notes":""}
-      ],
-      expansion: [
-        {"id":"capacity-pack","category":"Credit Expansion","feature":"Additional Capacity Pack","credit_type":"—","credit_rate":"$10 = 1 000 credits","credits_per_unit":1000,"frequency":"Monthly recurring","notes":"Auto-upgrade or manual add"},
-        {"id":"overage","category":"Credit Expansion","feature":"Overage (pay-as-you-go)","credit_type":"—","credit_rate":"$0.010 per credit (USD)","credits_per_unit":1,"frequency":"Monthly billed","notes":"Min 10 credit increments"}
-      ]
-    };
-
+    // State Management
     let state = {
-      smartCrmTier: 'starter',
-      dataHubTier: 'none',
-      usage: {},
-      prospectingMeetings: 0,
-      prospectingConversionRate: 0
+      currentStep: 0,
+      included: 0,
+      usage: {}
     };
 
-    function formatNumber(num) {
-      return num.toLocaleString('en-US');
+    // Steps Configuration
+    const steps = [
+      { id: 'customer-agent', title: 'Customer Agent', subtitle: 'Conversations per month' },
+      { id: 'prospecting-monitor', title: 'Prospecting Agent', subtitle: 'Monitor Contact' },
+      { id: 'prospecting-research', title: 'Company Research', subtitle: 'Research results' },
+      { id: 'data-agent', title: 'Data Agent', subtitle: 'Custom questions' },
+      { id: 'breeze-workflows', title: 'Breeze Workflows', subtitle: 'AI actions' },
+      { id: 'buyer-intent', title: 'Buyer Intent', subtitle: 'Target accounts' },
+      { id: 'data-hub', title: 'Data Hub', subtitle: 'Syncs & destinations' }
+    ];
+
+    // Talk Track Content
+    const talkTracks = {
+      'customer-agent': {
+        primary: 'How many conversations across all channels per month?',
+        alternative: 'If unsure, last month\'s chat + email + social thread counts work.',
+        benchmark: 'Early teams often start 200–1,000/month.',
+        formula: 'conversations × 100 credits',
+        example: '1,000 conversations × 100 = 100,000 credits'
+      },
+      'prospecting-monitor': {
+        primary: 'How many companies do you want to prospect into each month?',
+        alternative: 'How many reps? How many accounts per rep per month?',
+        benchmark: '50–100 accounts per rep per month.',
+        formula: 'companies × contacts/company × 100 (default contacts/company = 2)',
+        example: '375 companies × 2 contacts × 100 = 75,000 credits'
+      },
+      'prospecting-research': {
+        primary: 'How many deep research results do you need per month?',
+        alternative: 'Think about how many companies you want detailed insights on.',
+        benchmark: 'Most teams start with 100-500 results.',
+        formula: 'results × 10',
+        example: '500 results × 10 = 5,000 credits'
+      },
+      'data-agent': {
+        primary: 'How many custom questions do you answer per record?',
+        alternative: 'How many new records per month? How often do you refresh?',
+        benchmark: 'Typical: 1-5 questions per record.',
+        formula: 'questions × new records × monthly refreshes × 10',
+        example: '3 × 1,000 × 1 × 10 = 30,000 credits'
+      },
+      'breeze-workflows': {
+        primary: 'What AI action and how many records per month?',
+        alternative: 'Count total workflow executions with AI steps.',
+        benchmark: 'Automation-heavy teams: 500-5,000/month.',
+        formula: 'actions/month × 10',
+        example: '200 actions × 10 = 2,000 credits'
+      },
+      'buyer-intent': {
+        primary: 'How many target accounts do you want to actively track?',
+        alternative: 'Any additional companies to monitor?',
+        benchmark: 'ABM teams: 10-100 accounts.',
+        formula: '(targets + others) × 10',
+        example: '15 + 13 = 28 × 10 = 280 credits'
+      },
+      'data-hub': {
+        primary: 'What\'s your dataset size, destinations, and sync cadence?',
+        alternative: 'How often do you need data refreshed?',
+        benchmark: 'Most teams: Medium datasets, 1-2 destinations, daily sync.',
+        formula: 'sizeCredits × destinations × syncs/month',
+        example: 'Medium (75) × 1 × 30 = 2,250 credits'
+      }
+    };
+
+    // Initialize
+    function init() {
+      loadTheme();
+      renderSteps();
+      renderCurrentStep();
+      renderTalkTrack();
+      setupScrollBehavior();
+      loadFromURL();
+      updateCalculations();
     }
 
-    function formatCurrency(amount) {
-      return '$' + amount.toFixed(2);
+    // Render Steps Navigation
+    function renderSteps() {
+      const container = document.getElementById('stepsContainer');
+      container.innerHTML = steps.map((step, index) => `
+        <div class="step-item ${index === state.currentStep ? 'active' : ''}" onclick="goToStep(${index})">
+          <span class="step-number">Step ${index + 1}</span>
+          <div class="step-title">${step.title}</div>
+        </div>
+      `).join('');
     }
 
-    function initializeUsageInputs() {
-      const container = document.getElementById('usageInputs');
-      const categories = {};
+    // Go to Step
+    function goToStep(index) {
+      state.currentStep = index;
+      renderSteps();
+      renderCurrentStep();
+      renderTalkTrack();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-      CREDIT_TABLE.actions.forEach(action => {
-        if (!categories[action.category]) {
-          categories[action.category] = [];
-        }
-        categories[action.category].push(action);
-      });
+    // Render Current Step Input Panel
+    function renderCurrentStep() {
+      const step = steps[state.currentStep];
+      const panel = document.getElementById('inputPanel');
+      
+      let content = `<h2>${step.title}</h2><p class="subtitle">${step.subtitle}</p>`;
 
-      container.innerHTML = Object.entries(categories).map(([category, items]) => {
-        const rows = items.map(item => {
-          const isTBD = item.credits_per_unit === null;
-          const rowClass = isTBD ? 'usage-row tbd-row' : 'usage-row';
-          
-          if (item.id === 'customer-agent') {
-            return `
-              <div class="${rowClass}" style="display: block; border-bottom: 1px solid var(--om-border); padding-bottom: 1rem;">
-                <div class="usage-label" style="margin-bottom: 0.5rem;">
-                  <span>${item.feature}</span>
-                  ${isTBD ? '<span class="badge">TBD (Beta)</span>' : ''}
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                  <div class="credit-rate">× ${item.credit_rate}</div>
-                  <input 
-                    type="number" 
-                    class="usage-input" 
-                    id="input-${item.id}" 
-                    min="0" 
-                    step="1" 
-                    value="0"
-                    ${isTBD ? 'disabled' : ''}
-                    onchange="updateCalculations()"
-                    aria-label="${item.feature} count"
-                  >
-                </div>
-                <p class="help-text">Estimate how many tickets or conversations each customer support agent is expected to handle per month. This helps calculate the AI cost per agent based on real workload.</p>
-              </div>
-            `;
-          }
-          
-          if (item.id === 'prospecting-agent-monitor-contact') {
-            return `
-              <div class="${rowClass}" style="display: block; border-bottom: 1px solid var(--om-border); padding-bottom: 1.5rem;">
-                <div class="usage-label" style="margin-bottom: 0.5rem;">
-                  <span>${item.feature}</span>
-                  ${isTBD ? '<span class="badge">TBD (Beta)</span>' : ''}
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                  <div class="credit-rate">× ${item.credit_rate}</div>
-                  <input 
-                    type="number" 
-                    class="usage-input" 
-                    id="input-${item.id}" 
-                    min="0" 
-                    step="1" 
-                    value="0"
-                    ${isTBD ? 'disabled' : ''}
-                    onchange="updateCalculations()"
-                    aria-label="${item.feature} count"
-                  >
-                </div>
-                
-                <div class="prospecting-inputs">
-                  <div class="input-group">
-                    <label for="prospecting-meetings">Meetings or Demos Needed per Month</label>
-                    <input 
-                      type="number" 
-                      id="prospecting-meetings" 
-                      min="0" 
-                      step="1" 
-                      value="0"
-                      oninput="updateProspectingCalculation()"
-                    >
-                    <p class="help-text">How many qualified meetings or demos do you expect your prospecting agent to book per month?</p>
-                  </div>
-                  
-                  <div class="input-group">
-                    <label for="prospecting-conversion">Expected Conversion Rate (%)</label>
-                    <input 
-                      type="number" 
-                      id="prospecting-conversion" 
-                      min="1" 
-                      max="100" 
-                      step="0.1" 
-                      value="0"
-                      oninput="updateProspectingCalculation()"
-                    >
-                    <p class="help-text">What is your expected conversion rate from outreach to booked meetings? (e.g., 5%, 10%, 20%)</p>
-                    <div id="conversion-error" class="validation-error" style="display: none;">Conversion rate must be between 1 and 100</div>
-                  </div>
-                  
-                  <div id="prospecting-result" class="calculated-result" style="display: none;">
-                    ➡️ You'll need to monitor approximately <span id="contacts-to-monitor">0</span> contacts per month.
-                  </div>
-                </div>
-              </div>
-            `;
-          }
-          
-          return `
-            <div class="${rowClass}">
-              <div class="usage-label">
-                <span>${item.feature}</span>
-                ${isTBD ? '<span class="badge">TBD (Beta)</span>' : ''}
-              </div>
-              <div class="credit-rate">× ${item.credit_rate}</div>
-              <input 
-                type="number" 
-                class="usage-input" 
-                id="input-${item.id}" 
-                min="0" 
-                step="1" 
-                value="0"
-                ${isTBD ? 'disabled' : ''}
-                onchange="updateCalculations()"
-                aria-label="${item.feature} count"
-              >
-            </div>
-          `;
-        }).join('');
+      switch(step.id) {
+        case 'customer-agent':
+          content += renderCustomerAgent();
+          break;
+        case 'prospecting-monitor':
+          content += renderProspectingMonitor();
+          break;
+        case 'prospecting-research':
+          content += renderProspectingResearch();
+          break;
+        case 'data-agent':
+          content += renderDataAgent();
+          break;
+        case 'breeze-workflows':
+          content += renderBreezeWorkflows();
+          break;
+        case 'buyer-intent':
+          content += renderBuyerIntent();
+          break;
+        case 'data-hub':
+          content += renderDataHub();
+          break;
+      }
 
-        return `
-          <div class="usage-category">
-            <h3>${category}</h3>
-            ${rows}
+      panel.innerHTML = content;
+    }
+
+    // Customer Agent Input
+    function renderCustomerAgent() {
+      const value = state.usage['customer-agent'] || 0;
+      return `
+        <div class="input-group">
+          <label class="input-label">Conversations per Month</label>
+          <p class="input-help">Estimate how many conversations across all channels (chat, email, social) per month.</p>
+          <input type="number" id="input-customer-agent" value="${value}" min="0" oninput="updateUsage('customer-agent', this.value)">
+          <div class="quick-add-chips">
+            <span class="chip" onclick="addQuick('customer-agent', 50)">+50</span>
+            <span class="chip" onclick="addQuick('customer-agent', 100)">+100</span>
+            <span class="chip" onclick="addQuick('customer-agent', 1000)">+1000</span>
           </div>
-        `;
-      }).join('');
-
-      CREDIT_TABLE.actions.forEach(action => {
-        if (action.credits_per_unit !== null) {
-          state.usage[action.id] = 0;
-        }
-      });
+        </div>
+        <div class="calculated-result">
+          💳 Credits: ${value} conversations × 100 = ${(value * 100).toLocaleString()} credits
+        </div>
+      `;
     }
 
-    function getIncludedCredits() {
-      const smartCrmCredits = {
-        'starter': 500,
-        'professional': 3000,
-        'enterprise': 5000
-      };
+    // Prospecting Monitor Input with Tabs
+    function renderProspectingMonitor() {
+      const companies = state.usage['prospecting-monitor-companies'] || 0;
+      const contactsPerCompany = state.usage['prospecting-monitor-contacts-per-company'] || 2;
+      const meetings = state.usage['prospecting-monitor-meetings'] || 0;
+      const conversion = state.usage['prospecting-monitor-conversion'] || 5;
+      const mode = state.usage['prospecting-monitor-mode'] || 'direct';
 
-      const dataHubCredits = {
-        'none': 0,
-        'starter': 500,
-        'pro': 5000,
-        'enterprise': 10000
-      };
+      return `
+        <div class="tabs">
+          <button class="tab ${mode === 'direct' ? 'active' : ''}" onclick="switchProspectingMode('direct')">Direct Input</button>
+          <button class="tab ${mode === 'goal' ? 'active' : ''}" onclick="switchProspectingMode('goal')">Goal Mode</button>
+        </div>
 
-      return smartCrmCredits[state.smartCrmTier] + dataHubCredits[state.dataHubTier];
-    }
-
-    function getProjectedUsage() {
-      let total = 0;
-      CREDIT_TABLE.actions.forEach(action => {
-        if (action.credits_per_unit !== null && state.usage[action.id]) {
-          total += state.usage[action.id] * action.credits_per_unit;
-        }
-      });
-      return total;
-    }
-
-    function updateQuickStats(included, usage, net) {
-      document.getElementById('quickIncluded').textContent = formatNumber(included);
-      document.getElementById('quickProjected').textContent = formatNumber(usage);
-      document.getElementById('quickNet').textContent = formatNumber(net);
-      
-      const netPill = document.getElementById('quickNetPill');
-      netPill.className = 'pill ' + (net >= 0 ? 'pill--success' : 'pill--danger');
-    }
-
-    function updateCalculations() {
-      CREDIT_TABLE.actions.forEach(action => {
-        if (action.credits_per_unit !== null) {
-          const input = document.getElementById(`input-${action.id}`);
-          if (input) {
-            state.usage[action.id] = parseInt(input.value) || 0;
-          }
-        }
-      });
-
-      const included = getIncludedCredits();
-      const usage = getProjectedUsage();
-      const net = included - usage;
-
-      document.getElementById('includedCredits').textContent = formatNumber(included);
-      document.getElementById('projectedUsage').textContent = formatNumber(usage);
-      
-      const netElement = document.getElementById('netBalance');
-      netElement.textContent = formatNumber(net);
-      netElement.className = 'summary-value ' + (net >= 0 ? 'positive' : 'negative');
-
-      updateQuickStats(included, usage, net);
-      updateExpansionOptions(net);
-    }
-
-    function updateProspectingCalculation() {
-      const meetingsInput = document.getElementById('prospecting-meetings');
-      const conversionInput = document.getElementById('prospecting-conversion');
-      const errorDiv = document.getElementById('conversion-error');
-      const resultDiv = document.getElementById('prospecting-result');
-      const contactsSpan = document.getElementById('contacts-to-monitor');
-      const prospectingAgentInput = document.getElementById('input-prospecting-agent-monitor-contact');
-
-      if (!meetingsInput || !conversionInput) return;
-
-      const meetings = parseFloat(meetingsInput.value) || 0;
-      const conversionRate = parseFloat(conversionInput.value) || 0;
-
-      state.prospectingMeetings = meetings;
-      state.prospectingConversionRate = conversionRate;
-
-      if (conversionRate > 0 && (conversionRate < 1 || conversionRate > 100)) {
-        errorDiv.style.display = 'block';
-        resultDiv.style.display = 'none';
-        return;
-      } else {
-        errorDiv.style.display = 'none';
-      }
-
-      if (meetings > 0 && conversionRate > 0) {
-        const contactsToMonitor = Math.round(meetings / (conversionRate / 100));
-        contactsSpan.textContent = formatNumber(contactsToMonitor);
-        resultDiv.style.display = 'block';
-
-        if (prospectingAgentInput) {
-          prospectingAgentInput.value = contactsToMonitor;
-          prospectingAgentInput.dispatchEvent(new Event('change'));
-        }
-      } else {
-        resultDiv.style.display = 'none';
-        if (prospectingAgentInput) {
-          prospectingAgentInput.value = 0;
-          prospectingAgentInput.dispatchEvent(new Event('change'));
-        }
-      }
-    }
-
-    function updateExpansionOptions(net) {
-      const container = document.getElementById('expansionOptions');
-      
-      if (net >= 0) {
-        container.innerHTML = '';
-        return;
-      }
-
-      const deficit = Math.abs(net);
-      
-      const packsNeeded = Math.ceil(deficit / 1000);
-      const packCost = packsNeeded * 10;
-      const packCredits = packsNeeded * 1000;
-      const packNet = getIncludedCredits() + packCredits - getProjectedUsage();
-
-      const overageBlocks = Math.ceil(deficit / 10);
-      const overageCost = overageBlocks * 0.10;
-      const overageCredits = overageBlocks * 10;
-      const overageNet = getIncludedCredits() + overageCredits - getProjectedUsage();
-
-      const cheaperOption = packCost <= overageCost ? 'pack' : 'overage';
-
-      container.innerHTML = `
-        <div class="expansion-section">
-          <h3>Expansion Options</h3>
-          <div class="expansion-compare">
-            <div class="expansion-option ${cheaperOption === 'pack' ? 'recommended' : ''}">
-              <div class="expansion-header">
-                <h4>Capacity Packs</h4>
-                ${cheaperOption === 'pack' ? '<span class="badge recommended">Recommended</span>' : ''}
-              </div>
-              <div class="expansion-details">
-                ${packsNeeded} pack${packsNeeded > 1 ? 's' : ''} × $10 = <strong>${formatCurrency(packCost)}</strong><br>
-                Adds ${formatNumber(packCredits)} credits → New net: <strong>${formatNumber(packNet)}</strong>
-              </div>
+        <div class="tab-content ${mode === 'direct' ? 'active' : ''}" id="direct-tab">
+          <div class="input-group">
+            <label class="input-label">Companies per Month</label>
+            <p class="input-help">How many companies do you want to prospect into each month?</p>
+            <input type="number" id="input-prospecting-companies" value="${companies}" min="0" oninput="updateProspecting()">
+            <div class="quick-add-chips">
+              <span class="chip" onclick="addQuickProspecting('companies', 50)">+50</span>
+              <span class="chip" onclick="addQuickProspecting('companies', 100)">+100</span>
+              <span class="chip" onclick="addQuickProspecting('companies', 1000)">+1000</span>
             </div>
-            
-            <div class="expansion-option ${cheaperOption === 'overage' ? 'recommended' : ''}">
-              <div class="expansion-header">
-                <h4>Overage (Pay-as-you-go)</h4>
-                ${cheaperOption === 'overage' ? '<span class="badge recommended">Recommended</span>' : ''}
-              </div>
-              <div class="expansion-details">
-                ${overageBlocks} × 10 credits @ $0.01/credit = <strong>${formatCurrency(overageCost)}</strong><br>
-                Adds ${formatNumber(overageCredits)} credits → New net: <strong>${formatNumber(overageNet)}</strong>
-              </div>
+            <p class="input-help" style="margin-top: 0.5rem;">💡 Don't know? Reps × accounts/rep/month</p>
+            <span class="benchmark-chip">Benchmark: 50–100 accounts/rep/month</span>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Contacts per Company</label>
+            <input type="number" id="input-prospecting-contacts" value="${contactsPerCompany}" min="1" oninput="updateProspecting()">
+          </div>
+          <div class="calculated-result">
+            💳 Credits: ${companies} companies × ${contactsPerCompany} contacts × 100 = ${(companies * contactsPerCompany * 100).toLocaleString()} credits
+          </div>
+        </div>
+
+        <div class="tab-content ${mode === 'goal' ? 'active' : ''}" id="goal-tab">
+          <div class="input-group">
+            <label class="input-label">Meetings Needed per Month</label>
+            <input type="number" id="input-prospecting-meetings" value="${meetings}" min="0" oninput="updateProspecting()">
+            <div class="quick-add-chips">
+              <span class="chip" onclick="addQuickProspecting('meetings', 10)">+10</span>
+              <span class="chip" onclick="addQuickProspecting('meetings', 20)">+20</span>
+              <span class="chip" onclick="addQuickProspecting('meetings', 50)">+50</span>
             </div>
           </div>
-          <div class="expansion-explainer">
-            Capacity packs add credits in 1,000-credit blocks at $10 each. Overage bills per 10-credit block at $0.10. We do the math so you choose confidently.
+          <div class="input-group">
+            <label class="input-label">Meeting Conversion Rate (%)</label>
+            <input type="number" id="input-prospecting-conversion" value="${conversion}" min="1" max="100" step="1" oninput="updateProspecting()">
+          </div>
+          <div class="input-group">
+            <label class="input-label">Contacts per Company</label>
+            <input type="number" id="input-prospecting-contacts-goal" value="${contactsPerCompany}" min="1" oninput="updateProspecting()">
+          </div>
+          <div class="calculated-result">
+            📊 Derived: ${Math.ceil(meetings / (conversion / 100))} companies needed<br>
+            💳 Credits: ${Math.ceil(meetings / (conversion / 100))} × ${contactsPerCompany} × 100 = ${(Math.ceil(meetings / (conversion / 100)) * contactsPerCompany * 100).toLocaleString()} credits
           </div>
         </div>
       `;
     }
 
-    function resetCalculator() {
-      state = {
-        smartCrmTier: 'starter',
-        dataHubTier: 'none',
-        usage: {},
-        prospectingMeetings: 0,
-        prospectingConversionRate: 0
-      };
-
-      document.querySelector('input[name="smartcrm"][value="starter"]').checked = true;
-      document.querySelector('input[name="datahub"][value="none"]').checked = true;
-
-      CREDIT_TABLE.actions.forEach(action => {
-        if (action.credits_per_unit !== null) {
-          const input = document.getElementById(`input-${action.id}`);
-          if (input) {
-            input.value = 0;
-          }
-          state.usage[action.id] = 0;
-        }
-      });
-
-      const meetingsInput = document.getElementById('prospecting-meetings');
-      const conversionInput = document.getElementById('prospecting-conversion');
-      if (meetingsInput) meetingsInput.value = 0;
-      if (conversionInput) conversionInput.value = 0;
-
-      updateRadioStyles();
-      updateProspectingCalculation();
-      updateCalculations();
-      showToast('Calculator reset');
+    // Prospecting Research
+    function renderProspectingResearch() {
+      const value = state.usage['prospecting-agent-company-research'] || 0;
+      return `
+        <div class="input-group">
+          <label class="input-label">Research Results per Month</label>
+          <p class="input-help">How many deep research results do you need per month?</p>
+          <input type="number" id="input-prospecting-agent-company-research" value="${value}" min="0" oninput="updateUsage('prospecting-agent-company-research', this.value)">
+          <div class="quick-add-chips">
+            <span class="chip" onclick="addQuick('prospecting-agent-company-research', 50)">+50</span>
+            <span class="chip" onclick="addQuick('prospecting-agent-company-research', 100)">+100</span>
+            <span class="chip" onclick="addQuick('prospecting-agent-company-research', 1000)">+1000</span>
+          </div>
+        </div>
+        <div class="calculated-result">
+          💳 Credits: ${value} results × 10 = ${(value * 10).toLocaleString()} credits
+        </div>
+      `;
     }
 
-    function exportCSV() {
-      const rows = [
-        ['Feature', 'Category', 'Count', 'Credits per Unit', 'Subtotal Credits']
-      ];
+    // Data Agent
+    function renderDataAgent() {
+      const questions = state.usage['data-agent-questions'] || 0;
+      const records = state.usage['data-agent-records'] || 0;
+      const refreshes = state.usage['data-agent-refreshes'] || 1;
+      const total = questions * records * refreshes * 10;
 
-      CREDIT_TABLE.actions.forEach(action => {
-        if (action.credits_per_unit !== null && state.usage[action.id] > 0) {
-          rows.push([
-            action.feature,
-            action.category,
-            state.usage[action.id],
-            action.credits_per_unit,
-            state.usage[action.id] * action.credits_per_unit
-          ]);
-        }
-      });
-
-      rows.push([]);
-      rows.push(['Summary', '', '', '', '']);
-      rows.push(['Included Credits', '', '', '', getIncludedCredits()]);
-      rows.push(['Projected Usage', '', '', '', getProjectedUsage()]);
-      rows.push(['Net Balance', '', '', '', getIncludedCredits() - getProjectedUsage()]);
-
-      const csvContent = rows.map(row => row.join(',')).join('\n');
-      const blob = new Blob([csvContent], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'hubspot-credits-projection.csv';
-      a.click();
-      URL.revokeObjectURL(url);
-
-      showToast('CSV exported successfully');
+      return `
+        <div class="input-group">
+          <label class="input-label">Questions per Record</label>
+          <input type="number" id="input-data-agent-questions" value="${questions}" min="0" oninput="updateDataAgent()">
+          <div class="quick-add-chips">
+            <span class="chip" onclick="addQuickDataAgent('questions', 1)">+1</span>
+            <span class="chip" onclick="addQuickDataAgent('questions', 3)">+3</span>
+            <span class="chip" onclick="addQuickDataAgent('questions', 5)">+5</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">New Records per Month</label>
+          <input type="number" id="input-data-agent-records" value="${records}" min="0" oninput="updateDataAgent()">
+          <div class="quick-add-chips">
+            <span class="chip" onclick="addQuickDataAgent('records', 100)">+100</span>
+            <span class="chip" onclick="addQuickDataAgent('records', 500)">+500</span>
+            <span class="chip" onclick="addQuickDataAgent('records', 1000)">+1000</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Refreshes per Month</label>
+          <select id="input-data-agent-refreshes" onchange="updateDataAgent()">
+            <option value="1" ${refreshes === 1 ? 'selected' : ''}>1 (Monthly)</option>
+            <option value="4" ${refreshes === 4 ? 'selected' : ''}>4 (Weekly)</option>
+            <option value="30" ${refreshes === 30 ? 'selected' : ''}>30 (Daily)</option>
+          </select>
+        </div>
+        <div class="calculated-result">
+          💳 Credits: ${questions} × ${records} × ${refreshes} × 10 = ${total.toLocaleString()} credits
+        </div>
+      `;
     }
 
-    function shareURL() {
-      const stateJSON = JSON.stringify(state);
-      const encoded = btoa(stateJSON);
-      const url = window.location.origin + window.location.pathname + '#' + encoded;
+    // Breeze Workflows
+    function renderBreezeWorkflows() {
+      const value = state.usage['workflow-ai-action-breeze'] || 0;
+      return `
+        <div class="input-group">
+          <label class="input-label">AI Actions per Month</label>
+          <p class="input-help">How many AI actions are executed in workflows per month?</p>
+          <input type="number" id="input-workflow-ai-action-breeze" value="${value}" min="0" oninput="updateUsage('workflow-ai-action-breeze', this.value)">
+          <div class="quick-add-chips">
+            <span class="chip" onclick="addQuick('workflow-ai-action-breeze', 50)">+50</span>
+            <span class="chip" onclick="addQuick('workflow-ai-action-breeze', 100)">+100</span>
+            <span class="chip" onclick="addQuick('workflow-ai-action-breeze', 1000)">+1000</span>
+          </div>
+        </div>
+        <div class="calculated-result">
+          💳 Credits: ${value} actions × 10 = ${(value * 10).toLocaleString()} credits
+        </div>
+      `;
+    }
+
+    // Buyer Intent
+    function renderBuyerIntent() {
+      const targets = state.usage['buyer-intent-targets'] || 0;
+      const additional = state.usage['buyer-intent-additional'] || 0;
+      const total = (targets + additional) * 10;
+
+      return `
+        <div class="input-group">
+          <label class="input-label">Target Accounts</label>
+          <p class="input-help">How many target accounts do you want to actively track?</p>
+          <input type="number" id="input-buyer-intent-targets" value="${targets}" min="0" oninput="updateBuyerIntent()">
+          <div class="quick-add-chips">
+            <span class="chip" onclick="addQuickBuyerIntent('targets', 10)">+10</span>
+            <span class="chip" onclick="addQuickBuyerIntent('targets', 50)">+50</span>
+            <span class="chip" onclick="addQuickBuyerIntent('targets', 100)">+100</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Additional Companies</label>
+          <input type="number" id="input-buyer-intent-additional" value="${additional}" min="0" oninput="updateBuyerIntent()">
+          <div class="quick-add-chips">
+            <span class="chip" onclick="addQuickBuyerIntent('additional', 10)">+10</span>
+            <span class="chip" onclick="addQuickBuyerIntent('additional', 50)">+50</span>
+            <span class="chip" onclick="addQuickBuyerIntent('additional', 100)">+100</span>
+          </div>
+        </div>
+        <div class="calculated-result">
+          💳 Credits: (${targets} + ${additional}) × 10 = ${total.toLocaleString()} credits
+        </div>
+      `;
+    }
+
+    // Data Hub
+    function renderDataHub() {
+      const size = state.usage['data-hub-size'] || 'small';
+      const destinations = state.usage['data-hub-destinations'] || 1;
+      const frequency = state.usage['data-hub-frequency'] || 1;
       
-      navigator.clipboard.writeText(url).then(() => {
-        showToast('Share link copied to clipboard');
-      }).catch(() => {
-        showToast('Share link: ' + url);
-      });
+      const sizeCredits = { small: 25, medium: 75, large: 200 };
+      const total = sizeCredits[size] * destinations * frequency;
+
+      return `
+        <div class="input-group">
+          <label class="input-label">Dataset Size</label>
+          <select id="input-data-hub-size" onchange="updateDataHub()">
+            <option value="small" ${size === 'small' ? 'selected' : ''}>Small (< 500K rows) - 25 credits</option>
+            <option value="medium" ${size === 'medium' ? 'selected' : ''}>Medium (500K-5M rows) - 75 credits</option>
+            <option value="large" ${size === 'large' ? 'selected' : ''}>Large (> 5M rows) - 200 credits</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Destinations</label>
+          <input type="number" id="input-data-hub-destinations" value="${destinations}" min="1" oninput="updateDataHub()">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Sync Frequency</label>
+          <select id="input-data-hub-frequency" onchange="updateDataHub()">
+            <option value="1" ${frequency === 1 ? 'selected' : ''}>One-time (1)</option>
+            <option value="1" ${frequency === 1 ? 'selected' : ''}>Monthly (1)</option>
+            <option value="30" ${frequency === 30 ? 'selected' : ''}>Daily (30)</option>
+            <option value="700" ${frequency === 700 ? 'selected' : ''}>Hourly (700)</option>
+            <option value="2900" ${frequency === 2900 ? 'selected' : ''}>Fifteen-min (2900)</option>
+          </select>
+        </div>
+        <div class="calculated-result">
+          💳 Credits: ${sizeCredits[size]} × ${destinations} × ${frequency} = ${total.toLocaleString()} credits
+        </div>
+      `;
     }
 
-    function loadFromURL() {
-      const hash = window.location.hash.substring(1);
-      if (hash) {
-        try {
-          const decoded = atob(hash);
-          const loadedState = JSON.parse(decoded);
-          state = loadedState;
+    // Update Functions
+    function updateUsage(id, value) {
+      state.usage[id] = parseInt(value) || 0;
+      updateCalculations();
+      renderCurrentStep();
+    }
 
-          document.querySelector(`input[name="smartcrm"][value="${state.smartCrmTier}"]`).checked = true;
-          document.querySelector(`input[name="datahub"][value="${state.dataHubTier}"]`).checked = true;
-
-          Object.entries(state.usage).forEach(([id, value]) => {
-            const input = document.getElementById(`input-${id}`);
-            if (input) {
-              input.value = value;
-            }
-          });
-
-          const meetingsInput = document.getElementById('prospecting-meetings');
-          const conversionInput = document.getElementById('prospecting-conversion');
-          if (meetingsInput && state.prospectingMeetings !== undefined) {
-            meetingsInput.value = state.prospectingMeetings;
-          }
-          if (conversionInput && state.prospectingConversionRate !== undefined) {
-            conversionInput.value = state.prospectingConversionRate;
-          }
-
-          updateRadioStyles();
-          updateProspectingCalculation();
-          updateCalculations();
-        } catch (e) {
-          console.error('Failed to load state from URL', e);
-        }
+    function addQuick(id, amount) {
+      const input = document.getElementById(`input-${id}`);
+      if (input) {
+        const newValue = (parseInt(input.value) || 0) + amount;
+        input.value = newValue;
+        updateUsage(id, newValue);
       }
     }
 
-    function showToast(message) {
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.textContent = message;
-      toast.setAttribute('role', 'status');
-      toast.setAttribute('aria-live', 'polite');
-      document.body.appendChild(toast);
-
-      setTimeout(() => {
-        toast.remove();
-      }, 3000);
+    function switchProspectingMode(mode) {
+      state.usage['prospecting-monitor-mode'] = mode;
+      renderCurrentStep();
+      updateProspecting();
     }
 
-    function updateRadioStyles() {
-      document.querySelectorAll('.radio-option').forEach(option => {
-        const radio = option.querySelector('input[type="radio"]');
-        if (radio.checked) {
-          option.classList.add('selected');
+    function updateProspecting() {
+      const mode = state.usage['prospecting-monitor-mode'] || 'direct';
+      
+      if (mode === 'direct') {
+        const companies = parseInt(document.getElementById('input-prospecting-companies')?.value) || 0;
+        const contacts = parseInt(document.getElementById('input-prospecting-contacts')?.value) || 2;
+        state.usage['prospecting-monitor-companies'] = companies;
+        state.usage['prospecting-monitor-contacts-per-company'] = contacts;
+        state.usage['prospecting-agent-monitor-contact'] = companies * contacts;
+      } else {
+        const meetings = parseInt(document.getElementById('input-prospecting-meetings')?.value) || 0;
+        const conversion = parseInt(document.getElementById('input-prospecting-conversion')?.value) || 5;
+        const contacts = parseInt(document.getElementById('input-prospecting-contacts-goal')?.value) || 2;
+        const companies = Math.ceil(meetings / (conversion / 100));
+        
+        state.usage['prospecting-monitor-meetings'] = meetings;
+        state.usage['prospecting-monitor-conversion'] = conversion;
+        state.usage['prospecting-monitor-contacts-per-company'] = contacts;
+        state.usage['prospecting-monitor-companies'] = companies;
+        state.usage['prospecting-agent-monitor-contact'] = companies * contacts;
+      }
+      
+      updateCalculations();
+      renderCurrentStep();
+    }
+
+    function addQuickProspecting(field, amount) {
+      const mode = state.usage['prospecting-monitor-mode'] || 'direct';
+      if (mode === 'direct' && field === 'companies') {
+        const input = document.getElementById('input-prospecting-companies');
+        input.value = (parseInt(input.value) || 0) + amount;
+      } else if (mode === 'goal' && field === 'meetings') {
+        const input = document.getElementById('input-prospecting-meetings');
+        input.value = (parseInt(input.value) || 0) + amount;
+      }
+      updateProspecting();
+    }
+
+    function updateDataAgent() {
+      const questions = parseInt(document.getElementById('input-data-agent-questions')?.value) || 0;
+      const records = parseInt(document.getElementById('input-data-agent-records')?.value) || 0;
+      const refreshes = parseInt(document.getElementById('input-data-agent-refreshes')?.value) || 1;
+      
+      state.usage['data-agent-questions'] = questions;
+      state.usage['data-agent-records'] = records;
+      state.usage['data-agent-refreshes'] = refreshes;
+      state.usage['data-agent-text-response'] = questions * records * refreshes;
+      
+      updateCalculations();
+      renderCurrentStep();
+    }
+
+    function addQuickDataAgent(field, amount) {
+      const input = document.getElementById(`input-data-agent-${field}`);
+      if (input) {
+        input.value = (parseInt(input.value) || 0) + amount;
+        updateDataAgent();
+      }
+    }
+
+    function updateBuyerIntent() {
+      const targets = parseInt(document.getElementById('input-buyer-intent-targets')?.value) || 0;
+      const additional = parseInt(document.getElementById('input-buyer-intent-additional')?.value) || 0;
+      
+      state.usage['buyer-intent-targets'] = targets;
+      state.usage['buyer-intent-additional'] = additional;
+      state.usage['company-monitoring-intent'] = targets + additional;
+      
+      updateCalculations();
+      renderCurrentStep();
+    }
+
+    function addQuickBuyerIntent(field, amount) {
+      const input = document.getElementById(`input-buyer-intent-${field}`);
+      if (input) {
+        input.value = (parseInt(input.value) || 0) + amount;
+        updateBuyerIntent();
+      }
+    }
+
+    function updateDataHub() {
+      const size = document.getElementById('input-data-hub-size')?.value || 'small';
+      const destinations = parseInt(document.getElementById('input-data-hub-destinations')?.value) || 1;
+      const frequency = parseInt(document.getElementById('input-data-hub-frequency')?.value) || 1;
+      
+      state.usage['data-hub-size'] = size;
+      state.usage['data-hub-destinations'] = destinations;
+      state.usage['data-hub-frequency'] = frequency;
+      
+      const sizeMap = { small: 25, medium: 75, large: 200 };
+      const sizeId = size === 'small' ? 'data-studio-small-sync' : size === 'medium' ? 'data-studio-medium-sync' : 'data-studio-large-sync';
+      state.usage[sizeId] = destinations * frequency;
+      
+      updateCalculations();
+      renderCurrentStep();
+    }
+
+    // Calculate Totals
+    function getProjectedUsage() {
+      let total = 0;
+      
+      // Customer Agent
+      total += (state.usage['customer-agent'] || 0) * 100;
+      
+      // Prospecting Monitor
+      total += (state.usage['prospecting-agent-monitor-contact'] || 0) * 100;
+      
+      // Prospecting Research
+      total += (state.usage['prospecting-agent-company-research'] || 0) * 10;
+      
+      // Data Agent
+      total += (state.usage['data-agent-text-response'] || 0) * 10;
+      
+      // Breeze Workflows
+      total += (state.usage['workflow-ai-action-breeze'] || 0) * 10;
+      
+      // Buyer Intent
+      total += (state.usage['company-monitoring-intent'] || 0) * 10;
+      
+      // Data Hub
+      const sizeMap = { small: 25, medium: 75, large: 200 };
+      const size = state.usage['data-hub-size'] || 'small';
+      const destinations = state.usage['data-hub-destinations'] || 0;
+      const frequency = state.usage['data-hub-frequency'] || 0;
+      total += sizeMap[size] * destinations * frequency;
+      
+      return total;
+    }
+
+    function updateCalculations() {
+      const included = state.included || 500; // Default starter
+      const projected = getProjectedUsage();
+      const net = included - projected;
+
+      // Update all KPI displays
+      document.getElementById('heroIncluded').textContent = included.toLocaleString();
+      document.getElementById('heroProjected').textContent = projected.toLocaleString();
+      document.getElementById('heroNet').textContent = net.toLocaleString();
+      
+      document.getElementById('stickyIncluded').textContent = included.toLocaleString();
+      document.getElementById('stickyProjected').textContent = projected.toLocaleString();
+      document.getElementById('stickyNet').textContent = net.toLocaleString();
+      
+      document.getElementById('summaryIncluded').textContent = included.toLocaleString();
+      document.getElementById('summaryProjected').textContent = projected.toLocaleString();
+      document.getElementById('summaryNet').textContent = net.toLocaleString();
+
+      // Update colors
+      const netClass = net >= 0 ? 'positive' : 'negative';
+      document.getElementById('heroNet').className = `kpi-value ${netClass}`;
+      document.getElementById('stickyNet').className = `sticky-kpi-value ${netClass}`;
+      document.getElementById('summaryNet').className = `value ${netClass}`;
+
+      // Update recommendation
+      updateRecommendation(net);
+    }
+
+    function updateRecommendation(net) {
+      const container = document.getElementById('recommendationContainer');
+      
+      if (net >= 0) {
+        container.innerHTML = '<p style="color: var(--om-success); font-weight: 600;">✅ You have enough credits included in your plan!</p>';
+        return;
+      }
+
+      const deficit = Math.abs(net);
+      const capacityPacks = Math.ceil(deficit / 1000);
+      const capacityCost = capacityPacks * 10;
+      const overageCost = Math.ceil(deficit / 10) * 0.10;
+
+      const recommended = capacityCost <= overageCost ? 'capacity' : 'overage';
+
+      container.innerHTML = `
+        <div class="recommendation-box">
+          <h4>⚠️ Credit Deficit: ${deficit.toLocaleString()} credits</h4>
+          
+          <div class="option-row ${recommended === 'capacity' ? 'recommended' : ''}">
+            <div>
+              <strong>Capacity Packs</strong><br>
+              <span style="color: var(--om-muted); font-size: 0.875rem;">${capacityPacks} pack${capacityPacks > 1 ? 's' : ''} × $10</span>
+            </div>
+            <div style="text-align: right;">
+              <strong>$${capacityCost.toFixed(2)}</strong>
+              ${recommended === 'capacity' ? '<div class="recommended-badge">RECOMMENDED</div>' : ''}
+            </div>
+          </div>
+
+          <div class="option-row ${recommended === 'overage' ? 'recommended' : ''}">
+            <div>
+              <strong>Overage (Pay-as-you-go)</strong><br>
+              <span style="color: var(--om-muted); font-size: 0.875rem;">$0.01 per credit</span>
+            </div>
+            <div style="text-align: right;">
+              <strong>$${overageCost.toFixed(2)}</strong>
+              ${recommended === 'overage' ? '<div class="recommended-badge">RECOMMENDED</div>' : ''}
+            </div>
+          </div>
+
+          <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--om-muted);">
+            💡 Capacity packs suit consistent overages; overage is fine for spikes.
+          </p>
+        </div>
+      `;
+    }
+
+    // Talk Track Panel
+    function renderTalkTrack() {
+      const step = steps[state.currentStep];
+      const track = talkTracks[step.id];
+      
+      if (!track) return;
+
+      document.getElementById('talkTrackContent').innerHTML = `
+        <div class="talk-section">
+          <h4>Primary Question</h4>
+          <p>${track.primary}</p>
+        </div>
+        <div class="talk-section">
+          <h4>If they don't know</h4>
+          <p>${track.alternative}</p>
+        </div>
+        <div class="talk-section">
+          <h4>Common Benchmark</h4>
+          <p>${track.benchmark}</p>
+        </div>
+        <div class="talk-section">
+          <h4>Formula</h4>
+          <div class="formula-box">${track.formula}</div>
+        </div>
+        <div class="talk-section">
+          <h4>Example</h4>
+          <p>${track.example}</p>
+        </div>
+      `;
+    }
+
+    // Scroll Behavior
+    function setupScrollBehavior() {
+      window.addEventListener('scroll', () => {
+        const hero = document.getElementById('hero');
+        const stickyHeader = document.getElementById('stickyHeader');
+        
+        if (window.scrollY > 200) {
+          hero.classList.add('collapsed');
+          stickyHeader.classList.add('visible');
         } else {
-          option.classList.remove('selected');
+          hero.classList.remove('collapsed');
+          stickyHeader.classList.remove('visible');
         }
       });
     }
 
+    // Theme Toggle
     function toggleTheme() {
       const html = document.documentElement;
       const currentTheme = html.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', newTheme);
-      localStorage.setItem('om-theme', newTheme);
-      document.getElementById('themeIcon').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+      localStorage.setItem('theme', newTheme);
+      document.getElementById('themeToggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
     }
 
     function loadTheme() {
-      const savedTheme = localStorage.getItem('om-theme') || 'dark';
+      const savedTheme = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', savedTheme);
-      document.getElementById('themeIcon').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+      document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadTheme();
-      initializeUsageInputs();
-      
-      document.querySelectorAll('input[name="smartcrm"]').forEach(radio => {
-        radio.addEventListener('change', (e) => {
-          state.smartCrmTier = e.target.value;
-          updateRadioStyles();
+    // URL State Management
+    function shareURL() {
+      const stateStr = btoa(JSON.stringify(state));
+      const url = `${window.location.origin}${window.location.pathname}#${stateStr}`;
+      navigator.clipboard.writeText(url).then(() => {
+        alert('✅ Calculator URL copied to clipboard!');
+      });
+    }
+
+    function loadFromURL() {
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        try {
+          const loadedState = JSON.parse(atob(hash));
+          state = { ...state, ...loadedState };
+          renderCurrentStep();
           updateCalculations();
-        });
-      });
+        } catch (e) {
+          console.error('Failed to load state from URL');
+        }
+      }
+    }
 
-      document.querySelectorAll('input[name="datahub"]').forEach(radio => {
-        radio.addEventListener('change', (e) => {
-          state.dataHubTier = e.target.value;
-          updateRadioStyles();
-          updateCalculations();
-        });
-      });
+    // Export CSV
+    function exportCSV() {
+      const rows = [
+        ['Feature', 'Usage', 'Credits per Unit', 'Total Credits'],
+        ['Customer Agent', state.usage['customer-agent'] || 0, 100, (state.usage['customer-agent'] || 0) * 100],
+        ['Prospecting Monitor', state.usage['prospecting-agent-monitor-contact'] || 0, 100, (state.usage['prospecting-agent-monitor-contact'] || 0) * 100],
+        ['Prospecting Research', state.usage['prospecting-agent-company-research'] || 0, 10, (state.usage['prospecting-agent-company-research'] || 0) * 10],
+        ['Data Agent', state.usage['data-agent-text-response'] || 0, 10, (state.usage['data-agent-text-response'] || 0) * 10],
+        ['Breeze Workflows', state.usage['workflow-ai-action-breeze'] || 0, 10, (state.usage['workflow-ai-action-breeze'] || 0) * 10],
+        ['Buyer Intent', state.usage['company-monitoring-intent'] || 0, 10, (state.usage['company-monitoring-intent'] || 0) * 10],
+        ['', '', 'Total', getProjectedUsage()]
+      ];
 
-      document.querySelectorAll('.radio-option').forEach(option => {
-        option.addEventListener('click', () => {
-          const radio = option.querySelector('input[type="radio"]');
-          radio.checked = true;
-          radio.dispatchEvent(new Event('change'));
-        });
-      });
+      const csv = rows.map(row => row.join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'hubspot-credits-calculator.csv';
+      a.click();
+    }
 
-      updateRadioStyles();
-      loadFromURL();
-      updateProspectingCalculation();
-      updateCalculations();
-    });
+    // Reset
+    function resetCalculator() {
+      if (confirm('Reset all values? This cannot be undone.')) {
+        state = { currentStep: 0, included: 500, usage: {} };
+        renderCurrentStep();
+        updateCalculations();
+      }
+    }
 
-    window.__test__ = {
-      getState: () => state,
-      getIncludedCredits,
-      getProjectedUsage,
-      getNetBalance: () => getIncludedCredits() - getProjectedUsage(),
-      getCreditTable: () => CREDIT_TABLE
-    };
+    // Initialize on load
+    init();
   </script>
 </body>
 </html>
