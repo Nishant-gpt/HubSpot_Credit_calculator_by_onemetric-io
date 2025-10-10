@@ -1,0 +1,117 @@
+Refactor the existing HubSpot AI Credits Calculator at my current URL into a single-file static app (index.html) with:
+
+A. Hero + collapsing header
+
+Full-width Hero with:
+Left: “Breeze by OneMetric.io” (text logo).
+Center: H1 “HubSpot Credits Calculator” + sub “Estimate your monthly credit consumption.”
+Right: a 3-stat KPI card (“Included”, “Projected”, “Net”).
+
+On scroll, collapse to a sticky top bar showing the 3 KPIs and a “Talk to an expert” mailto button.
+
+B. Three-column layout
+
+Left: Steps (unchanged order).
+
+Center: current step’s inputs.
+
+Right: Partner Talk-Track panel with these sections and sample copy (use placeholders I provide below):
+
+“Primary question”
+
+“If they don’t know”
+
+“Common benchmark”
+
+“Formula” (plain English)
+
+“Example” (one example row)
+The talk-track panel must update when the step changes. No tooltips; show text inline.
+
+C. Feature logic (keep existing math; add Goal Mode where specified)
+
+Implement/adjust:
+
+Customer Agent: input “Conversations/month”; credits = conversations × 100.
+Talk-track: Primary → “How many conversations across all channels per month?” Include chat, email, social, other text.
+
+Prospecting Agent (Monitor Contact): add a two-tab input:
+
+Direct: companies/month (default contactsPerCompany=2; editable). credits = companies × contactsPerCompany × 100.
+
+Goal mode: inputs: meetingsNeeded, meetingConversion% (0–100, step 1), contactsPerCompany (default 2). Derived companies = ceil(meetingsNeeded / (meetingConversion%/100)). Credits = companies × contactsPerCompany × 100.
+Show helper lines: “Don’t know? Reps × accounts/rep/month” and a benchmark chip: “50–100 accounts/rep/month.”
+
+Prospecting Agent (Company Research): input “Research results/month”; credits = results × 10.
+
+Data Agent: inputs: questionsCount × newRecordsPerMonth × refreshesPerMonth (presets: 1, 4, 30). Credits = product × 10.
+
+Breeze Workflows: input “AI actions executed/month”; credits = actions × 10.
+
+Buyer Intent: inputs: targetAccounts + additionalCompanies; credits = (sum) × 10.
+
+Data Hub: inputs: datasetSize (Small 25 / Medium 75 / Large 200), destinations, syncFrequency (One-time 1, Monthly 1, Daily 30, Hourly 700, Fifteen-min 2900). Credits = sizeCredits × destinations × frequency.
+
+D. Summary block
+
+Show Included, Projected, Net. If deficit > 0, compute:
+
+Capacity packs: ceil(deficit / 1000) × $10.
+
+Overage: ceil(deficit / 10) × $0.10.
+Highlight cheaper as “Recommended”. Add a mini line: “Capacity packs suit consistent overages; overage is fine for spikes.”
+
+E. Copy to insert in the Talk-Track panel (per step)
+
+Customer Agent
+Primary: “How many conversations across all channels per month?”
+Alternatives: “If unsure, last month’s chat + email + social thread counts work.”
+Benchmark: “Early teams often start 200–1,000/month.”
+Formula: conversations × 100 credits.
+Example: “1,000 conversations × 100 = 100,000 credits.”
+
+Prospecting Agent (Monitor Contact)
+Primary: “How many companies do you want to prospect into each month?”
+Alternatives: “How many reps? How many accounts per rep per month?”
+Benchmark: “50–100 accounts per rep per month.”
+Formula: companies × contacts/company × 100 (default contacts/company = 2).
+Example: “375 companies × 200 = 75,000 credits.”
+
+Prospecting Agent (Company Research)
+Primary: “How many deep research results do you need per month?”
+Formula: results × 10.
+Example: “500 results × 10 = 5,000 credits.”
+
+Data Agent
+Primary: “How many custom questions do you answer per record?”
+Alternatives: “How many new records per month? How often do you refresh?”
+Formula: questions × new records × monthly refreshes × 10.
+Example: “3 × 1,000 × 1 × 10 = 30,000 credits.”
+
+Breeze Workflows
+Primary: “What AI action and how many records per month?”
+Formula: actions/month × 10.
+Example: “200 actions × 10 = 2,000 credits.”
+
+Buyer Intent
+Primary: “How many target accounts do you want to actively track?”
+Alternatives: “Any additional companies to monitor?”
+Formula: (targets + others) × 10.
+Example: “15 + 13 = 28 × 10 = 280 credits.”
+
+Data Hub
+Primary: “What’s your dataset size, destinations, and sync cadence?”
+Formula: sizeCredits × destinations × syncs/month.
+Example: “Medium (75) × 1 × 30 = 2,250 credits.”
+
+F. Visuals + theming
+
+Keep your current palette; apply to the new hero, KPI chips, and buttons. 20px rounded cards, soft shadow, subtle gradient hero.
+
+Add quick-add chips (+50, +100, +1000) consistently to all numeric inputs.
+
+G. Keep existing share/export behavior and IDs
+
+Preserve URL state encoding, CSV export, and all calculation IDs. Only add the new controls and derived computations where specified.
+
+Deliverable: one index.html (vanilla JS, CSS in a <style> block). No dependencies.
