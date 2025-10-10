@@ -894,9 +894,9 @@
             <label class="input-label">Meetings Needed per Month</label>
             <input type="number" id="input-prospecting-meetings" value="${meetings}" min="0" oninput="updateProspecting()">
             <div class="quick-add-chips">
-              <span class="chip" onclick="addQuickProspecting('meetings', 10)">+10</span>
-              <span class="chip" onclick="addQuickProspecting('meetings', 20)">+20</span>
               <span class="chip" onclick="addQuickProspecting('meetings', 50)">+50</span>
+              <span class="chip" onclick="addQuickProspecting('meetings', 100)">+100</span>
+              <span class="chip" onclick="addQuickProspecting('meetings', 1000)">+1000</span>
             </div>
           </div>
           <div class="input-group">
@@ -947,17 +947,17 @@
           <label class="input-label">Questions per Record</label>
           <input type="number" id="input-data-agent-questions" value="${questions}" min="0" oninput="updateDataAgent()">
           <div class="quick-add-chips">
-            <span class="chip" onclick="addQuickDataAgent('questions', 1)">+1</span>
-            <span class="chip" onclick="addQuickDataAgent('questions', 3)">+3</span>
-            <span class="chip" onclick="addQuickDataAgent('questions', 5)">+5</span>
+            <span class="chip" onclick="addQuickDataAgent('questions', 50)">+50</span>
+            <span class="chip" onclick="addQuickDataAgent('questions', 100)">+100</span>
+            <span class="chip" onclick="addQuickDataAgent('questions', 1000)">+1000</span>
           </div>
         </div>
         <div class="input-group">
           <label class="input-label">New Records per Month</label>
           <input type="number" id="input-data-agent-records" value="${records}" min="0" oninput="updateDataAgent()">
           <div class="quick-add-chips">
+            <span class="chip" onclick="addQuickDataAgent('records', 50)">+50</span>
             <span class="chip" onclick="addQuickDataAgent('records', 100)">+100</span>
-            <span class="chip" onclick="addQuickDataAgent('records', 500)">+500</span>
             <span class="chip" onclick="addQuickDataAgent('records', 1000)">+1000</span>
           </div>
         </div>
@@ -1007,18 +1007,18 @@
           <p class="input-help">How many target accounts do you want to actively track?</p>
           <input type="number" id="input-buyer-intent-targets" value="${targets}" min="0" oninput="updateBuyerIntent()">
           <div class="quick-add-chips">
-            <span class="chip" onclick="addQuickBuyerIntent('targets', 10)">+10</span>
             <span class="chip" onclick="addQuickBuyerIntent('targets', 50)">+50</span>
             <span class="chip" onclick="addQuickBuyerIntent('targets', 100)">+100</span>
+            <span class="chip" onclick="addQuickBuyerIntent('targets', 1000)">+1000</span>
           </div>
         </div>
         <div class="input-group">
           <label class="input-label">Additional Companies</label>
           <input type="number" id="input-buyer-intent-additional" value="${additional}" min="0" oninput="updateBuyerIntent()">
           <div class="quick-add-chips">
-            <span class="chip" onclick="addQuickBuyerIntent('additional', 10)">+10</span>
             <span class="chip" onclick="addQuickBuyerIntent('additional', 50)">+50</span>
             <span class="chip" onclick="addQuickBuyerIntent('additional', 100)">+100</span>
+            <span class="chip" onclick="addQuickBuyerIntent('additional', 1000)">+1000</span>
           </div>
         </div>
         <div class="calculated-result">
