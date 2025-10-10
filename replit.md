@@ -18,56 +18,59 @@ Helps HubSpot customers estimate their monthly AI credit consumption with:
 
 ## Features
 
-### Hero Section
-- **Full-width gradient hero** with OneMetric.io branding
-- **Left**: Breeze by OneMetric.io logo
-- **Center**: H1 "HubSpot Credits Calculator" + subtitle
-- **Right**: Live KPI card (Included/Projected/Net credits)
-- **Collapsing behavior**: Smoothly collapses on scroll, replaced by sticky header
+### Header (Sticky 56px)
+- **Left**: OneMetric.io logo · Breeze branding
+- **Center**: "HubSpot Credits Calculator" title
+- **Right**: "How credits work" + "Talk to an expert" (OneMetric.io link)
 
-### Three-Column Layout
-1. **Left Column**: Step navigation (7 steps) with visual active indicators
-2. **Center Column**: Active step inputs + Summary block
-3. **Right Column**: Dynamic partner talk-track panel
+### Sidebar Navigation (280px)
+- **8 calculator steps** with icons, labels, and live credit badges
+- **Active step highlighting** with purple border and background tint
+- **Per-step credit totals** update in real-time as inputs change
+- **Responsive behavior**: Horizontal scroll on mobile
 
-### Calculation Steps (Step-by-Step Workflow)
-1. **Customer Agent**: Conversations per month × 100 credits
-2. **Prospecting Agent (Monitor Contact)**: 
-   - Direct Mode: Companies × Contacts/company × 100
-   - Goal Mode: Meetings ÷ Conversion% = Companies
-3. **Prospecting Agent (Company Research)**: Results × 10 credits
+### Content Card
+- **Clean, focused design** with step title and helper text
+- **Next section button** for easy step-by-step navigation
+- **Tool cards** for interactive configuration options
+- **Section cards** group related inputs
+
+### Calculation Steps
+1. **Subscription Base**: Plan selection (Starter/Pro/Enterprise) + Data Hub toggle
+2. **Customer Agent**: Conversations × 100 credits
+3. **Prospecting Agent**: 
+   - Monitor Contact (Direct/Goal Mode) × 100 credits
+   - Company Research × 10 credits
 4. **Data Agent**: Questions × Records × Refreshes × 10 credits
-5. **Breeze Workflows**: AI Actions × 10 credits
-6. **Buyer Intent**: (Target Accounts + Additional) × 10 credits
-7. **Data Hub**: Size Credits × Destinations × Sync Frequency
+5. **Buyer Intent**: (Target + Additional) × 10 credits
+6. **Breeze Workflows**: AI Actions × 10 credits
+7. **Data Hub**: Dataset Size × Destinations × Sync Frequency
+8. **Results**: Summary, top drivers, expansion recommendations
 
-### Partner Talk-Track Panel
-Dynamic content per step with:
-- **Primary Question**: Main discovery question for sales conversations
-- **If they don't know**: Alternative framing
-- **Common Benchmark**: Industry standards
-- **Formula**: Plain English calculation
-- **Example**: Concrete example with numbers
+### Tool Cards
+- **Selectable cards** for plan tiers, modes, dataset sizes
+- **Visual feedback** with purple highlight when active
+- **Icon + name + helper text** for clarity
 
-### Smart Recommendations
-- Shows Included credits, Projected usage, Net balance
-- Color-coded (green = surplus, red = deficit)
-- When deficit exists:
-  - **Capacity Packs**: ceil(deficit/1000) × $10
-  - **Overage**: ceil(deficit/10) × $0.10
-  - Highlights cheaper option as "RECOMMENDED"
-  - Helper text about use cases
+### Results Step (Dedicated)
+- **Summary cards**: Included, Projected, Net balance
+- **Top 3 drivers**: Visual bar chart showing largest credit consumers
+- **Expansion options**: Capacity Packs vs Overage comparison
+- **Recommended badge**: Highlights cheaper expansion option
+- **Export actions**: CSV download, Share URL, Reset calculator
 
-### UX Enhancements
-- **Quick-add chips**: +50/+100/+1000 on all numeric inputs
-- **Theme toggle**: Dark/light mode with localStorage persistence
-- **Sticky header**: Appears on scroll with condensed KPIs and CTA
-- **Responsive design**: 3-col desktop, 2-col tablet, 1-col mobile
+### UX Features
+- **Quick-add chips**: +50/+100/+1000 on numeric inputs
+- **Toggle switches**: Clean UI for boolean options
+- **Input helpers**: Inline explanatory text below each input
+- **Responsive design**: Adapts from desktop to mobile
+- **Purple/coral theme**: Primary #7C3AED, Accent #FF7A59
 
 ### Utilities
-- **Share**: Generate shareable URL with encoded state
+- **Share**: Copy shareable URL with base64-encoded state
 - **Export CSV**: Download detailed usage breakdown
-- **Reset All**: Clear all inputs and restore defaults
+- **Reset**: Clear all inputs and restore defaults
+- **URL state**: Automatic loading from shared links
 
 ### Data Model
 The calculator includes complete pricing data for:
