@@ -1,10 +1,14 @@
 # HubSpot AI Credits Calculator
 
 ## Overview
-A single-file, zero-backend web application that calculates projected monthly HubSpot AI credit usage and cost. Built for OneMetric.io with a clean, enterprise-grade design.
+A modern, single-file web application featuring a three-column layout with hero section, step-based navigation, and partner sales enablement tools. Built for OneMetric.io (Breeze by OneMetric.io).
 
 ## Purpose
-Helps HubSpot customers estimate their monthly AI credit consumption and associated costs, with clear recommendations for expansion options when credits run low.
+Helps HubSpot customers estimate their monthly AI credit consumption with:
+- Step-by-step guided workflow
+- Partner talk-track guidance for sales conversations
+- Smart expansion recommendations (Capacity Packs vs Overage)
+- Goal-based prospecting calculations
 
 ## Technology Stack
 - **Pure HTML/CSS/JavaScript** (vanilla, no frameworks)
@@ -14,30 +18,56 @@ Helps HubSpot customers estimate their monthly AI credit consumption and associa
 
 ## Features
 
-### Core Functionality
-1. **Plan Configuration**
-   - Smart CRM/Marketing/Sales/Service/Content Hub tier selection (Starter/Pro/Enterprise)
-   - Data Hub/Customer Platform tier selection (None/Starter/Pro/Enterprise)
-   - Automatic calculation of included credits
+### Hero Section
+- **Full-width gradient hero** with OneMetric.io branding
+- **Left**: Breeze by OneMetric.io logo
+- **Center**: H1 "HubSpot Credits Calculator" + subtitle
+- **Right**: Live KPI card (Included/Projected/Net credits)
+- **Collapsing behavior**: Smoothly collapses on scroll, replaced by sticky header
 
-2. **Usage Estimation**
-   - Input fields for all HubSpot AI features
-   - Organized by category (Agents, Automation, Buyer Intent, Data Studio, Beta Agents)
-   - Real-time credit calculation as you type
-   - Help tooltips for each feature
+### Three-Column Layout
+1. **Left Column**: Step navigation (7 steps) with visual active indicators
+2. **Center Column**: Active step inputs + Summary block
+3. **Right Column**: Dynamic partner talk-track panel
 
-3. **Projection & Recommendations**
-   - Shows included credits, projected usage, and net balance
-   - Color-coded results (green = surplus, red = deficit)
-   - Smart expansion recommendations when credits run out:
-     - Capacity Packs ($10 per 1,000 credits)
-     - Overage/Pay-as-you-go ($0.01 per credit, 10-credit minimum)
-   - Automatically highlights the cheaper option
+### Calculation Steps (Step-by-Step Workflow)
+1. **Customer Agent**: Conversations per month × 100 credits
+2. **Prospecting Agent (Monitor Contact)**: 
+   - Direct Mode: Companies × Contacts/company × 100
+   - Goal Mode: Meetings ÷ Conversion% = Companies
+3. **Prospecting Agent (Company Research)**: Results × 10 credits
+4. **Data Agent**: Questions × Records × Refreshes × 10 credits
+5. **Breeze Workflows**: AI Actions × 10 credits
+6. **Buyer Intent**: (Target Accounts + Additional) × 10 credits
+7. **Data Hub**: Size Credits × Destinations × Sync Frequency
 
-4. **Utilities**
-   - **Reset**: Clear all inputs and restore defaults
-   - **Export CSV**: Download detailed usage breakdown
-   - **Share**: Generate shareable URL with encoded state
+### Partner Talk-Track Panel
+Dynamic content per step with:
+- **Primary Question**: Main discovery question for sales conversations
+- **If they don't know**: Alternative framing
+- **Common Benchmark**: Industry standards
+- **Formula**: Plain English calculation
+- **Example**: Concrete example with numbers
+
+### Smart Recommendations
+- Shows Included credits, Projected usage, Net balance
+- Color-coded (green = surplus, red = deficit)
+- When deficit exists:
+  - **Capacity Packs**: ceil(deficit/1000) × $10
+  - **Overage**: ceil(deficit/10) × $0.10
+  - Highlights cheaper option as "RECOMMENDED"
+  - Helper text about use cases
+
+### UX Enhancements
+- **Quick-add chips**: +50/+100/+1000 on all numeric inputs
+- **Theme toggle**: Dark/light mode with localStorage persistence
+- **Sticky header**: Appears on scroll with condensed KPIs and CTA
+- **Responsive design**: 3-col desktop, 2-col tablet, 1-col mobile
+
+### Utilities
+- **Share**: Generate shareable URL with encoded state
+- **Export CSV**: Download detailed usage breakdown
+- **Reset All**: Clear all inputs and restore defaults
 
 ### Data Model
 The calculator includes complete pricing data for:
@@ -126,25 +156,23 @@ Net Balance,[total]
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
 ## Recent Changes
+- **2025-10-10**: Complete Refactor - Three-Column Layout
+  - NEW: Hero section with collapsing behavior on scroll
+  - NEW: Sticky header with condensed KPIs and CTA
+  - NEW: Three-column layout (Steps | Inputs | Talk-Track)
+  - NEW: Step-based navigation workflow (7 steps)
+  - NEW: Partner talk-track panel with sales enablement content
+  - NEW: Goal Mode for Prospecting Agent (meetings ÷ conversion = companies)
+  - NEW: Quick-add chips (+50/+100/+1000) on all numeric inputs
+  - NEW: Smart recommendations (Capacity Packs vs Overage comparison)
+  - Enhanced: All calculations with visual formula displays
+  - Enhanced: Responsive design (3-col/2-col/1-col)
+  - Preserved: URL sharing, CSV export, theme toggle
+  - Preserved: All calculation logic and credit rates
+
 - **2025-10-09**: Branding Update
-  - Replaced text logo with OneMetric logo image in header and footer
-  - Removed tagline strip "HubSpot AI Credits—clear, predictable, no surprises."
+  - Replaced text logo with OneMetric logo image
   - Updated CTA to "Talk to an HubSpot expert" linking to www.onemetric.io
-  
-- **2025-10-09**: Enhanced Calculator with Visible Help Text
-  - Added always-visible help text for Customer Agent (no tooltips)
-  - Added Prospecting Agent calculation inputs:
-    - Meetings or Demos Needed per Month
-    - Expected Conversion Rate (%)
-    - Auto-calculated Contacts to Monitor
-  - Added validation for conversion rate (1-100)
-  - Added "Reset All Values" button
-  - State preservation updated for new fields
-  - Refactored with OneMetric.io dark/light theme
-  - Professional header with theme toggle
-  - Quick stats badges in header
-  - "How Credits Work" FAQ section
-  - Enhanced footer with partner branding
 
 ## Notes
 - No API keys or secrets required
