@@ -156,30 +156,19 @@ Net Balance,[total]
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
 ## Recent Changes
-- **2025-10-10**: Dark Mode Color Improvements
-  - Updated dark theme to GitHub-style blue-tinted grays
-  - Background: #0d1117 (dark slate)
-  - Surface/panels: #161b22 (dark slate gray)
-  - Borders: #30363d (subtle blue-gray)
-  - Text: #c9d1d9 (light gray)
-  - Muted text: #8b949e (medium gray)
-  - Success: #3fb950 (GitHub green)
-  - Danger: #f85149 (GitHub red)
-  - Better visual hierarchy and contrast
-
-- **2025-10-10**: Complete Refactor - Three-Column Layout
-  - NEW: Hero section with collapsing behavior on scroll
-  - NEW: Sticky header with condensed KPIs and CTA
-  - NEW: Three-column layout (Steps | Inputs | Talk-Track)
-  - NEW: Step-based navigation workflow (7 steps)
-  - NEW: Partner talk-track panel with sales enablement content
-  - NEW: Goal Mode for Prospecting Agent (meetings ÷ conversion = companies)
-  - NEW: Quick-add chips (+50/+100/+1000) on all numeric inputs
-  - NEW: Smart recommendations (Capacity Packs vs Overage comparison)
-  - Enhanced: All calculations with visual formula displays
-  - Enhanced: Responsive design (3-col/2-col/1-col)
-  - Preserved: URL sharing, CSV export, theme toggle
-  - Preserved: All calculation logic and credit rates
+- **2025-10-10**: Complete UI Redesign - Sidebar Layout
+  - NEW: Sidebar navigation (280px) with 8 steps, icons, and live credit badges
+  - NEW: Sticky header (56px) with OneMetric.io · Breeze branding
+  - NEW: Tool card interface for plan selection, mode switching, dataset sizes
+  - NEW: Dedicated Results step with summary, top drivers, and expansion options
+  - NEW: Purple/coral color scheme (Primary: #7C3AED, Accent: #FF7A59)
+  - NEW: Per-step credit totals displayed in sidebar badges (live updates)
+  - NEW: Clean, focused design matching modern SaaS UI patterns
+  - Enhanced: Responsive sidebar (horizontal scroll on mobile)
+  - Enhanced: Visual hierarchy with cards, shadows, and rounded corners
+  - Preserved: All calculation formulas and credit rates
+  - Preserved: URL state encoding, CSV export, reset functionality
+  - Preserved: Direct & Goal Mode for Prospecting Agent
 
 - **2025-10-09**: Branding Update
   - Replaced text logo with OneMetric logo image
